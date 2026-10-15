@@ -1,0 +1,84 @@
+{
+  "properties": {
+    "facts": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Facts",
+      "type": "object"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "kpi_id": {
+      "title": "Kpi Id",
+      "type": "string"
+    },
+    "narrative": {
+      "default": "",
+      "title": "Narrative",
+      "type": "string"
+    },
+    "period": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Period"
+    },
+    "rule_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rule Id"
+    },
+    "severity": {
+      "default": "info",
+      "enum": [
+        "info",
+        "review",
+        "high"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "source": {
+      "default": "rule",
+      "enum": [
+        "rule",
+        "model",
+        "both"
+      ],
+      "title": "Source",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "trend",
+        "anomaly",
+        "driver",
+        "recommendation"
+      ],
+      "title": "Type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "kpi_id",
+    "type"
+  ],
+  "title": "Insight",
+  "type": "object"
+}

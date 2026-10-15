@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "lineage_graph",
+      "kind": "json",
+      "path": "runs/{run_id}/audit/lineage_graph.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "nodes": 38,
+    "edges": 41,
+    "untracked_steps": 0
+  },
+  "lineage_events": []
+}

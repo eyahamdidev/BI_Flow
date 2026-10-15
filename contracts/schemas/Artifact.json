@@ -1,0 +1,69 @@
+{
+  "properties": {
+    "kind": {
+      "enum": [
+        "parquet",
+        "csv",
+        "duckdb",
+        "json",
+        "html",
+        "md",
+        "png"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "label": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Label"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "path": {
+      "description": "relative to DATA_DIR",
+      "title": "Path",
+      "type": "string"
+    },
+    "rows": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rows"
+    },
+    "sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sha256"
+    }
+  },
+  "required": [
+    "name",
+    "kind",
+    "path"
+  ],
+  "title": "Artifact",
+  "type": "object"
+}

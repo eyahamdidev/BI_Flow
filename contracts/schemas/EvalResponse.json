@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "metrics": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Metrics",
+      "type": "object"
+    },
+    "module": {
+      "title": "Module",
+      "type": "string"
+    },
+    "notes": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Notes",
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "partial",
+        "error"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "module",
+    "status"
+  ],
+  "title": "EvalResponse",
+  "type": "object"
+}

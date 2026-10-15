@@ -1,0 +1,6 @@
+pandas
+pyarrow
+pandera
+sqlalchemy
+duckdb
+# contracts are installed separately: pip install ../../contracts

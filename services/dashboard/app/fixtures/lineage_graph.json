@@ -1,0 +1,81 @@
+{
+  "nodes": [
+    {
+      "id": "raw.orders",
+      "label": "raw orders",
+      "layer": 0
+    },
+    {
+      "id": "raw.products",
+      "label": "raw products",
+      "layer": 0
+    },
+    {
+      "id": "clean.orders",
+      "label": "clean orders",
+      "layer": 1
+    },
+    {
+      "id": "clean.products",
+      "label": "clean products",
+      "layer": 1
+    },
+    {
+      "id": "dbt.fact_orders",
+      "label": "fact_orders",
+      "layer": 2
+    },
+    {
+      "id": "kpi.revenue",
+      "label": "KPI revenue",
+      "layer": 3
+    },
+    {
+      "id": "kpi.late_rate",
+      "label": "KPI late_rate",
+      "layer": 3
+    },
+    {
+      "id": "ins.i1",
+      "label": "insight i1",
+      "layer": 4
+    }
+  ],
+  "edges": [
+    {
+      "from": "raw.orders",
+      "to": "clean.orders",
+      "step": "parse_dates"
+    },
+    {
+      "from": "raw.products",
+      "to": "clean.products",
+      "step": "knn_impute(weight)"
+    },
+    {
+      "from": "clean.orders",
+      "to": "dbt.fact_orders",
+      "step": "dbt marts"
+    },
+    {
+      "from": "clean.products",
+      "to": "dbt.fact_orders",
+      "step": "dbt marts"
+    },
+    {
+      "from": "dbt.fact_orders",
+      "to": "kpi.revenue",
+      "step": "SQL revenue"
+    },
+    {
+      "from": "dbt.fact_orders",
+      "to": "kpi.late_rate",
+      "step": "SQL late_rate"
+    },
+    {
+      "from": "kpi.revenue",
+      "to": "ins.i1",
+      "step": "MAD anomaly"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+name: ci
+on:
+  pull_request:
+  push: {branches: [main]}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install ruff
+      - run: ruff check .
+
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -e contracts
+      - run: python scripts/export_schemas.py
+      - name: schemas must be committed
+        run: git diff --exit-code contracts/schemas
+
+  service-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [ingest_quality, profile_clean, etl, semantic_kpi, analyst, auditor, gateway, dashboard]
+    env: {FAKE_LLM: "1", BIFLOW_MOCK: "1"}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -e contracts uvicorn pytest
+      - run: pip install -r services/${{ matrix.service }}/requirements.in
+      - run: python -m pytest -q
+        working-directory: services/${{ matrix.service }}
+
+  smoke:
+    runs-on: ubuntu-latest
+    needs: service-tests
+    env: {FAKE_LLM: "1", BIFLOW_MOCK: "1"}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -e contracts uvicorn pytest httpx pyyaml
+      - run: python -m pytest tests/smoke -q

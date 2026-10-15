@@ -1,0 +1,18 @@
+{
+  "before": {
+    "overall": 71.4,
+    "completeness": 78,
+    "uniqueness": 92,
+    "validity": 64,
+    "consistency": 70,
+    "timeliness": 53
+  },
+  "after": {
+    "overall": 91.2,
+    "completeness": 96,
+    "uniqueness": 100,
+    "validity": 90,
+    "consistency": 88,
+    "timeliness": 82
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "properties": {
+    "agent": {
+      "title": "Agent",
+      "type": "string"
+    },
+    "event_id": {
+      "title": "Event Id",
+      "type": "string"
+    },
+    "inputs": {
+      "default": [],
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Inputs",
+      "type": "array"
+    },
+    "llm": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Llm"
+    },
+    "method": {
+      "default": "deterministic",
+      "enum": [
+        "deterministic",
+        "ml",
+        "llm_assisted"
+      ],
+      "title": "Method",
+      "type": "string"
+    },
+    "outputs": {
+      "default": [],
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Outputs",
+      "type": "array"
+    },
+    "params": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Params",
+      "type": "object"
+    },
+    "rows_affected": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rows Affected"
+    },
+    "rule": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rule"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "step": {
+      "title": "Step",
+      "type": "string"
+    },
+    "ts": {
+      "title": "Ts",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "run_id",
+    "ts",
+    "agent",
+    "step"
+  ],
+  "title": "LineageEvent",
+  "type": "object"
+}

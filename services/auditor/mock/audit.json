@@ -1,0 +1,26 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "trace_report_md",
+      "kind": "md",
+      "path": "runs/{run_id}/audit/trace_report.md",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    },
+    {
+      "name": "trace_report_json",
+      "kind": "json",
+      "path": "runs/{run_id}/audit/trace_report.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "sections": 9,
+    "factcheck_first_try_pass": 1.0
+  },
+  "lineage_events": []
+}

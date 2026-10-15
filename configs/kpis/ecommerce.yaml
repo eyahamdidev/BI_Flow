@@ -1,0 +1,102 @@
+# KPI catalog (BO5 owns the schema). SQL runs on fact_orders (see `marts:` in the dataset YAML).
+- id: revenue
+  name: Revenue
+  description: Total payments received for delivered orders.
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders WHERE order_status='delivered' GROUP BY 1"
+  grain: month
+  unit: BRL
+  direction: higher_is_better
+  dimensions: [product_category, customer_state, main_payment_type]
+  synonyms: [sales, turnover]
+  caveats: "Excludes cancelled/unavailable orders."
+- id: orders
+  name: Orders
+  description: Number of delivered orders.
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, COUNT(*) AS value FROM fact_orders WHERE order_status='delivered' GROUP BY 1"
+  grain: month
+  unit: count
+  direction: higher_is_better
+  dimensions: [product_category, customer_state, main_payment_type]
+  synonyms: [order volume, number of orders]
+- id: aov
+  name: Average order value
+  description: Revenue divided by delivered orders.
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value)/COUNT(*) AS value FROM fact_orders WHERE order_status='delivered' GROUP BY 1"
+  grain: month
+  unit: BRL
+  direction: higher_is_better
+  dimensions: [product_category, customer_state]
+  synonyms: [basket size, ticket medio]
+- id: avg_delivery_days
+  name: Average delivery time
+  description: Days from purchase to delivery to the customer.
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, AVG(delivery_days) AS value FROM fact_orders WHERE order_status='delivered' GROUP BY 1"
+  grain: month
+  unit: days
+  direction: lower_is_better
+  dimensions: [customer_state, product_category]
+  synonyms: [delivery time, shipping time]
+- id: delivery_delay
+  name: Delivery delay vs estimate
+  description: Average days late versus the estimated delivery date (negative = early).
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, AVG(delay_days) AS value FROM fact_orders WHERE order_status='delivered' GROUP BY 1"
+  grain: month
+  unit: days
+  direction: lower_is_better
+  dimensions: [customer_state, product_category]
+  synonyms: [delay, lateness]
+- id: late_rate
+  name: Late-delivery rate
+  description: Share of delivered orders that arrived after the estimated date.
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, AVG(CAST(is_late AS INTEGER)) AS value FROM fact_orders WHERE order_status='delivered' GROUP BY 1"
+  grain: month
+  unit: ratio
+  direction: lower_is_better
+  dimensions: [customer_state, product_category]
+  synonyms: [late deliveries, on-time rate (inverse)]
+- id: credit_card_share
+  name: Credit-card share of payments
+  description: Share of delivered orders paid mainly by credit card (payment mix headline).
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, AVG(CAST(main_payment_type='credit_card' AS INTEGER)) AS value FROM fact_orders WHERE order_status='delivered' GROUP BY 1"
+  grain: month
+  unit: ratio
+  direction: neutral
+  dimensions: [customer_state]
+  synonyms: [payment mix, card usage]
+- id: avg_installments
+  name: Average installments
+  description: Mean number of payment installments per delivered order.
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, AVG(payment_installments) AS value FROM fact_orders WHERE order_status='delivered' GROUP BY 1"
+  grain: month
+  unit: count
+  direction: neutral
+  dimensions: [customer_state]
+  synonyms: [installments, parcelas]
+- id: avg_review_score
+  name: Average review score
+  description: Mean customer review score (1 to 5) for delivered orders.
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, AVG(review_score) AS value FROM fact_orders WHERE order_status='delivered' AND review_score IS NOT NULL GROUP BY 1"
+  grain: month
+  unit: score
+  direction: higher_is_better
+  dimensions: [customer_state, product_category]
+  synonyms: [satisfaction, rating, csat]
+- id: low_review_rate
+  name: Low-review rate
+  description: Share of reviewed delivered orders with a score of 2 or lower.
+  sql: "SELECT date_trunc('month', order_purchase_timestamp) AS period, AVG(CAST(review_score <= 2 AS INTEGER)) AS value FROM fact_orders WHERE order_status='delivered' AND review_score IS NOT NULL GROUP BY 1"
+  grain: month
+  unit: ratio
+  direction: lower_is_better
+  dimensions: [customer_state, product_category]
+  synonyms: [unhappy customers, bad reviews]
+- id: repeat_purchase_rate
+  name: Repeat-purchase rate (cohort)
+  description: Share of customers (by first-order month) with a second order within 180 days. Churn = 1 - this value. Most Olist customers buy once, so say so on the dashboard.
+  sql: "WITH f AS (SELECT customer_unique_id, MIN(order_purchase_timestamp) AS first_ts FROM fact_orders GROUP BY 1), r AS (SELECT f.customer_unique_id, date_trunc('month', f.first_ts) AS period, MAX(CASE WHEN o.order_purchase_timestamp > f.first_ts AND o.order_purchase_timestamp <= f.first_ts + INTERVAL 180 DAY THEN 1 ELSE 0 END) AS repeated FROM f JOIN fact_orders o USING (customer_unique_id) GROUP BY 1,2) SELECT period, AVG(repeated) AS value FROM r GROUP BY 1"
+  grain: month
+  unit: ratio
+  direction: higher_is_better
+  dimensions: []
+  synonyms: [churn (inverse), retention, repeat customers]
+  caveats: "Cohort metric; recent cohorts have a shorter observation window."

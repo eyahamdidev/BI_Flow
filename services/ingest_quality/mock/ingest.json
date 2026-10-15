@@ -1,0 +1,49 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "manifest",
+      "kind": "json",
+      "path": "runs/{run_id}/00_ingest/manifest.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    },
+    {
+      "name": "orders",
+      "kind": "parquet",
+      "path": "runs/{run_id}/00_ingest/orders.parquet",
+      "rows": 99441,
+      "sha256": null,
+      "label": null
+    },
+    {
+      "name": "order_items",
+      "kind": "parquet",
+      "path": "runs/{run_id}/00_ingest/order_items.parquet",
+      "rows": 112650,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "tables": 9,
+    "rows_total": 1550922
+  },
+  "lineage_events": [
+    {
+      "event_id": "mock-ingest_quality-ingest_csv",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "ingest_quality",
+      "step": "ingest_csv",
+      "inputs": [],
+      "outputs": [],
+      "rule": "CSVConnector(olist)",
+      "rows_affected": null,
+      "method": "deterministic",
+      "params": {},
+      "llm": null
+    }
+  ]
+}

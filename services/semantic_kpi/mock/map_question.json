@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "outputs": [],
+  "metrics": {
+    "kpi_id": "revenue",
+    "confidence": 0.91,
+    "method": "retrieval"
+  },
+  "lineage_events": []
+}

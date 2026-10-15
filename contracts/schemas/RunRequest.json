@@ -1,0 +1,75 @@
+{
+  "properties": {
+    "config_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Config Ref"
+    },
+    "dataset": {
+      "title": "Dataset",
+      "type": "string"
+    },
+    "inputs": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "default": {},
+      "title": "Inputs",
+      "type": "object"
+    },
+    "lang": {
+      "default": "en",
+      "enum": [
+        "en",
+        "fr"
+      ],
+      "title": "Lang",
+      "type": "string"
+    },
+    "mode": {
+      "title": "Mode",
+      "type": "string"
+    },
+    "options": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Options",
+      "type": "object"
+    },
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "trace_parent": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trace Parent"
+    }
+  },
+  "required": [
+    "request_id",
+    "run_id",
+    "dataset",
+    "mode"
+  ],
+  "title": "RunRequest",
+  "type": "object"
+}

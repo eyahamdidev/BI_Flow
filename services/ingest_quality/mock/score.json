@@ -1,0 +1,37 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "quality_score",
+      "kind": "json",
+      "path": "runs/{run_id}/00_ingest/quality_score.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "overall": 71.4,
+    "completeness": 78.0,
+    "uniqueness": 92.0,
+    "validity": 64.0,
+    "consistency": 70.0,
+    "timeliness": 53.0
+  },
+  "lineage_events": [
+    {
+      "event_id": "mock-ingest_quality-score",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "ingest_quality",
+      "step": "score",
+      "inputs": [],
+      "outputs": [],
+      "rule": "quality_score(weights.yaml)",
+      "rows_affected": null,
+      "method": "deterministic",
+      "params": {},
+      "llm": null
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+# Replace the placeholders with real GitHub handles (5 people, 6 BOs: decide who takes two).
+/contracts/                    @BO1-OWNER @BO2-OWNER @BO3-OWNER @BO4-OWNER @BO5-OWNER @BO6-OWNER
+/config/models.yaml            @BO1-OWNER @BO2-OWNER @BO3-OWNER @BO4-OWNER @BO5-OWNER @BO6-OWNER
+/services/gateway/             @BO1-OWNER
+/services/etl/                 @BO1-OWNER
+/services/auditor/             @BO2-OWNER
+/services/profile_clean/       @BO3-OWNER
+/services/ingest_quality/      @BO4-OWNER
+/.github/                      @BO4-OWNER
+/tests/                        @BO4-OWNER
+/services/semantic_kpi/        @BO5-OWNER
+/configs/kpis/                 @BO5-OWNER
+/services/analyst/             @BO6-OWNER
+/services/dashboard/           @BO6-OWNER
+/configs/recommendations/      @BO6-OWNER
+/configs/datasets/             @BO1-OWNER @BO3-OWNER @BO4-OWNER @BO5-OWNER
+/docker-compose.yml            @BO1-OWNER
+/prompts/                      @BO1-OWNER

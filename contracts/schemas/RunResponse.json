@@ -1,0 +1,340 @@
+{
+  "$defs": {
+    "Artifact": {
+      "properties": {
+        "kind": {
+          "enum": [
+            "parquet",
+            "csv",
+            "duckdb",
+            "json",
+            "html",
+            "md",
+            "png"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "path": {
+          "description": "relative to DATA_DIR",
+          "title": "Path",
+          "type": "string"
+        },
+        "rows": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rows"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sha256"
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "path"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "ErrorInfo": {
+      "properties": {
+        "code": {
+          "enum": [
+            "BAD_INPUT",
+            "SCHEMA_MISMATCH",
+            "UNSUPPORTED_SOURCE",
+            "MODEL_UNAVAILABLE",
+            "TIMEOUT",
+            "INTERNAL"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "ErrorInfo",
+      "type": "object"
+    },
+    "LLMCall": {
+      "properties": {
+        "cache_hit": {
+          "default": false,
+          "title": "Cache Hit",
+          "type": "boolean"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ms"
+        },
+        "prompt_id": {
+          "title": "Prompt Id",
+          "type": "string"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "tokens": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tokens"
+        }
+      },
+      "required": [
+        "prompt_id",
+        "model",
+        "provider"
+      ],
+      "title": "LLMCall",
+      "type": "object"
+    },
+    "LineageEvent": {
+      "properties": {
+        "agent": {
+          "title": "Agent",
+          "type": "string"
+        },
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "inputs": {
+          "default": [],
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Inputs",
+          "type": "array"
+        },
+        "llm": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Llm"
+        },
+        "method": {
+          "default": "deterministic",
+          "enum": [
+            "deterministic",
+            "ml",
+            "llm_assisted"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "outputs": {
+          "default": [],
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Outputs",
+          "type": "array"
+        },
+        "params": {
+          "additionalProperties": true,
+          "default": {},
+          "title": "Params",
+          "type": "object"
+        },
+        "rows_affected": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rows Affected"
+        },
+        "rule": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rule"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "step": {
+          "title": "Step",
+          "type": "string"
+        },
+        "ts": {
+          "title": "Ts",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "run_id",
+        "ts",
+        "agent",
+        "step"
+      ],
+      "title": "LineageEvent",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ErrorInfo"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "latency_ms": {
+      "default": 0,
+      "title": "Latency Ms",
+      "type": "integer"
+    },
+    "lineage_events": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/LineageEvent"
+      },
+      "title": "Lineage Events",
+      "type": "array"
+    },
+    "llm_calls": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/LLMCall"
+      },
+      "title": "Llm Calls",
+      "type": "array"
+    },
+    "metrics": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Metrics",
+      "type": "object"
+    },
+    "module": {
+      "title": "Module",
+      "type": "string"
+    },
+    "outputs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Artifact"
+      },
+      "title": "Outputs",
+      "type": "array"
+    },
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "partial",
+        "error"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "request_id",
+    "run_id",
+    "module",
+    "status"
+  ],
+  "title": "RunResponse",
+  "type": "object"
+}

@@ -1,0 +1,13 @@
+# Recommendation rule table (BO6). The LLM may only REWRITE a matched template into plain language; it cannot add actions.
+- id: late_rate_up_region
+  when: {kpi: late_rate, trend: up, top_driver_dimension: customer_state}
+  action: "Review carrier performance and shipping promises for {top_drivers}."
+- id: review_drop_after_delay
+  when: {kpi: avg_review_score, trend: down, correlated_with: delivery_delay}
+  action: "Prioritise on-time delivery in {top_drivers}: review scores fall where deliveries are late."
+- id: revenue_anomaly_low
+  when: {kpi: revenue, anomaly: low}
+  action: "Check stock-outs, campaign changes and data completeness for {period} before acting on the drop."
+- id: aov_up_mix
+  when: {kpi: aov, trend: up, top_driver_dimension: product_category}
+  action: "Consider promoting the higher-value categories driving the increase: {top_drivers}."

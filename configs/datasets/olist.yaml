@@ -1,0 +1,91 @@
+# Dataset config: the ONE place that is Olist-specific. Agents contain no Olist code (BO5 scalability rule).
+name: olist
+domain: ecommerce
+kpi_file: configs/kpis/ecommerce.yaml
+recommendations_file: configs/recommendations/ecommerce.yaml
+
+source:                      # BO4 connectors: csv | sql | api
+  type: csv
+  path: data/raw/olist
+  tables:
+    orders: olist_orders_dataset.csv
+    order_items: olist_order_items_dataset.csv
+    order_payments: olist_order_payments_dataset.csv
+    order_reviews: olist_order_reviews_dataset.csv
+    customers: olist_customers_dataset.csv
+    products: olist_products_dataset.csv
+    sellers: olist_sellers_dataset.csv
+    geolocation: olist_geolocation_dataset.csv
+    category_translation: product_category_name_translation.csv
+
+expected_schema:             # BO4 -> pandera. Add the rest of the columns as you go.
+  orders:
+    order_id: str
+    customer_id: str
+    order_status: str
+    order_purchase_timestamp: datetime
+    order_delivered_customer_date: {type: datetime, nullable: true}
+    order_estimated_delivery_date: datetime
+  order_items:
+    order_id: str
+    order_item_id: int
+    product_id: str
+    seller_id: str
+    price: float
+    freight_value: float
+  order_payments:
+    order_id: str
+    payment_type: str
+    payment_installments: int
+    payment_value: float
+  order_reviews:
+    review_id: str
+    order_id: str
+    review_score: int
+  customers:
+    customer_id: str
+    customer_unique_id: str
+    customer_state: str
+  products:
+    product_id: str
+    product_category_name: {type: str, nullable: true}
+  sellers:
+    seller_id: str
+    seller_state: str
+  geolocation:
+    geolocation_zip_code_prefix: str
+  category_translation:
+    product_category_name: str
+    product_category_name_english: str
+
+relationships:               # BO1 renders staging/join SQL from this block; BO4 uses it for FK checks
+  - {from: order_items.order_id,   to: orders.order_id}
+  - {from: order_items.product_id, to: products.product_id}
+  - {from: order_items.seller_id,  to: sellers.seller_id}
+  - {from: order_payments.order_id, to: orders.order_id}
+  - {from: order_reviews.order_id,  to: orders.order_id}
+  - {from: orders.customer_id,      to: customers.customer_id}
+  - {from: products.product_category_name, to: category_translation.product_category_name}
+
+cleaning_rules:              # BO3: rule layer. strategies: drop | constant | median | mode | flag_only
+  parse_dates: [order_purchase_timestamp, order_approved_at, order_delivered_carrier_date, order_delivered_customer_date, order_estimated_delivery_date]
+  drop_exact_duplicates: [geolocation, order_reviews]
+  dedupe: {geolocation: {key: geolocation_zip_code_prefix, agg: {geolocation_lat: mean, geolocation_lng: mean}}}
+  category_mapping_fixes: {pc_gamer: pc_gamer, portal_minicursos: portal_minicursos}   # unmatched in the translation table
+  null_strategy:
+    orders.order_delivered_customer_date: flag_only      # undelivered orders: keep, flag
+    order_reviews.review_comment_message: flag_only
+    products.product_weight_g: {strategy: knn_impute, allowed: [median, knn_impute]}
+    products.product_category_name: {strategy: constant, value: unknown}
+  impossible_values:
+    - {table: order_items, column: price, rule: ">= 0", action: flag}
+    - {table: orders, rule: "order_delivered_customer_date >= order_purchase_timestamp", action: flag}
+  outliers: {method: isolation_forest, columns: [order_items.price, order_items.freight_value, products.product_weight_g], action: flag}
+  llm_advisory: {enabled: true, allowed_actions: [impute_median, impute_mode, flag, ignore]}   # never drop_column unless listed
+
+quality_score:               # BO4: weights sum to 1
+  weights: {completeness: 0.30, uniqueness: 0.20, validity: 0.20, consistency: 0.20, timeliness: 0.10}
+
+marts:                       # BO1 <-> BO5 contract: columns every KPI SQL may rely on
+  fact_orders: [order_id, customer_unique_id, order_status, order_purchase_timestamp, payment_value, items_value, freight_value,
+                delivery_days, delay_days, is_late, review_score, main_payment_type, payment_installments, customer_state, product_category]

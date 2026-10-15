@@ -1,0 +1,6 @@
+duckdb
+pandas
+pyarrow
+chromadb
+pyyaml
+# contracts are installed separately: pip install ../../contracts

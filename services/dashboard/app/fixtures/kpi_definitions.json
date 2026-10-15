@@ -1,0 +1,54 @@
+[
+  {
+    "id": "revenue",
+    "name": "Revenue",
+    "unit": "BRL",
+    "direction": "higher_is_better",
+    "description": "Total payments received for delivered orders.",
+    "dimensions": [
+      "customer_state"
+    ]
+  },
+  {
+    "id": "orders",
+    "name": "Orders",
+    "unit": "count",
+    "direction": "higher_is_better",
+    "description": "Delivered orders.",
+    "dimensions": [
+      "customer_state"
+    ]
+  },
+  {
+    "id": "aov",
+    "name": "Average order value",
+    "unit": "BRL",
+    "direction": "higher_is_better",
+    "description": "Revenue divided by delivered orders.",
+    "dimensions": []
+  },
+  {
+    "id": "late_rate",
+    "name": "Late-delivery rate",
+    "unit": "ratio",
+    "direction": "lower_is_better",
+    "description": "Share of orders delivered after the estimate.",
+    "dimensions": []
+  },
+  {
+    "id": "avg_review_score",
+    "name": "Average review score",
+    "unit": "score",
+    "direction": "higher_is_better",
+    "description": "Mean review score (1-5).",
+    "dimensions": []
+  },
+  {
+    "id": "avg_delivery_days",
+    "name": "Average delivery time",
+    "unit": "days",
+    "direction": "lower_is_better",
+    "description": "Days from purchase to delivery.",
+    "dimensions": []
+  }
+]

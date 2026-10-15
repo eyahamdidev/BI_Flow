@@ -1,0 +1,20 @@
+# Models are chosen by CONFIG, not code (spec rule 9). Owner: BO1. Benchmark winners are written here at the freeze.
+# Pick a profile with BIFLOW_PROFILE (defaults to LLM_PROVIDER). Per-developer override: LLM_MODEL_MAIN / LLM_MODEL_FAST in .env.
+profiles:
+  ollama:                       # local, free, private. 16 GB RAM comfortable.
+    llm_main: qwen2.5:7b-instruct
+    llm_fast: llama3.2:3b
+    embedder: nomic-embed-text
+  low_ram:                      # local, 8 GB RAM laptops
+    llm_main: llama3.2:3b
+    llm_fast: llama3.2:3b
+    embedder: nomic-embed-text
+  api:                          # any OpenAI-compatible provider. Names below are Groq examples: confirm on day 1.
+    llm_main: llama-3.3-70b-versatile
+    llm_fast: llama-3.1-8b-instant
+    embedder: null              # most chat APIs have no embeddings: use EMBED_PROVIDER=ollama or local
+
+embedder_options:
+  ollama: nomic-embed-text      # or bge-m3
+  local: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2   # in-container, no Ollama needed
+  api: text-embedding-3-small   # only if your provider has /v1/embeddings
