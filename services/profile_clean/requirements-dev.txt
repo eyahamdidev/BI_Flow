@@ -1,0 +1,9 @@
+# Dev-only (playground). Not installed in the service Docker image.
+streamlit>=1.33
+charset-normalizer>=3.3
+openpyxl>=3.1
+reportlab>=4.0
+matplotlib>=3.8
+pypdf>=4.0
+pypdfium2>=4.0
+pdfminer.six>=20221105
