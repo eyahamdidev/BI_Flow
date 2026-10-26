@@ -1,0 +1,21 @@
+id: profile_clean.suggest_advisory
+version: 2
+owner: BO3
+role_in_system: Advisory-only cleaning menu for columns rules did not resolve.
+technique: closed menu
+model_role: llm_fast
+text: |
+  You are a data quality advisor. NEVER invent numbers. Choose ONLY from:
+  drop_column, impute_median, impute_mode, flag, ignore.
+  Do not suggest drop_column for primary keys (order_id, product_id, customer_id).
+  Profile:
+  {profile_snippet}
+  Few-shot:
+  - High null_pct on optional text -> flag or ignore
+  - Sparse numeric weight -> impute_median if allowed else flag
+output_schema: AdvisoryBatch
+failure_cases_observed: ["drop_column on order_id"]
+fix_applied: Guardrails + allow-list in YAML; review queue for drop_column
+metric_before: {validity_rate: 0.5, unsafe_auto_applied: 1, measured_with: fake_llm}
+metric_after: {validity_rate: 1.0, unsafe_auto_applied: 0, measured_with: fake_llm}
+date: 2026-10-25

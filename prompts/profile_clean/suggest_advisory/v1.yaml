@@ -1,0 +1,15 @@
+id: profile_clean.suggest_advisory
+version: 1
+owner: BO3
+role_in_system: Suggest cleaning actions for ambiguous columns (naive baseline).
+technique: structured output
+model_role: llm_fast
+text: |
+  Given the profile snippet, suggest what to do with problematic columns.
+  Return JSON with suggestions array.
+output_schema: AdvisoryBatch
+failure_cases_observed: ["hallucinated drop_column on keys"]
+fix_applied: null
+metric_before: {validity_rate: 0.5, unsafe_suggestions: 1, measured_with: fake_llm}
+metric_after: null
+date: 2026-10-25
