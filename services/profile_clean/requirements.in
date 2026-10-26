@@ -3,4 +3,9 @@ pyarrow
 numpy
 scikit-learn
 scipy
-# contracts are installed separately: pip install ../../contracts
+pyyaml
+httpx
+jsonschema
+ruff
+# contracts: pip install -e ../../contracts
+# optional: ydata-profiling

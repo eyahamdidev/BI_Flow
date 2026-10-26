@@ -67,21 +67,45 @@ relationships:               # BO1 renders staging/join SQL from this block; BO4
   - {from: orders.customer_id,      to: customers.customer_id}
   - {from: products.product_category_name, to: category_translation.product_category_name}
 
-cleaning_rules:              # BO3: rule layer. strategies: drop | constant | median | mode | flag_only
+cleaning_rules:              # BO3: rule layer. strategies: drop | constant | median | mode | flag_only | knn_impute
+  primary_keys:
+    orders: order_id
+    products: product_id
+    order_reviews: review_id
+  rename_columns:
+    products:
+      product_name_lenght: product_name_length
+      product_description_lenght: product_description_length
   parse_dates: [order_purchase_timestamp, order_approved_at, order_delivered_carrier_date, order_delivered_customer_date, order_estimated_delivery_date]
+  trim_strings:
+    customers: [customer_city]
+    sellers: [seller_city]
+    geolocation: [geolocation_city, geolocation_state]
   drop_exact_duplicates: [geolocation, order_reviews]
-  dedupe: {geolocation: {key: geolocation_zip_code_prefix, agg: {geolocation_lat: mean, geolocation_lng: mean}}}
-  category_mapping_fixes: {pc_gamer: pc_gamer, portal_minicursos: portal_minicursos}   # unmatched in the translation table
+  dedupe:
+    geolocation:
+      key: geolocation_zip_code_prefix
+      normalize_city: [geolocation_city]
+      agg: {geolocation_lat: mean, geolocation_lng: mean, geolocation_city: first, geolocation_state: first}
+  category_mapping_fixes:
+    pc_gamer: pc_gamer
+    portateis_cozinha_e_preparadores_de_alimentos: portateis_cozinha_e_preparadores_de_alimentos
+    portal_minicursos: portal_minicursos
   null_strategy:
-    orders.order_delivered_customer_date: flag_only      # undelivered orders: keep, flag
-    order_reviews.review_comment_message: flag_only
-    products.product_weight_g: {strategy: knn_impute, allowed: [median, knn_impute]}
+    orders.order_delivered_customer_date: {strategy: flag_only, flag_column: delivery_missing_flag}
+    order_reviews.review_comment_message: {strategy: flag_only, flag_column: has_comment}
+    products.product_weight_g: {strategy: knn_impute, allowed: [median, knn_impute], imputed_flag: product_weight_g__imputed}
+    products.product_length_cm: {strategy: median, allowed: [median, knn_impute], imputed_flag: product_length_cm__imputed}
     products.product_category_name: {strategy: constant, value: unknown}
   impossible_values:
-    - {table: order_items, column: price, rule: ">= 0", action: flag}
+    - {table: order_items, column: price, rule: ">= 0", action: flag, flag_column: price__invalid}
+    - {table: order_items, column: freight_value, rule: ">= 0", action: flag, flag_column: freight_value__invalid}
     - {table: orders, rule: "order_delivered_customer_date >= order_purchase_timestamp", action: flag}
-  outliers: {method: isolation_forest, columns: [order_items.price, order_items.freight_value, products.product_weight_g], action: flag}
-  llm_advisory: {enabled: true, allowed_actions: [impute_median, impute_mode, flag, ignore]}   # never drop_column unless listed
+  outliers: {method: iqr, columns: [order_items.price, order_items.freight_value, products.product_weight_g], action: flag}
+  llm_advisory:
+    enabled: true
+    prompt_id: profile_clean.suggest_advisory@v2
+    allowed_actions: [impute_median, impute_mode, flag, ignore]
 
 quality_score:               # BO4: weights sum to 1
   weights: {completeness: 0.30, uniqueness: 0.20, validity: 0.20, consistency: 0.20, timeliness: 0.10}
