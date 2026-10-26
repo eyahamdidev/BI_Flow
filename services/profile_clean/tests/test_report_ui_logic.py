@@ -5,7 +5,6 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
-
 from report_pdf import build, has_clean_run
 
 
