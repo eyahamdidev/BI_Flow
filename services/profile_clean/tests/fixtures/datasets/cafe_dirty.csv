@@ -1,0 +1,4 @@
+order_id,amount,status,when
+a1,10.5,OK,2024-01-01
+a2,ERROR,UNKNOWN,bad
+a3,12,OK,15/03/2024

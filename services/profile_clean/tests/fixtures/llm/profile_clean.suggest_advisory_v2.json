@@ -1,0 +1,16 @@
+{
+  "suggestions": [
+    {
+      "table": "products",
+      "column": "product_weight_g",
+      "action": "impute_median",
+      "reason": "Numeric weight nulls are sparse; median is safe."
+    },
+    {
+      "table": "orders",
+      "column": "order_id",
+      "action": "drop_column",
+      "reason": "Adversarial suggestion should not auto-apply."
+    }
+  ]
+}

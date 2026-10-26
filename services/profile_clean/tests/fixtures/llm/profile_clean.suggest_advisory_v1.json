@@ -1,0 +1,10 @@
+{
+  "suggestions": [
+    {
+      "table": "products",
+      "column": "product_weight_g",
+      "action": "ignore",
+      "reason": "v1 naive baseline"
+    }
+  ]
+}
