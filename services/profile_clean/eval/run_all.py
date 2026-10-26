@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 import time
 from pathlib import Path
 
@@ -12,7 +13,6 @@ os.environ.setdefault("FAKE_LLM", "1")
 
 REPO = Path(__file__).resolve().parents[3]
 EVAL_DIR = Path(__file__).resolve().parent
-import sys
 
 sys.path.insert(0, str(EVAL_DIR))
 RESULTS = Path(__file__).parent / "results"
@@ -38,7 +38,7 @@ def _find_mini() -> Path:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fast", action="store_true")
-    args = ap.parse_args()
+    ap.parse_args()
     t0 = time.perf_counter()
     mini = _find_mini()
     if not list(mini.glob("*.parquet")):
@@ -61,10 +61,8 @@ def main() -> None:
             (corrupted / "ground_truth.json").write_text(json.dumps(manifest, indent=2))
 
     from bench_imputation import run as bench_imp
-
-    from bench_outliers import run as bench_out
-
     from bench_llm_advisory import run_benchmark as bench_llm
+    from bench_outliers import run as bench_out
 
     imp = bench_imp(mini if (mini / "products.parquet").exists() else corrupted)
     outl = bench_out(corrupted)

@@ -1,12 +1,11 @@
 """Generate sample PDFs + PNG previews for visual QA."""
 from __future__ import annotations
 
-import io
 import shutil
 import sys
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -19,7 +18,6 @@ OUT = ROOT / "eval" / "report_samples"
 def _pipeline(data_dir: Path, csv_path: Path, table: str, dataset: str) -> tuple[str, float]:
     import os
 
-    import yaml
     from app.handlers import clean, profile
     from biflow_contracts import RunRequest
     from draft_yaml import generate_draft_yaml, yaml_dump
@@ -73,7 +71,7 @@ def _pipeline(data_dir: Path, csv_path: Path, table: str, dataset: str) -> tuple
             options={"stage": "after", "profile_before_path": f"runs/{run_id}/01_profile/profile.json"},
         )
     )
-    fixed = datetime(2026, 10, 26, 9, 0, 0, tzinfo=timezone.utc)
+    fixed = datetime(2026, 10, 26, 9, 0, 0, tzinfo=UTC)
     pdf = build(data_dir, run_id, dataset, now=fixed, tz=ZoneInfo("UTC"))
     elapsed = time.perf_counter() - t0
     return str(pdf), elapsed
@@ -112,7 +110,7 @@ def main() -> None:
         from report_pdf import build
 
         run_id = messy.name
-        pdf = build(REPO / "data", run_id, "04_dirty", now=datetime(2026, 10, 26, 9, 0, 0, tzinfo=timezone.utc))
+        pdf = build(REPO / "data", run_id, "04_dirty", now=datetime(2026, 10, 26, 9, 0, 0, tzinfo=UTC))
         target = OUT / "messy_dirty_csv.pdf"
         shutil.copy2(pdf, target)
         _render_pngs(target, OUT / "messy")

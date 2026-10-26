@@ -7,9 +7,8 @@ import time
 
 os.environ.setdefault("FAKE_LLM", "1")
 
-from pydantic import BaseModel
-
 from biflow_contracts.biflow_llm import chat_json
+from pydantic import BaseModel
 
 
 class ColumnAdvice(BaseModel):
