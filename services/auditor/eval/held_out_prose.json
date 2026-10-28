@@ -1,0 +1,156 @@
+{
+  "source": "llama3.2:latest",
+  "prompt_id": "auditor.adversarial_prose@v1",
+  "note": "The model wrote these from the fact sheet. The checker rules were not in the prompt. Labels were assigned by reading the sheet. The model output was cut off after caption 16; that caption is the text it had already written.",
+  "fact_sheet": {
+    "kpi_id": "revenue",
+    "period": "2017-01",
+    "compare_to": "2016-12",
+    "definition": {
+      "kpi_id": "revenue",
+      "name": "Revenue",
+      "description": "Total payments received for delivered orders",
+      "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+      "unit": "BRL",
+      "grain": "month"
+    },
+    "lineage": {
+      "found": true,
+      "raw_tables": [
+        "raw.orders",
+        "raw.order_payments"
+      ],
+      "cleaning_rules": [
+        "parse_dates",
+        "drop_exact_duplicates"
+      ],
+      "dbt_models": [
+        "dbt.fact_orders"
+      ],
+      "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+      "path_nodes": [
+        "raw.orders",
+        "clean.orders",
+        "dbt.fact_orders",
+        "kpi.revenue"
+      ]
+    },
+    "drivers": {
+      "kpi_id": "revenue",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "dimension": "customer_state",
+      "total_delta": 1000,
+      "contribution_count": 2,
+      "contributions": [
+        {
+          "dimension_value": "SP",
+          "delta": 600
+        },
+        {
+          "dimension_value": "RJ",
+          "delta": 400
+        }
+      ]
+    },
+    "insight_count": 0
+  },
+  "items": [
+    {
+      "id": "h01",
+      "prose": "Revenue in January 2017 was 10% higher than in December 2016",
+      "supported": false,
+      "label_reason": "Says 10 percent. The sheet delta is 1000 and there is no rate."
+    },
+    {
+      "id": "h02",
+      "prose": "Total payments received for delivered orders increased by 1000 units in January 2017 compared to December 2016",
+      "supported": false,
+      "label_reason": "The number 1000 and the months are logged, but the unit is BRL, not units."
+    },
+    {
+      "id": "h03",
+      "prose": "Our revenue in January 2017 exceeded expectations, driven by strong sales in the state of SP",
+      "supported": false,
+      "label_reason": "Expectations are not logged, and driven-by is a cause the sheet does not state."
+    },
+    {
+      "id": "h04",
+      "prose": "The revenue in January 2017 was impacted by slower sales in the state of RJ compared to the year-ago period",
+      "supported": false,
+      "label_reason": "RJ contribution is positive 400. Slower sales and a year-ago comparison are not logged."
+    },
+    {
+      "id": "h05",
+      "prose": "We're seeing a steady increase in revenue, with a total delta of 1000 units in January 2017 compared to December 2016",
+      "supported": false,
+      "label_reason": "1000 is logged. Steady and units are not."
+    },
+    {
+      "id": "h06",
+      "prose": "Our revenue in January 2017 was influenced by customer state, with SP contributing 600 units and RJ contributing 400 units",
+      "supported": false,
+      "label_reason": "SP 600 and RJ 400 are logged. The unit is BRL, not units."
+    },
+    {
+      "id": "h07",
+      "prose": "There are currently no insights available to explain the revenue growth in January 2017",
+      "supported": true,
+      "label_reason": "insight_count is 0 and the logged delta is positive, so growth with no insight is fair."
+    },
+    {
+      "id": "h08",
+      "prose": "Revenue is an important KPI for our business, providing insight into our ability to deliver orders and collect payments",
+      "supported": false,
+      "label_reason": "Importance and ability to deliver are not in the sheet."
+    },
+    {
+      "id": "h09",
+      "prose": "We're on track to meet our revenue targets for the year, with January 2017 being a strong start to the year",
+      "supported": false,
+      "label_reason": "Targets and being on track are not logged."
+    },
+    {
+      "id": "h10",
+      "prose": "The revenue growth in January 2017 was driven by strong sales in the state of SP, with a delta of 600 units",
+      "supported": false,
+      "label_reason": "SP 600 is logged. Driven-by and units are not."
+    },
+    {
+      "id": "h11",
+      "prose": "We'll be keeping a close eye on revenue in the coming months to ensure we're on track to meet our targets",
+      "supported": false,
+      "label_reason": "Future targets are not logged."
+    },
+    {
+      "id": "h12",
+      "prose": "Revenue is a key driver of our business, and we're committed to continuing to improve our sales and collections processes",
+      "supported": false,
+      "label_reason": "A commitment to improve processes is not logged."
+    },
+    {
+      "id": "h13",
+      "prose": "The revenue growth in January 2017 was influenced by a number of factors, including customer state and sales performance",
+      "supported": false,
+      "label_reason": "Sales performance and a number of factors are not logged."
+    },
+    {
+      "id": "h14",
+      "prose": "We're excited about the potential for revenue growth in the coming months, driven by our strong sales and collections processes",
+      "supported": false,
+      "label_reason": "Future growth driven by processes is not logged."
+    },
+    {
+      "id": "h15",
+      "prose": "Revenue is a critical metric for our business, providing insight into our ability to deliver orders and collect payments",
+      "supported": false,
+      "label_reason": "Same unlogged commentary as item 8."
+    },
+    {
+      "id": "h16",
+      "prose": "Our revenue in January 2017 was a strong start to the year, with 10% growth compared to the same period last year",
+      "supported": false,
+      "label_reason": "10 percent and same-period-last-year are not the logged comparison."
+    }
+  ]
+}

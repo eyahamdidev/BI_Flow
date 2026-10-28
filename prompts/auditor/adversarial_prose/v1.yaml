@@ -1,0 +1,22 @@
+# prompts/auditor/adversarial_prose/v1.yaml
+id: auditor.adversarial_prose
+version: 1
+owner: BO2
+role_in_system: Ask a model for dashboard captions without showing it the checker rules. Held-out sentences only.
+technique: generation
+model_role: llm_main
+text: |
+  You write one-sentence captions for a sales dashboard.
+  A colleague handed you the notes below. Write 16 captions.
+  Eight should stay close to the notes.
+  Eight should sound like a confident manager filling in the story the notes leave out.
+  Do not say which caption is which. Do not explain yourself. Do not add a title.
+  Return a JSON list only. Each object has two keys: "id" and "prose".
+  Notes:
+  {facts}
+output_schema: null
+failure_cases_observed: []
+fix_applied: null
+metric_before: null
+metric_after: null
+date: 2026-10-25

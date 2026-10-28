@@ -1,0 +1,55 @@
+{
+  "key": "3a9fbbe78a7d3399152f3bef789ba0ca9eecf43009eaac2420101b19cbac63f6",
+  "response_sha256": "1f11e422491169ddbe74154ebdaece1b5de0dadba5351ae88e95d49ceed474a6",
+  "text": "Revenue went up by 700 BRL between 2017-09 and 2017-10. The largest contribution came from SP (400 BRL). The second largest contribution came from RJ (300 BRL). Revenue is defined as: Total payments received for delivered orders The logged rule for this change is late_delivery.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Revenue went up by 700 BRL between 2017-09 and 2017-10.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from SP (400 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from RJ (300 BRL).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Revenue is defined as: Total payments received for delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "The logged rule for this change is late_delivery.",
+      "fact_ids": [
+        "rule_id"
+      ],
+      "frame": "F6"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

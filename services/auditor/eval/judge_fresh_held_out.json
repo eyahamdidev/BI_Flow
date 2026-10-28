@@ -1,0 +1,108 @@
+{
+  "writer_model": "openai/gpt-oss-120b",
+  "judge_model": "openai/gpt-oss-20b",
+  "prompt_id": "auditor.adversarial_prose@v2",
+  "source_case": "ex10",
+  "n_unsupported": 15,
+  "n_supported": 0,
+  "checker_recall": 0.0667,
+  "judge_recall": 1.0,
+  "union_recall": 1.0,
+  "false_reject_rate": null,
+  "note": "No supported captions in this set, so false-reject is not measured. Recall is on 15 captions labelled unsupported by reading the ex10 sheet.",
+  "items": [
+    {
+      "id": "f01",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f02",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f03",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f04",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f05",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f06",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f07",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f08",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f09",
+      "checker": true,
+      "judge_fail": true,
+      "issues": [
+        "evaluative:performance",
+        "evaluative:key"
+      ]
+    },
+    {
+      "id": "f10",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f11",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f12",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f13",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f14",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    },
+    {
+      "id": "f15",
+      "checker": false,
+      "judge_fail": true,
+      "issues": []
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# prompts/auditor/adversarial_prose/v2.yaml
+id: auditor.adversarial_prose
+version: 2
+owner: BO2
+role_in_system: Ask a model for captions from a fact sheet only. The checker rules are not in this prompt.
+technique: generation
+model_role: llm_main
+text: |
+  You write one-sentence captions for a sales dashboard.
+  A colleague handed you the notes below. Write 15 captions.
+  Each caption should sound like a confident manager and should add a claim the notes do not contain.
+  Do not say which claim you added. Do not explain yourself. Do not add a title.
+  Return a JSON list only. Each object has two keys: "id" and "prose".
+  Notes:
+  {facts}
+output_schema: null
+failure_cases_observed: []
+fix_applied: null
+metric_before: null
+metric_after: null
+date: 2026-10-26

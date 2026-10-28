@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biflow.local/schemas/lineage_graph.json",
+  "title": "LineageGraph",
+  "description": "Streamlit-ready lineage graph agreed with the dashboard. Required node fields are id, label, and layer (0 raw, 1 clean, 2 dbt, 3 KPI, 4 insight). Required edge fields are from, to, and step. Extra metadata and the pyvis block are safe to ignore.",
+  "type": "object",
+  "required": ["nodes", "edges", "pyvis"],
+  "additionalProperties": false,
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "layer", "kind", "metadata"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "label": {"type": "string"},
+          "layer": {"type": "integer", "minimum": 0, "maximum": 4},
+          "kind": {"enum": ["dataset", "model", "kpi", "insight"]},
+          "metadata": {"type": "object"}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "step"],
+        "additionalProperties": false,
+        "properties": {
+          "from": {"type": "string"},
+          "to": {"type": "string"},
+          "step": {"type": "string"},
+          "rule": {"type": "string"},
+          "method": {"enum": ["deterministic", "ml", "llm_assisted"]},
+          "agent": {"type": "string"},
+          "rows_in": {"type": "integer"},
+          "rows_out": {"type": "integer"},
+          "sql": {"type": "string"},
+          "step_name": {"type": "string"}
+        }
+      }
+    },
+    "pyvis": {
+      "type": "object",
+      "required": ["nodes", "edges"],
+      "additionalProperties": false,
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "label", "title", "level", "group"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "label": {"type": "string"},
+              "title": {"type": "string"},
+              "level": {"type": "integer"},
+              "group": {"type": "string"}
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to", "title"],
+            "additionalProperties": false,
+            "properties": {
+              "from": {"type": "string"},
+              "to": {"type": "string"},
+              "title": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

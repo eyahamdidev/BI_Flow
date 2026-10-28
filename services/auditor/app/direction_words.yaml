@@ -1,0 +1,68 @@
+# Direction words and causal connectives for the auditor checker.
+# Extend this file. Do not add the stems "drop" or "lower": the checker splits
+# snake_case on underscores, so drop_exact_duplicates would look like a decrease.
+up:
+  - increased
+  - increase
+  - increasing
+  - rose
+  - risen
+  - rising
+  - rise
+  - grew
+  - grown
+  - growing
+  - grow
+  - gained
+  - gain
+  - higher
+  - climbed
+  - climbing
+  - climb
+  - up
+  - augmenté
+  - augmentee
+  - hausse
+  - monté
+  - monte
+  - grimpé
+down:
+  - decreased
+  - decrease
+  - decreasing
+  - fell
+  - fallen
+  - falling
+  - fall
+  - dropped
+  - dropping
+  - declined
+  - decline
+  - declining
+  - shrank
+  - shrunk
+  - down
+  - baisse
+  - baissé
+  - diminué
+  - diminue
+up_phrases:
+  - went up
+  - gone up
+  - en hausse
+down_phrases:
+  - went down
+  - gone down
+  - en baisse
+# A causal connective is rejected unless one of these fields holds a value that the sentence quotes.
+cause_connectives:
+  - because
+  - caused by
+  - due to
+  - thanks to
+  - driven by
+  - the reason is
+cause_fields:
+  - cause
+  - causes
+  - rule_id

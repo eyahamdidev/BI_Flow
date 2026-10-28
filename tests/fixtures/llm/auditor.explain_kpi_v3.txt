@@ -1,0 +1,1 @@
+The value comes from the logged definition for the requested period. The path from the raw tables to the KPI is the one stored in the fact sheet. The driver split is the logged decomposition. No figure was added beyond that sheet.

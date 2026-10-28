@@ -1,0 +1,109 @@
+{
+  "judge_model": "openai/gpt-oss-20b",
+  "writer_model": "llama3.2:latest",
+  "writer_note": "Held-out captions were written by llama3.2. The judge is a different Groq model.",
+  "n_unsupported": 15,
+  "n_supported": 1,
+  "recall": 0.6667,
+  "checker_recall": 0.7333,
+  "union_recall": 0.8667,
+  "union_false_reject_rate": 0.0,
+  "items": [
+    {
+      "id": "h01",
+      "checker": true,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h02",
+      "checker": false,
+      "judge_fail": false,
+      "supported": false
+    },
+    {
+      "id": "h03",
+      "checker": true,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h04",
+      "checker": false,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h05",
+      "checker": true,
+      "judge_fail": false,
+      "supported": false
+    },
+    {
+      "id": "h06",
+      "checker": false,
+      "judge_fail": false,
+      "supported": false
+    },
+    {
+      "id": "h08",
+      "checker": true,
+      "judge_fail": false,
+      "supported": false
+    },
+    {
+      "id": "h09",
+      "checker": true,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h10",
+      "checker": true,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h11",
+      "checker": false,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h12",
+      "checker": true,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h13",
+      "checker": true,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h14",
+      "checker": true,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h15",
+      "checker": true,
+      "judge_fail": false,
+      "supported": false
+    },
+    {
+      "id": "h16",
+      "checker": true,
+      "judge_fail": true,
+      "supported": false
+    },
+    {
+      "id": "h07",
+      "checker_reject": false,
+      "judge_fail": false,
+      "supported": true
+    }
+  ]
+}

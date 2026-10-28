@@ -1,0 +1,105 @@
+concurrency 1 min_interval_s 8 model openai/gpt-oss-120b
+120b-run-1 ex01 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex02 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex03 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex04 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex05 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex06 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex07 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex08 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex09 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex10 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex11 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex12 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex13 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex14 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex15 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex16 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex17 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex18 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex19 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 ex20 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-1 http_429 0
+120b-run-1 rates {'n': 20, 'dropped': 0, 'first_try_pass_rate': 1.0, 'fallback_rate': 0.0}
+120b-run-2 ex01 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex02 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex03 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex04 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex05 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex06 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex07 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex08 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex09 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex10 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex11 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex12 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex13 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex14 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex15 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex16 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex17 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex18 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex19 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 ex20 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-2 http_429 0
+120b-run-2 rates {'n': 20, 'dropped': 0, 'first_try_pass_rate': 1.0, 'fallback_rate': 0.0}
+120b-run-3 ex01 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex02 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex03 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex04 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex05 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex06 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex07 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex08 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex09 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex10 llm first_try=True frames=F1,F2,F3,F4 cause=None
+120b-run-3 ex11 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex12 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex13 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex14 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex15 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex16 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex17 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex18 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex19 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 ex20 llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+120b-run-3 http_429 0
+120b-run-3 rates {'n': 20, 'dropped': 0, 'first_try_pass_rate': 1.0, 'fallback_rate': 0.0}
+gate_strict passed=True
+gate_without_429_or_timeout passed=True
+identical_frame_sets 19 of 20
+synthetic syn01_decrease llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+synthetic syn02_flat llm first_try=True frames=F1,F2,F3,F4 cause=None
+synthetic syn03_one_driver llm first_try=True frames=F1,F2,F4,F5 cause=None
+synthetic syn04_three_drivers llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+synthetic syn05_rule llm first_try=True frames=F1,F2,F3,F4,F6 cause=None
+synthetic syn06_caveat llm first_try=True frames=F1,F2,F3,F4,F7 cause=None
+synthetic syn07_both llm first_try=True frames=F1,F2,F3,F4,F6 cause=None
+synthetic syn08_no_lineage llm first_try=True frames=F1,F2,F3,F4 cause=None
+synthetic syn09_empty abstain first_try=None frames= cause=None
+synthetic syn10_decrease_fr llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+synthetic syn11_flat_fr llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+synthetic syn12_rule_fr llm first_try=True frames=F1,F2,F3,F4,F6 cause=None
+synthetic syn13_caveat_fr llm first_try=True frames=F1,F2,F3 cause=None
+synthetic syn14_three_fr llm first_try=True frames=F1,F2,F3,F4,F5 cause=None
+synthetic syn15_both_fr llm first_try=True frames=F1,F2,F3,F4,F6 cause=None
+synthetic http_429 0
+synthetic rates {'n': 15, 'dropped': 0, 'first_try_pass_rate': 0.9333, 'fallback_rate': 0.0}
+synthetic table
+syn01_decrease | offered=F1,F2,F3,F4,F5 | chosen=F1,F2,F3,F4,F5 | first_try=True | source=llm | cause=None | direction=True | safety=True | 429=0
+syn02_flat | offered=F1,F2,F3,F4,F5 | chosen=F1,F2,F3,F4 | first_try=True | source=llm | cause=None | direction=True | safety=True | 429=0
+syn03_one_driver | offered=F1,F2,F4,F5 | chosen=F1,F2,F4,F5 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn04_three_drivers | offered=F1,F2,F3,F4,F5 | chosen=F1,F2,F3,F4,F5 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn05_rule | offered=F1,F2,F3,F4,F5,F6 | chosen=F1,F2,F3,F4,F6 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn06_caveat | offered=F1,F2,F3,F4,F5,F7 | chosen=F1,F2,F3,F4,F7 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn07_both | offered=F1,F2,F3,F4,F5,F6,F7 | chosen=F1,F2,F3,F4,F6 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn08_no_lineage | offered=F1,F2,F3,F4 | chosen=F1,F2,F3,F4 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn09_empty | offered=- | chosen=- | first_try=None | source=abstain | cause=None | direction=None | safety=True | 429=0
+syn10_decrease_fr | offered=F1,F2,F3,F4,F5 | chosen=F1,F2,F3,F4,F5 | first_try=True | source=llm | cause=None | direction=True | safety=True | 429=0
+syn11_flat_fr | offered=F1,F2,F3,F4,F5 | chosen=F1,F2,F3,F4,F5 | first_try=True | source=llm | cause=None | direction=True | safety=True | 429=0
+syn12_rule_fr | offered=F1,F2,F3,F4,F5,F6 | chosen=F1,F2,F3,F4,F6 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn13_caveat_fr | offered=F1,F2,F3,F4,F5,F7 | chosen=F1,F2,F3 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn14_three_fr | offered=F1,F2,F3,F4,F5 | chosen=F1,F2,F3,F4,F5 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+syn15_both_fr | offered=F1,F2,F3,F4,F5,F6,F7 | chosen=F1,F2,F3,F4,F6 | first_try=True | source=llm | cause=None | direction=None | safety=True | 429=0
+store_imported 34
+gate api_default v7

@@ -1,0 +1,48 @@
+{
+  "key": "7cba89c94e0889d241024fb63ca9dddc6213d9e9d50688b63b0e956fddb765e3",
+  "response_sha256": "f567dedd5832311fde27b1376294efc8e08950066ae6f72de135c84f4b3e92a4",
+  "text": "AOV went up by 250 BRL between 2017-05 and 2017-06. The largest contribution came from MG (250 BRL). AOV is defined as: Average payment value of delivered orders The figure comes from raw.order_payments; the logged cleaning steps are drop_exact_duplicates.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "AOV went up by 250 BRL between 2017-05 and 2017-06.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from MG (250 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "AOV is defined as: Average payment value of delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "The figure comes from raw.order_payments; the logged cleaning steps are drop_exact_duplicates.",
+      "fact_ids": [
+        "lineage.raw_tables",
+        "lineage.cleaning_rules"
+      ],
+      "frame": "F5"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

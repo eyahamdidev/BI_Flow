@@ -1,0 +1,56 @@
+# Evaluative words. A sentence that uses one of these outside an id placeholder
+# is commentary, not a logged fact. Match on word boundaries.
+en:
+  - important
+  - critical
+  - key
+  - steady
+  - strong
+  - weak
+  - healthy
+  - concerning
+  - ability
+  - performance
+fr:
+  - important
+  - importante
+  - importants
+  - importantes
+  - critique
+  - critiques
+  - clé
+  - cle
+  - clés
+  - cles
+  - stable
+  - constant
+  - constante
+  - constants
+  - régulier
+  - regulier
+  - régulière
+  - reguliere
+  - fort
+  - forte
+  - forts
+  - fortes
+  - faible
+  - faibles
+  - sain
+  - saine
+  - sains
+  - saines
+  - préoccupant
+  - preoccupant
+  - préoccupante
+  - preoccupante
+  - inquiétant
+  - inquietant
+  - inquiétante
+  - inquietante
+  - capacité
+  - capacite
+  - capacités
+  - capacites
+  - performance
+  - performances

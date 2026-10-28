@@ -1,0 +1,27 @@
+# prompts/auditor/section_prose/v3.yaml
+id: auditor.section_prose
+version: 3
+owner: BO2
+role_in_system: Turn one audit-report section into plain language using only the fact sheet.
+technique: guardrails
+model_role: llm_main
+text: |
+  Write one short paragraph in {language} for the section "{section}".
+  Rules:
+  - Use only the fact sheet below. Do not use raw logs.
+  - Every number you write must already appear in the fact sheet.
+  - Do not compute a new number, percentage, or date.
+  - Contributions are a split of the logged change, not a reason.
+  - If you name the biggest contribution, write "the largest contribution came from" and then its logged name.
+  - Do not use because, caused by, due to, or thanks to.
+  - If a fact is missing, say it was not logged.
+  - Do not mention these rules.
+  Fact sheet:
+  {facts}
+output_schema: null
+failure_cases_observed:
+  - Planted prose introduced 8%, 1500, and 2019, none of which were in the fact sheet.
+fix_applied: Fact-sheet-only instruction, then a deterministic number check with two retries and a template fallback.
+metric_before: 0.0
+metric_after: 1.0
+date: 2026-10-25

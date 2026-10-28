@@ -1,0 +1,129 @@
+{
+  "judge_model": "openai/gpt-oss-20b",
+  "n": 30,
+  "false_rejects": 2,
+  "false_reject_rate": 0.0667,
+  "note": "These 30 sentences are author-written and supported. A FAIL is a false reject. This is not the held-out recall.",
+  "items": [
+    {
+      "id": "v01",
+      "judge_fail": false
+    },
+    {
+      "id": "v02",
+      "judge_fail": false
+    },
+    {
+      "id": "v03",
+      "judge_fail": false
+    },
+    {
+      "id": "v04",
+      "judge_fail": false
+    },
+    {
+      "id": "v05",
+      "judge_fail": false
+    },
+    {
+      "id": "v06",
+      "judge_fail": false
+    },
+    {
+      "id": "v07",
+      "judge_fail": false
+    },
+    {
+      "id": "v08",
+      "judge_fail": false
+    },
+    {
+      "id": "v09",
+      "judge_fail": false
+    },
+    {
+      "id": "v10",
+      "judge_fail": false
+    },
+    {
+      "id": "v11",
+      "judge_fail": false
+    },
+    {
+      "id": "v12",
+      "judge_fail": false
+    },
+    {
+      "id": "v13",
+      "judge_fail": false
+    },
+    {
+      "id": "v14",
+      "judge_fail": false
+    },
+    {
+      "id": "v15",
+      "judge_fail": false
+    },
+    {
+      "id": "v16",
+      "judge_fail": false
+    },
+    {
+      "id": "v17",
+      "judge_fail": false
+    },
+    {
+      "id": "v18",
+      "judge_fail": false
+    },
+    {
+      "id": "v19",
+      "judge_fail": false
+    },
+    {
+      "id": "v20",
+      "judge_fail": false
+    },
+    {
+      "id": "v21",
+      "judge_fail": false
+    },
+    {
+      "id": "v22",
+      "judge_fail": false
+    },
+    {
+      "id": "v23",
+      "judge_fail": false
+    },
+    {
+      "id": "v24",
+      "judge_fail": false
+    },
+    {
+      "id": "v25",
+      "judge_fail": false
+    },
+    {
+      "id": "v26",
+      "judge_fail": false
+    },
+    {
+      "id": "v27",
+      "judge_fail": false
+    },
+    {
+      "id": "v28",
+      "judge_fail": false
+    },
+    {
+      "id": "v29",
+      "judge_fail": true
+    },
+    {
+      "id": "v30",
+      "judge_fail": true
+    }
+  ]
+}

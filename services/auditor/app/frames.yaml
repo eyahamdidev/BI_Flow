@@ -1,0 +1,39 @@
+# Sentence frames for explain v7. The model picks names. Code fills the brackets.
+# F5 uses lineage.cleaning_rules. The fact sheet does not have lineage.cleaning_steps.
+# F4 also needs kpi.name, because the sentence contains that bracket.
+frames:
+  F1:
+    meaning: State the KPI, the direction, the size of the change, and the two periods.
+    requires: [kpi.name, drivers.direction, drivers.total_delta, period.compare, period.current]
+    text_en: "[kpi.name] [drivers.direction] by [drivers.total_delta] between [period.compare] and [period.current]."
+    text_fr: "[kpi.name] a [drivers.direction] de [drivers.total_delta] entre [period.compare] et [period.current]."
+  F2:
+    meaning: Name the largest logged contribution and its amount.
+    requires: [drivers.top1.label, drivers.top1.delta]
+    text_en: "The largest contribution came from [drivers.top1.label] ([drivers.top1.delta])."
+    text_fr: "La plus grande contribution vient de [drivers.top1.label] ([drivers.top1.delta])."
+  F3:
+    meaning: Name the second largest logged contribution and its amount.
+    requires: [drivers.top2.label, drivers.top2.delta]
+    text_en: "The second largest contribution came from [drivers.top2.label] ([drivers.top2.delta])."
+    text_fr: "La deuxième plus grande contribution vient de [drivers.top2.label] ([drivers.top2.delta])."
+  F4:
+    meaning: Give the logged definition of the KPI.
+    requires: [kpi.name, definition.description]
+    text_en: "[kpi.name] is defined as: [definition.description]"
+    text_fr: "[kpi.name] est défini comme : [definition.description]"
+  F5:
+    meaning: Name the logged source tables and the logged cleaning steps.
+    requires: [lineage.raw_tables, lineage.cleaning_rules]
+    text_en: "The figure comes from [lineage.raw_tables]; the logged cleaning steps are [lineage.cleaning_rules]."
+    text_fr: "Le chiffre provient de [lineage.raw_tables] ; les étapes de nettoyage enregistrées sont [lineage.cleaning_rules]."
+  F6:
+    meaning: Quote the logged rule id. This is not a cause unless the sheet says so.
+    requires: [rule_id]
+    text_en: "The logged rule for this change is [rule_id]."
+    text_fr: "La règle enregistrée pour ce changement est [rule_id]."
+  F7:
+    meaning: Quote the caveat that was logged on the KPI definition.
+    requires: [definition.caveats]
+    text_en: "Caveat on record: [definition.caveats]"
+    text_fr: "Réserve enregistrée : [definition.caveats]"

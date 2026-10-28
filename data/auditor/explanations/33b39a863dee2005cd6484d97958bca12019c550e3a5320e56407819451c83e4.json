@@ -1,0 +1,40 @@
+{
+  "key": "33b39a863dee2005cd6484d97958bca12019c550e3a5320e56407819451c83e4",
+  "response_sha256": "0bb2568dc6f8152356c933a0174eeb9cb08eaaca686e7847860a946846778ddd",
+  "text": "Review score a en hausse de 2 points entre 2017-08 et 2017-09. La plus grande contribution vient de SP (2 points). La deuxième plus grande contribution vient de MG (0 points).",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Review score a en hausse de 2 points entre 2017-08 et 2017-09.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "La plus grande contribution vient de SP (2 points).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "La deuxième plus grande contribution vient de MG (0 points).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

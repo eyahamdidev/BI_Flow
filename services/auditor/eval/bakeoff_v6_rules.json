@@ -1,0 +1,174 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "prompt_id": "auditor.explain_kpi@v6",
+  "temperature": 0,
+  "seed": 7,
+  "reasoning_effort": "low",
+  "n": 20,
+  "first_try_pass_rate": 1.0,
+  "pass_after_retry_rate": 0.0,
+  "fallback_rate": 0.0,
+  "unsupported_statement_rate": 0.0,
+  "rows": [
+    {
+      "id": "ex01",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The indicator Revenue shows the logged change went up by 1000 BRL. The largest contribution came from SP. Another notable factor is RJ."
+    },
+    {
+      "id": "ex02",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The indicator Revenue shows the logged change went up by 2000 BRL. The largest contribution came from MG. Overall the metric reflects 2017-06 compared with 2017-05."
+    },
+    {
+      "id": "ex03",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Revenue shows the logged change for the period. The overall shift is went up by 3000 BRL. The largest contribution came from PR and the next impact is from RS."
+    },
+    {
+      "id": "ex04",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Revenue refers to the recent month. The logged change is went up by 4000 BRL. The largest contribution came from SC and affected the overall result."
+    },
+    {
+      "id": "ex05",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The indicator Orders shows the logged change went up by 5000 count. The largest contribution came from SP with 3000 count. Additional impact is noted from RJ with 2000 count."
+    },
+    {
+      "id": "ex06",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The indicator Orders shows the logged change went up by 6000 count. The largest contribution came from MG with a notable impact. Additional factors include BA influencing the overall shift."
+    },
+    {
+      "id": "ex07",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The indicator Orders shows a logged change went up by 7000 count. The largest contribution came from PR with 4200 count. Another notable contribution is from RS with 2800 count."
+    },
+    {
+      "id": "ex08",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The indicator Orders shows the logged change went up by 8000 count. The largest contribution came from SC with 4800 count. Additional impact is noted from ES with 3200 count."
+    },
+    {
+      "id": "ex09",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Average order value shows the logged change went up by 9000 BRL. The largest contribution came from SP and affected the overall result. Additional impact is noted from RJ with its share."
+    },
+    {
+      "id": "ex10",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Average order value shows the logged change went up by 10000 BRL. The largest contribution came from MG and it affected the overall result. Additional impact is seen from BA with its share of the change."
+    },
+    {
+      "id": "ex11",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Average order value shows the logged change went up by 11000 BRL. The largest contribution came from PR and impacted the overall result. Additional influence is noted from RS with its share."
+    },
+    {
+      "id": "ex12",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Average order value shows the period analysis. The logged change was went up by 12000 BRL. The largest contribution came from SC."
+    },
+    {
+      "id": "ex13",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Late-delivery rate shows the logged change for the period. The overall shift is went up by 13000 ratio. The largest contribution came from SP."
+    },
+    {
+      "id": "ex14",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Late-delivery rate shows the logged change went up by 14000 ratio. The largest contribution came from MG and affected the overall result. Additional factors include BA and 5600 ratio influencing the shift."
+    },
+    {
+      "id": "ex15",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Late-delivery rate shows the logged change for the period. The overall shift is went up by 15000 ratio. The largest contribution came from PR and other factors followed."
+    },
+    {
+      "id": "ex16",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Late-delivery rate shows the logged change went up by 16000 ratio. The largest contribution came from SC and affected the overall result. Additional impact is reflected in 2018-03 compared with 2018-02."
+    },
+    {
+      "id": "ex17",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Average review score reflects the period under review. The logged change is went up by 17000 score. The largest contribution came from SP."
+    },
+    {
+      "id": "ex18",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Average review score summarizes the period under review. The logged change was went up by 18000 score. The largest contribution came from MG."
+    },
+    {
+      "id": "ex19",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Average review score reflects the logged change went up by 19000 score. The largest contribution came from PR in this change. Additional context is provided by comparing 2017-11 with 2017-10."
+    },
+    {
+      "id": "ex20",
+      "source": "llm",
+      "first_try_pass": true,
+      "attempts": 1,
+      "unsupported": false,
+      "answer": "The metric Average review score reflects the period 2018-03 versus 2018-02. The logged change was went up by 20000 score. The largest contribution came from SC with 12000 score."
+    }
+  ]
+}

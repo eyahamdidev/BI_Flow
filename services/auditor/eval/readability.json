@@ -1,0 +1,37 @@
+{
+  "scale": "1-5 clarity for a non-technical reader, where 5 is clearest",
+  "reviewers": 5,
+  "instructions": "Five reviewers each score the explain answers. Leave scores empty until that review is done.",
+  "scores": [],
+  "pilot": {
+    "reviewers_completed": 1,
+    "reviewers_expected": 5,
+    "note": "One reader scored the 20 published v4 answers for clarity. This is not the five-person panel, so scores stays empty and the official mean stays null.",
+    "scale": "1-5, 5 is clearest to a non-technical reader",
+    "case_scores": [
+      4,
+      4,
+      4,
+      3,
+      3,
+      3,
+      3,
+      2,
+      3,
+      2,
+      2,
+      2,
+      4,
+      4,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "mean": 3.05
+  },
+  "form_scores": [],
+  "form_arm": "groq-120b-v6"
+}

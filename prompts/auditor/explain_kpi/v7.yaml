@@ -1,0 +1,36 @@
+# prompts/auditor/explain_kpi/v7.yaml
+id: auditor.explain_kpi
+version: 7
+owner: BO2
+role_in_system: Explain one KPI. The model selects sentence frames. Code writes every word.
+technique: frame-menu
+model_role: llm_main
+engine: jinja2
+text: |
+  You select sentence frames for "{{ section }}" in {{ language }}.
+  You do not write the explanation. Code writes every word from the frame you name.
+  Offered frames for this request:
+  {{ fields }}
+  Rules:
+  - Return one JSON object and no other text. No markdown.
+  - Use 3 to 5 frame names. If fewer than 3 frames are offered, return every offered name and no others.
+  - Put F1 first when it is offered.
+  - Do not repeat a name.
+  - Use only names from the offered list above.
+  - If F1, F2, F3, or F6 is offered, include that name. These four are mandatory when offered.
+  - If the offered list is empty, return {"abstain": true}.
+  The examples below show the JSON shape only. Their names are not an offered list.
+  {% raw %}
+  Example in English, when F1, F2 and F3 are offered:
+  {"frames":["F1","F2","F3"]}
+  Example in French, when F1, F2 and F3 are offered:
+  {"frames":["F1","F2","F3"]}
+  Example when nothing is offered:
+  {"abstain": true}
+  {% endraw %}
+output_schema: null
+failure_cases_observed: []
+fix_applied: The model returns frame names. Code renders the fixed sentence and fills the logged values.
+metric_before: "openai/gpt-oss-120b v6 first-try 1.00, fallback 0.00, on 20 explain cases"
+metric_after: "Required frames F1 F2 F3 F6 when offered. Three paced cold 120B runs, n=20: first-try 1.00, fallback 0.00, HTTP 429 count 0. Identical frame sets 19 of 20 (ex10 dropped F5 on run 3). F6 selected on 4 of 4 synthetic sheets where it was offered."
+date: 2026-10-26

@@ -1,0 +1,56 @@
+{
+  "key": "7c7a20fe1043b949564de3843d1291208425f4fcd964c789ad5789f17958a01a",
+  "response_sha256": "7d6ccba3c4e9519bda86b66543ba00fd29522636c98a2217c2c34bd6d22b1ec0",
+  "text": "Average review score went up by 17000 score between 2016-12 and 2017-01. The largest contribution came from SP (10200 score). The second largest contribution came from RJ (6800 score). Average review score is defined as: Mean review score The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Average review score went up by 17000 score between 2016-12 and 2017-01.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from SP (10200 score).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from RJ (6800 score).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Average review score is defined as: Mean review score",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+      "fact_ids": [
+        "lineage.raw_tables",
+        "lineage.cleaning_rules"
+      ],
+      "frame": "F5"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}
