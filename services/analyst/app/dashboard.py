@@ -18,18 +18,23 @@ from .insights import _event, data_dir, find_input
 
 def dashboard_config(req: Any) -> dict[str, Any]:
     t0 = time.perf_counter()
-    vp, dp, ip = (find_input(req.inputs, n) for n in ("kpi_values", "kpi_definitions", "insights"))
+    vp, dp, ip, rp = (find_input(req.inputs, n) for n in ("kpi_values", "kpi_definitions", "insights", "drivers"))
     if not vp or not vp.exists() or not dp or not dp.exists():
         return {"status": "error", "error": {"code": "BAD_INPUT", "message": "missing inputs kpi_values / kpi_definitions"}}
     values = pd.read_parquet(vp)
     defs = json.loads(dp.read_text(encoding="utf-8"))
     insights = json.loads(ip.read_text(encoding="utf-8")) if ip and ip.exists() else []
+    # same complete months as the analysis (analyst writes them in drivers.json), so tiles and insights agree
+    incomplete = (json.loads(rp.read_text(encoding="utf-8")).get("incomplete_periods") or {}) if rp and rp.exists() else {}
 
     tiles, charts = [], []
     for d in defs:
         kv = values[values.kpi_id == d["id"]]
         total = kv[kv.dimension == "total"]
-        good = A.complete_periods(total)
+        if d["id"] in incomplete:
+            good = sorted(set(total.period) - set(incomplete[d["id"]]))
+        else:
+            good = A.complete_periods(total)
         s = total.set_index("period")["value"].reindex(good).dropna()
         if s.empty:
             continue

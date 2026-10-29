@@ -8,6 +8,10 @@ same sheet can be rendered in English and in French.
 
 from __future__ import annotations
 
+# Bump when the code that ranks drivers / fills frames changes: a published answer is only reused if it was produced
+# by the same logic (v2: contributions ranked in the direction of the change, absolute delta after the direction word).
+EXPLAIN_LOGIC_VERSION = 2
+
 import hashlib
 import json
 from typing import Any
@@ -33,6 +37,7 @@ def explanation_key(
             "prompt_version": prompt_version,
             "model": model,
             "lang": lang or "en",
+            "logic_version": EXPLAIN_LOGIC_VERSION,
         },
         sort_keys=True,
         ensure_ascii=False,

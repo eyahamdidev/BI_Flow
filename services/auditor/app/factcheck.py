@@ -208,6 +208,18 @@ def _contributions(fact_sheet: Any) -> list[dict[str, Any]]:
     return [row for row in rows if isinstance(row, dict) and row.get("dimension_value") is not None]
 
 
+def leading_contributions(fact_sheet: Any) -> list[dict[str, Any]]:
+    """Contributions ranked by how much they pushed IN THE DIRECTION of the total change: when the KPI fell, the
+    most negative segment is the largest contributor (integration on real Olist data: a +6527 segment was named
+    "largest contribution" to a -42490 drop). The analyst's explicit "(unexplained)" row is not a segment."""
+    rows = [r for r in _contributions(fact_sheet) if isinstance(r.get("delta"), (int, float)) and not isinstance(r.get("delta"), bool)
+            and str(r.get("dimension_value")) != "(unexplained)"]
+    drivers = fact_sheet.get("drivers") if isinstance(fact_sheet, dict) else None
+    total = (drivers if isinstance(drivers, dict) else fact_sheet or {}).get("total_delta") if isinstance(fact_sheet, dict) else None
+    sign = -1.0 if isinstance(total, (int, float)) and not isinstance(total, bool) and total < 0 else 1.0
+    return [r for _k, _i, r in sorted(((sign * float(r["delta"]), -i, r) for i, r in enumerate(rows)), key=lambda t: (t[0], t[1]), reverse=True)]
+
+
 def _direction_claim(word: str, negated: set[str]) -> str | None:
     if word in negated:
         if word in _UP:
@@ -250,10 +262,8 @@ def _direction_issues(prose: str, fact_sheet: Any) -> list[str]:
 
 def _ranking_issues(prose: str, fact_sheet: Any) -> list[str]:
     issues: list[str] = []
-    rows = _contributions(fact_sheet)
-    scored = [(float(row["delta"]), str(row["dimension_value"])) for row in rows if isinstance(row.get("delta"), (int, float)) and not isinstance(row.get("delta"), bool)]
-    best = max((delta for delta, _name in scored), default=None)
-    winners = {name for delta, name in scored if delta == best} if best is not None else set()
+    ranked = leading_contributions(fact_sheet)
+    winners = {str(ranked[0]["dimension_value"])} | {str(r["dimension_value"]) for r in ranked[1:] if r["delta"] == ranked[0]["delta"]} if ranked else set()
     for match in _RANK.finditer(prose or ""):
         prefix = (prose or "")[max(0, match.start() - 12) : match.start()].lower()
         if prefix.endswith(("second ", "third ", "deuxième ", "deuxieme ")):

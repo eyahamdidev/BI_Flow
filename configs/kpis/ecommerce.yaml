@@ -100,3 +100,4 @@
   dimensions: []
   synonyms: [churn (inverse), retention, repeat customers]
   caveats: "Cohort metric; recent cohorts have a shorter observation window."
+  observation_window_months: 6   # the last 6 cohorts cannot be complete yet: excluded from trends/anomalies

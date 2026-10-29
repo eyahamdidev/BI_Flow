@@ -1,0 +1,55 @@
+# Second dataset (BO5 "scale across sectors"): urban mobility, UCI Bike Sharing (Capital Bikeshare, Washington DC),
+# daily rentals 2011-2012, via the public Microsoft ml-basics mirror (data/raw/bike_share/daily-bike-share.csv).
+# Onboarded with CONFIG ONLY: this file + configs/marts/mobility + configs/kpis/mobility.yaml +
+# configs/recommendations/mobility.yaml. No Python change under services/.
+name: bike_share
+domain: mobility
+kpi_file: configs/kpis/mobility.yaml
+recommendations_file: configs/recommendations/mobility.yaml
+
+source:
+  type: csv
+  path: data/raw/bike_share
+  tables:
+    rentals: daily-bike-share.csv
+
+expected_schema:
+  rentals:
+    instant: int
+    dteday: datetime            # "1/1/2011" in the file: parsed by the cleaner (raw check = convertible)
+    season: int                 # 1 winter, 2 spring, 3 summer, 4 fall (UCI codebook)
+    yr: int
+    mnth: int
+    holiday: int
+    weekday: int
+    workingday: int
+    weathersit: int             # 1 clear, 2 mist/cloudy, 3 light rain/snow, 4 heavy rain/snow
+    temp: float                 # normalised: temperature / 41 C
+    atemp: float
+    hum: float                  # normalised: humidity / 100
+    windspeed: float            # normalised: wind speed / 67
+    rentals: int                # CASUAL riders only in this mirror (UCI `casual`), not the total `cnt`
+
+relationships: []
+
+cleaning_rules:
+  primary_keys:
+    rentals: instant
+  parse_dates: [dteday]
+  drop_exact_duplicates: [rentals]
+  impossible_values:
+    - {table: rentals, column: rentals, rule: ">= 0", action: flag, flag_column: rentals__invalid}
+  llm_advisory: {enabled: false}
+
+quality_score:
+  weights: {completeness: 0.30, uniqueness: 0.20, validity: 0.20, consistency: 0.20, timeliness: 0.10}
+
+etl:
+  marts_dir: configs/marts/mobility
+  keys:
+    rentals: [instant]
+  reconcile: {table: rentals, key: instant, fact: fact_rentals}
+
+marts:
+  fact_rentals: [day_id, rental_date, season, weather, is_working_day, is_holiday, temperature_c, humidity_pct,
+                 wind_kmh, rentals]

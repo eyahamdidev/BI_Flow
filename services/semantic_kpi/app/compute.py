@@ -101,7 +101,7 @@ def compute(req: Any) -> dict[str, Any]:
             v["kpi_id"] = kid
             frames.append(v)
             defs.append({**{f: k.get(f) for f in ("id", "name", "description", "sql", "grain", "unit", "direction",
-                                                   "dimensions", "synonyms", "caveats")}, "aggregation": kind})
+                                                   "dimensions", "synonyms", "caveats", "observation_window_months")}, "aggregation": kind})
 
     if not frames:
         return {"status": "error", "error": {"code": "INTERNAL", "message": "no KPI could be computed"}, "warnings": warnings}

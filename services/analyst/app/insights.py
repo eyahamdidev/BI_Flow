@@ -171,10 +171,21 @@ def analyse(req: Any) -> dict[str, Any]:
         counts[typ] += 1
         return ins
 
+    # Months complete for the dataset = complete for every KPI that knows its row counts. A KPI without counts
+    # (custom SQL, e.g. the cohort repeat-purchase rate) uses this set instead of trusting every month.
+    totals = values[values.dimension == "total"]
+    counted = [A.complete_periods(g) for _, g in totals.groupby("kpi_id") if g["n"].notna().any()]
+    dataset_complete = sorted(set.intersection(*map(set, counted))) if counted else None
+
     for kid, d in defs.items():
         kv = values[values.kpi_id == kid]
         total = kv[kv.dimension == "total"]
-        good = A.complete_periods(total)
+        if total["n"].notna().any() or dataset_complete is None:
+            good = A.complete_periods(total)
+        else:
+            good = [p for p in sorted(total.period) if p in set(dataset_complete)]
+        if w := int(d.get("observation_window_months") or 0):  # cohort KPIs: the last w periods are not observable yet
+            good = good[:-w] if len(good) > w else []
         incomplete[kid] = sorted(set(total.period) - set(good))
         s = total.set_index("period")["value"].reindex(good)
         series[kid] = s
@@ -229,6 +240,11 @@ def analyse(req: Any) -> dict[str, Any]:
             ok &= r is not None and abs(r) >= 0.5
             facts["correlation"] = r
         latest = [x for x in drivers if x["kpi_id"] == kid and series[kid].size and x["period"] == series[kid].index[-1]]
+        if "latest_change" in w and ok:  # month-over-month direction of the latest complete month
+            delta = latest[0]["total_delta"] if latest else None
+            ok &= delta is not None and ((delta > 0) if w["latest_change"] == "up" else (delta < 0))
+            if ok:
+                facts.update(period=series[kid].index[-1], latest_delta=delta)
         if "top_driver_dimension" in w and ok:
             pick = next((x for x in latest if x["dimension"] == w["top_driver_dimension"]), None)
             ok &= pick is not None
@@ -238,7 +254,8 @@ def analyse(req: Any) -> dict[str, Any]:
             continue
         tops = [c["dimension_value"] for c in (latest[0]["contributions"] if latest else []) if c["dimension_value"] != "(unexplained)"][:3]
         facts.update(top_drivers=tops, rule=w)
-        action = rule["action"].format(top_drivers=", ".join(tops) or "the main segments", period=facts.get("period") or "the latest month")
+        action = rule["action"].format(top_drivers=", ".join(tops) or "the main segments", period=facts.get("period") or "the latest month",
+                                       correlation=facts.get("correlation"))
         facts["action"] = action
         add(kid, "recommendation", facts.get("period") or (series[kid].index[-1] if series[kid].size else None), "high", facts, rule["id"], "rule")
 

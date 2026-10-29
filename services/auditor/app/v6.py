@@ -63,21 +63,9 @@ def direction_word(delta: float, lang: str) -> str:
 
 
 def _ranked_drivers(sheet: dict[str, Any]) -> list[dict[str, Any]]:
-    drivers = sheet.get("drivers") if isinstance(sheet.get("drivers"), dict) else {}
-    rows = drivers.get("contributions") if isinstance(drivers, dict) else None
-    scored: list[tuple[float, int, dict[str, Any]]] = []
-    if isinstance(rows, list):
-        for index, row in enumerate(rows):
-            if not isinstance(row, dict):
-                continue
-            delta = row.get("delta")
-            if isinstance(delta, bool) or not isinstance(delta, (int, float)):
-                continue
-            if row.get("dimension_value") is None:
-                continue
-            scored.append((float(delta), -index, row))
-    scored.sort(reverse=True)
-    return [row for _delta, _index, row in scored[:3]]
+    from .factcheck import leading_contributions
+
+    return [row for row in leading_contributions(sheet) if row.get("dimension_value") is not None][:3]
 
 
 def _delta(sheet: dict[str, Any]) -> float | None:

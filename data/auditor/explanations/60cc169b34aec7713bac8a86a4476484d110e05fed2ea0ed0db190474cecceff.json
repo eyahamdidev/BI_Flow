@@ -1,0 +1,40 @@
+{
+  "key": "60cc169b34aec7713bac8a86a4476484d110e05fed2ea0ed0db190474cecceff",
+  "response_sha256": "f749acdd0c3cd409ce987e2bfd331dcdd4a8114b9310e8f1a56b1489b1bf6d89",
+  "text": "Revenue went down by 42489.58 BRL between 2018-07 and 2018-08. The largest contribution came from boleto (-52604.69 BRL). The second largest contribution came from voucher (-2236.56 BRL).",
+  "prose_source": "fallback",
+  "attempts": 1,
+  "warning": "secondary check rejected the rendered frames; frame fallback used. checker:42489.58. Fallback rendering also flagged: checker:42489.58",
+  "citations": [
+    {
+      "sentence": "Revenue went down by 42489.58 BRL between 2018-07 and 2018-08.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from boleto (-52604.69 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from voucher (-2236.56 BRL).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

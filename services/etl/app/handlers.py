@@ -134,11 +134,13 @@ def run(req: RunRequest) -> dict[str, Any]:
         # Fingerprint = hash of each mart's CONTENT, independent of row order: same input + same config must give
         # the same fingerprints (reproducibility check for benchmarks and BO4).
         fingerprints = {name: _fingerprint(con, name) for name in sorted(built) if name.startswith(("fact_", "dim_"))}
-        root = cfg.get("sample", {}).get("root", {"table": "orders", "key": "order_id"})
+        # reconciliation target: etl.reconcile {table, key, fact} (else the sample root, else orders/order_id)
+        rc = cfg.get("etl", {}).get("reconcile") or cfg.get("sample", {}).get("root") or {"table": "orders", "key": "order_id"}
+        root = {"table": rc["table"], "key": rc["key"], "fact": rc.get("fact", f"fact_{rc['table']}")}
         recon = None
-        if f"stg_{root['table']}" in built and f"fact_{root['table']}" in built:
+        if f"stg_{root['table']}" in built and root["fact"] in built:
             n_stg = con.execute(f'SELECT count(DISTINCT "{root["key"]}") FROM "stg_{root["table"]}"').fetchone()[0]
-            recon = {"staging_distinct": n_stg, "fact_rows": rows[f"fact_{root['table']}"], "ok": n_stg == rows[f"fact_{root['table']}"]}
+            recon = {"staging_distinct": n_stg, "fact_rows": rows[root["fact"]], "ok": n_stg == rows[root["fact"]]}
 
     # 5) Lineage: one event per model (with its compiled SQL), one for the test batch, one for reconciliation
     for m in res.models:
@@ -156,7 +158,7 @@ def run(req: RunRequest) -> dict[str, Any]:
                          rows_affected=sum(t["failures"] or 0 for t in res.tests if t["status"] != "pass"),
                          params={"summary": by_status, "tests": [{k: t[k] for k in ("name", "status", "failures", "severity")} for t in res.tests]}))
     if recon:
-        events.append(_event(req.run_id, "reconcile", rule=f"count(distinct {root['key']}) in stg_{root['table']} == count(*) in fact_{root['table']}",
+        events.append(_event(req.run_id, "reconcile", rule=f"count(distinct {root['key']}) in stg_{root['table']} == count(*) in {root['fact']}",
                              rows_affected=abs(recon["staging_distinct"] - recon["fact_rows"]), params=recon))
 
     # 6) Status: error if a model failed or the contract is broken, partial if an error-level test failed

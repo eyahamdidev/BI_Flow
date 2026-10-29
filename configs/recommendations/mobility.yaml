@@ -1,0 +1,10 @@
+# Recommendation rule table, urban mobility (BO6 schema). The LLM may only rephrase a matched action.
+- id: demand_follows_temperature
+  when: {kpi: avg_daily_rentals, correlated_with: avg_temperature_c}
+  action: "Demand follows temperature (monthly correlation {correlation}): size the active fleet and rebalancing crews by season."
+- id: rentals_drop_latest_month
+  when: {kpi: total_rentals, latest_change: down, top_driver_dimension: weather}
+  action: "Rentals fell in {period}, mostly on {top_drivers} days: check whether weather explains it before acting on pricing or stations."
+- id: rentals_anomaly_low
+  when: {kpi: total_rentals, anomaly: low}
+  action: "Rentals were unusually low in {period}: check station outages and data completeness for that month."

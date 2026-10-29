@@ -11,3 +11,13 @@
 - id: aov_up_mix
   when: {kpi: aov, trend: up, top_driver_dimension: product_category}
   action: "Consider promoting the higher-value categories driving the increase: {top_drivers}."
+# Added after the first full-Olist run (patterns the data actually shows; each still fires only on computed facts).
+- id: reviews_follow_late_deliveries
+  when: {kpi: low_review_rate, correlated_with: late_rate}
+  action: "Bad reviews move with late deliveries (monthly correlation {correlation}): cutting late deliveries in {top_drivers} is the most direct lever on satisfaction."
+- id: late_rate_rose_latest_month
+  when: {kpi: late_rate, latest_change: up, top_driver_dimension: customer_state}
+  action: "Late deliveries rose in {period}: review carrier performance and delivery promises for {top_drivers}."
+- id: revenue_seasonal_peak
+  when: {kpi: revenue, anomaly: high}
+  action: "Revenue peaked well above trend in {period} (a seasonal event such as Black Friday): plan stock, sellers and carrier capacity for the same period next year."

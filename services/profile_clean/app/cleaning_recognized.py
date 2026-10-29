@@ -143,7 +143,9 @@ def apply_category_maps(
         df = tables[t]
         id_col = pk_map.get(t, df.columns[0])
         before = df[col].astype("string")
-        mapped = before.replace(mapping)
+        # exact-value lookup: .map() is one hash lookup per row; .replace(dict) with thousands of keys took
+        # 137 s on the 1M-row geolocation table. Unmapped values keep their original text.
+        mapped = before.map(mapping).fillna(before).astype("string")
         mask = before.notna() & (before != mapped)
         n = int(mask.sum())
         if n:
@@ -174,7 +176,9 @@ def apply_auto_review_maps(
         df = tables[t]
         id_col = pk_map.get(t, df.columns[0])
         before = df[col].astype("string")
-        mapped = before.replace(mapping)
+        # exact-value lookup: .map() is one hash lookup per row; .replace(dict) with thousands of keys took
+        # 137 s on the 1M-row geolocation table. Unmapped values keep their original text.
+        mapped = before.map(mapping).fillna(before).astype("string")
         mask = before.notna() & (before != mapped)
         n = int(mask.sum())
         if n:

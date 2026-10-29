@@ -126,6 +126,7 @@ quality_score:               # BO4: weights sum to 1
 
 etl:                         # BO1: how the ETL module models this dataset
   marts_dir: configs/marts/ecommerce            # domain marts (SQL + tests), shared by every e-commerce dataset
+  reconcile: {table: orders, key: order_id, fact: fact_orders}   # one fact row per distinct order
   keys:                                         # grain of each table -> staging uniqueness tests (warn level)
     orders: [order_id]
     order_items: [order_id, order_item_id]

@@ -57,14 +57,22 @@ def _series_as_str(s: pd.Series) -> pd.Series:
     return s.astype("string")
 
 
+def _distinct(s: pd.Series) -> pd.Series:
+    """Distinct non-null values: same answer as the full column for any()/set questions, far cheaper on 1M rows."""
+    return pd.Series(s.dropna().unique())
+
+
 def _has_letter_token(s: pd.Series) -> bool:
-    ss = _series_as_str(s).dropna()
+    ss = _series_as_str(_distinct(s)).dropna()
     if ss.empty:
         return False
     return ss.str.contains(r"[A-Za-z]", regex=True).any()
 
 
 def _strict_numeric_fraction(s: pd.Series) -> float:
+    s = s.dropna()
+    if len(s) > 200_000:  # a proportion: a fixed 200k-row sample gives the same answer to within rounding
+        s = s.sample(200_000, random_state=0)
     ss = _series_as_str(s).dropna()
     if ss.empty:
         return 0.0
@@ -73,7 +81,7 @@ def _strict_numeric_fraction(s: pd.Series) -> float:
 
 
 def _is_binary_values(s: pd.Series) -> bool:
-    ss = _series_as_str(s).dropna()
+    ss = _series_as_str(_distinct(s)).dropna()
     if ss.empty:
         return False
     uniq = set(ss.str.lower().unique())

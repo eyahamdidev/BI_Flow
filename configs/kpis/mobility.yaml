@@ -1,0 +1,38 @@
+# KPI catalog, urban mobility (bike sharing). Same schema as ecommerce.yaml (BO5 owns it). SQL runs on fact_rentals.
+# NB: in this public mirror, `rentals` = CASUAL (non-registered) riders only (UCI column `casual`), not all rentals.
+- id: total_rentals
+  name: Casual rentals
+  description: Number of rentals by casual (non-registered) riders in the month.
+  sql: "SELECT date_trunc('month', rental_date) AS period, SUM(rentals) AS value FROM fact_rentals GROUP BY 1"
+  grain: month
+  unit: count
+  direction: higher_is_better
+  dimensions: [weather, is_working_day]
+  synonyms: [rides, trips, usage, demand]
+- id: avg_daily_rentals
+  name: Average daily casual rentals
+  description: Mean number of casual-rider rentals per day.
+  sql: "SELECT date_trunc('month', rental_date) AS period, AVG(rentals) AS value FROM fact_rentals GROUP BY 1"
+  grain: month
+  unit: count
+  direction: higher_is_better
+  dimensions: [weather, is_working_day]
+  synonyms: [daily demand, rides per day]
+- id: bad_weather_day_share
+  name: Bad-weather day share
+  description: Share of days with rain or snow.
+  sql: "SELECT date_trunc('month', rental_date) AS period, AVG(CAST(weather IN ('light rain/snow', 'heavy rain/snow') AS INTEGER)) AS value FROM fact_rentals GROUP BY 1"
+  grain: month
+  unit: ratio
+  direction: lower_is_better
+  dimensions: []
+  synonyms: [rainy days, weather risk]
+- id: avg_temperature_c
+  name: Average temperature
+  description: Mean daily temperature in degrees Celsius.
+  sql: "SELECT date_trunc('month', rental_date) AS period, AVG(temperature_c) AS value FROM fact_rentals GROUP BY 1"
+  grain: month
+  unit: C
+  direction: neutral
+  dimensions: []
+  synonyms: [temperature, weather]

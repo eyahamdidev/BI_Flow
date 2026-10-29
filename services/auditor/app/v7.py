@@ -203,7 +203,8 @@ def frame_values(sheet: dict[str, Any], lang: str) -> dict[str, Any]:
     delta = _delta(sheet)
     if delta is not None:
         values["drivers.direction"] = direction_word(delta, lang)
-        values["drivers.total_delta"] = delta
+        # the direction word carries the sign ("went down by 42489.58", not "went down by -42489.58")
+        values["drivers.total_delta"] = abs(delta)
     for rank, row in enumerate(_ranked_drivers(sheet), start=1):
         values[f"drivers.top{rank}.label"] = row.get("dimension_value")
         values[f"drivers.top{rank}.delta"] = row.get("delta")

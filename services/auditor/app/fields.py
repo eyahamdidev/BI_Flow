@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from .factcheck import canon
+from .factcheck import canon, leading_contributions
 
 _FIELD = re.compile(r"\[([A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*|\[\d+\])*)\]")
 _TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9_]*|\[\d+\]")
@@ -19,22 +19,8 @@ _SENTENCE = re.compile(r"(?<=[.!?])\s+")
 
 
 def _top_row(sheet: Any) -> dict[str, Any] | None:
-    drivers = sheet.get("drivers") if isinstance(sheet, dict) else None
-    rows = drivers.get("contributions") if isinstance(drivers, dict) else None
-    if not isinstance(rows, list):
-        return None
-    best: dict[str, Any] | None = None
-    best_delta: float | None = None
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
-        delta = row.get("delta")
-        if isinstance(delta, bool) or not isinstance(delta, (int, float)):
-            continue
-        if best_delta is None or float(delta) > best_delta:
-            best_delta = float(delta)
-            best = row
-    return best
+    ranked = leading_contributions(sheet)
+    return ranked[0] if ranked else None
 
 
 def lookup(sheet: Any, path: str) -> Any:

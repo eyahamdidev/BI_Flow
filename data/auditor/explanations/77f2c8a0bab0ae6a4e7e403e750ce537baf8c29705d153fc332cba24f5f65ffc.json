@@ -1,0 +1,47 @@
+{
+  "key": "77f2c8a0bab0ae6a4e7e403e750ce537baf8c29705d153fc332cba24f5f65ffc",
+  "response_sha256": "a5ba39c4fda89bebe18b053d9658682048bbaf2e5a44a6fd04095ace222daef6",
+  "text": "Revenue went up by 402387.78 BRL between 2017-10 and 2017-11. The largest contribution came from credit_card (321763.28 BRL). The second largest contribution came from boleto (79965.79 BRL). The logged rule for this change is revenue_seasonal_peak.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Revenue went up by 402387.78 BRL between 2017-10 and 2017-11.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from credit_card (321763.28 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from boleto (79965.79 BRL).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "The logged rule for this change is revenue_seasonal_peak.",
+      "fact_ids": [
+        "rule_id"
+      ],
+      "frame": "F6"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

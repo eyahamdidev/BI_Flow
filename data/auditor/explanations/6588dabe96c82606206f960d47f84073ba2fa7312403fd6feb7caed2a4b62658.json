@@ -1,0 +1,40 @@
+{
+  "key": "6588dabe96c82606206f960d47f84073ba2fa7312403fd6feb7caed2a4b62658",
+  "response_sha256": "323d2680c9ec1bb8c60084de609c7fafeba4bb4bbe3dad5b1e48c92d0e99b2c3",
+  "text": "Revenue went down by -42489.58 BRL between 2018-07 and 2018-08. The largest contribution came from debit_card (6527.35 BRL). The second largest contribution came from credit_card (5824.32 BRL).",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Revenue went down by -42489.58 BRL between 2018-07 and 2018-08.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from debit_card (6527.35 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from credit_card (5824.32 BRL).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}
