@@ -240,6 +240,17 @@ def clean(req: RunRequest) -> RunResponse | dict:
             "warnings": warnings,
         }
 
+    # One summary event per table linking raw.<t> -> clean.<t> (explicit node ids, row counts, rules applied), so the
+    # Auditor can walk back from a KPI to its raw tables and the cleaning that touched them. The per-rule events
+    # above carry no inputs/outputs, so without this the lineage chain stopped at the cleaned tables.
+    for r in recon:
+        t = r["table"]
+        applied = sorted({str(q.get("rule_id")) for q in state.quality_log if q.get("table") == t and q.get("rule_id")})
+        lineage.emit("clean_table", rule=", ".join(applied) or None, rows_affected=r["rows_in"] - r["rows_out"],
+                     inputs=[{"name": t, "node_id": f"raw.{t}", "rows": r["rows_in"]}],
+                     outputs=[{"name": t, "node_id": f"clean.{t}", "path": f"{rel_base}/{t}.parquet", "rows": r["rows_out"]}],
+                     params={"rules": applied, "rows_dropped_logged": r["rows_dropped_logged"]})
+
     rec_report = build_recognition_report(recognitions)
     write_json(rec_report, out_path / "recognition_report.json")
     write_json(state.quality_log, out_path / "quality_log.json")

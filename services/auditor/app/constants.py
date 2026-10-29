@@ -16,7 +16,7 @@ AUDITOR_STEPS = ("build_lineage_graph", "write_trace_report", "explain_kpi")
 # Kept aligned with each service's create_app(lineage_steps=...) and checked by a test.
 STATIC_LINEAGE_STEPS = {  # fallback only: the gateway passes the live lists (options.registered_steps)
     "ingest_quality": ['ingest_csv', 'ingest_sql', 'ingest_api', 'validate_schema', 'score'],
-    "profile_clean": ['category_map', 'category_mapping_fixes', 'dedupe', 'dedupe_geolocation', 'detect_outliers', 'drop_exact_duplicates', 'flag_impossible_values', 'impute_categorical', 'impute_numeric', 'llm_advisory', 'null_strategy', 'parse_dates', 'profile_diff', 'profile_tables', 'rename_columns', 'sentinel_to_null', 'standardise', 'translate_category_names', 'trim_strings', 'type_guard_block'],
+    "profile_clean": ['category_map', 'category_mapping_fixes', 'clean_table', 'dedupe', 'dedupe_geolocation', 'detect_outliers', 'drop_exact_duplicates', 'flag_impossible_values', 'impute_categorical', 'impute_numeric', 'llm_advisory', 'null_strategy', 'parse_dates', 'profile_diff', 'profile_tables', 'rename_columns', 'sentinel_to_null', 'standardise', 'translate_category_names', 'trim_strings', 'type_guard_block'],
     "etl": ['load_raw', 'dbt_staging', 'dbt_intermediate', 'dbt_marts', 'dbt_tests', 'reconcile'],
     "semantic_kpi": ['compute_kpi', 'compute_kpi_cut', 'index_kpis'],
     "analyst": ['detect_trends', 'detect_anomalies', 'decompose_drivers', 'match_recommendations', 'write_narratives', 'dashboard_config'],

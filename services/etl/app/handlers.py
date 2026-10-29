@@ -98,9 +98,10 @@ def run(req: RunRequest) -> dict[str, Any]:
             con.execute(f'CREATE TABLE raw."{t}" AS SELECT * FROM read_parquet(?)', [str(config.data_dir() / rel)])
             raw_rows[t] = con.execute(f'SELECT count(*) FROM raw."{t}"').fetchone()[0]
             table_columns[t] = [r[0] for r in con.execute(f'DESCRIBE raw."{t}"').fetchall()]
-            events.append(_event(req.run_id, "load_raw", rule=f"read_parquet -> raw.{t}", rows_affected=raw_rows[t],
-                                 inputs=[{"name": t, "path": rel, "rows": raw_rows[t]}],
-                                 outputs=[{"name": f"raw.{t}", "path": f"{rel_out}/{config.WAREHOUSE_NAME}", "rows": raw_rows[t]}]))
+            # explicit node ids so the Auditor's graph chains clean.<t> -> dbt.<t> (the warehouse copy) -> dbt.stg_<t> ...
+            events.append(_event(req.run_id, "load_raw", rule=f"read_parquet -> warehouse raw.{t}", rows_affected=raw_rows[t],
+                                 inputs=[{"name": t, "node_id": f"clean.{t}", "path": rel, "rows": raw_rows[t]}],
+                                 outputs=[{"name": t, "node_id": f"dbt.{t}", "path": f"{rel_out}/{config.WAREHOUSE_NAME}", "rows": raw_rows[t]}]))
     load_s = time.perf_counter() - t0
 
     # 2) Assemble this run's dbt project: template + generated staging + domain marts
@@ -147,8 +148,8 @@ def run(req: RunRequest) -> dict[str, Any]:
         events.append(_event(
             req.run_id, f"dbt_{m['layer']}", rule=f"dbt model {m['name']} ({m['materialized']})",
             rows_affected=rows.get(m["name"]),
-            inputs=[{"name": d, "rows": rows.get(d, raw_rows.get(d))} for d in m["depends_on"]],
-            outputs=[{"name": m["name"], "path": f"{rel_out}/{config.WAREHOUSE_NAME}", "rows": rows.get(m["name"])}],
+            inputs=[{"name": d, "node_id": f"dbt.{d}", "rows": rows.get(d, raw_rows.get(d))} for d in m["depends_on"]],
+            outputs=[{"name": m["name"], "node_id": f"dbt.{m['name']}", "path": f"{rel_out}/{config.WAREHOUSE_NAME}", "rows": rows.get(m["name"])}],
             params={"model": m["name"], "status": m["status"], "seconds": m["seconds"], "sql": m["sql"]},
         ))
     by_status: dict[str, int] = {}

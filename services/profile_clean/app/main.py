@@ -32,6 +32,7 @@ LINEAGE_STEPS = sorted(
         "dedupe_geolocation",
         "translate_category_names",
         "category_mapping_fixes",
+        "clean_table",
         "null_strategy",
         "flag_impossible_values",
         "impute_numeric",

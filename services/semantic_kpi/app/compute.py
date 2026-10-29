@@ -78,9 +78,11 @@ def compute(req: Any) -> dict[str, Any]:
                 continue
             df["dimension"], df["dimension_value"] = "total", "all"
             parts = [df]
+            # explicit node ids: the KPI node reads the fact table(s) named in its SQL (lineage: fact -> KPI)
+            sources = sorted(set(re.findall(r"\bFROM\s+([A-Za-z_][A-Za-z0-9_]*)", sql, re.IGNORECASE)) - {"f", "r"})
             events.append(event(req.run_id, "compute_kpi", rule=sql, rows_affected=len(df),
-                                inputs=[{"name": "warehouse", "path": wh.relative_to(data_dir()).as_posix()}],
-                                outputs=[{"name": f"kpi_values[{kid}, total]", "rows": len(df)}],
+                                inputs=[{"name": t, "node_id": f"dbt.{t}", "path": wh.relative_to(data_dir()).as_posix()} for t in sources],
+                                outputs=[{"name": f"kpi.{kid}", "kpi_id": kid, "node_id": f"kpi.{kid}", "rows": len(df)}],
                                 params={"kpi_id": kid, "dimension": "total", "aggregation": kind}))
             for dim in k.get("dimensions") or []:
                 q = cut_sql(sql, dim)
