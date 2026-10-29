@@ -73,7 +73,7 @@ services:
     ports: ["8106:8106"]
   dashboard:
     build: {context: ., dockerfile: services/dashboard/Dockerfile, args: *build_args}
-    environment: {DATA_DIR: /srv/data, GATEWAY_URL: "http://gateway:8000"}
+    environment: {DATA_DIR: /srv/data, GATEWAY_URL: "http://gateway:8000", PYTHONPATH: /srv/service}
     volumes: ["./data:/srv/data:ro"]
     ports: ["8501:8501"]
     profiles: ["core"]
