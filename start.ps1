@@ -3,7 +3,8 @@
 #   .\start.ps1 -Dataset bike_share     run another dataset (olist_sample | bike_share | olist)
 #   .\start.ps1 -Full           download the full Olist data (Kaggle) and run it
 #   .\start.ps1 -Stop           stop everything
-param([string]$Dataset = "olist_sample", [switch]$Full, [switch]$Stop, [switch]$NoRun)
+#   .\start.ps1 -NoBrowser      do not open the browser at the end
+param([string]$Dataset = "olist_sample", [switch]$Full, [switch]$Stop, [switch]$NoRun, [switch]$NoBrowser)
 $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
 
@@ -47,4 +48,4 @@ if (-not $NoRun) {
 }
 Write-Host ""
 Write-Host "Dashboard: http://localhost:8501   (pick the run in the left sidebar)" -ForegroundColor Green
-Start-Process "http://localhost:8501"
+if (-not $NoBrowser) { Start-Process "http://localhost:8501" }
