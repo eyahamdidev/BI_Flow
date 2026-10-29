@@ -38,3 +38,25 @@ def datasets() -> list[dict]:
         return r.json() if r.status_code == 200 else []
     except httpx.HTTPError:
         return []
+
+
+def template(base: str) -> dict:
+    """Files and columns a new dataset needs to reuse `base`'s structure."""
+    try:
+        r = httpx.get(f"{BASE}/api/datasets/{base}/template", timeout=10)
+        return r.json() if r.status_code == 200 else {}
+    except httpx.HTTPError:
+        return {}
+
+
+def add_dataset(name: str, base: str, files: list) -> dict:
+    """Send uploaded CSVs (Streamlit UploadedFile objects) to the gateway, which checks and saves them."""
+    import base64
+
+    payload = {"name": name, "base": base,
+               "files": [{"name": f.name, "content_b64": base64.b64encode(f.getvalue()).decode()} for f in files]}
+    try:
+        r = httpx.post(f"{BASE}/api/datasets", json=payload, timeout=300)
+        return r.json() if r.status_code == 200 else {"ok": False, "errors": [f"gateway answered HTTP {r.status_code}"]}
+    except httpx.HTTPError as e:
+        return {"ok": False, "errors": [f"gateway not reachable ({type(e).__name__})"]}

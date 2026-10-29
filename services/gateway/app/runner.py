@@ -122,8 +122,22 @@ def load_dataset_config(path: Path, _seen: tuple[Path, ...] = ()) -> dict[str, A
     cfg = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     parent = cfg.pop("extends", None)
     if parent:
-        cfg = _deep_merge(load_dataset_config((path.parent / parent).resolve(), (*_seen, path)), cfg)
+        base = (path.parent / parent).resolve()
+        if not base.exists():  # an uploaded dataset (data/uploads/<name>/) extends a config in configs/datasets/
+            base = (repo_root() / "configs" / "datasets" / parent).resolve()
+        cfg = _deep_merge(load_dataset_config(base, (*_seen, path)), cfg)
     return cfg
+
+
+def uploads_dir() -> Path:
+    return data_dir() / "uploads"
+
+
+def dataset_config_path(name: str) -> Path:
+    """configs/datasets/<name>.yaml (versioned with the code), else data/uploads/<name>/dataset.yaml (added from the
+    dashboard, local only)."""
+    versioned = repo_root() / "configs" / "datasets" / f"{name}.yaml"
+    return versioned if versioned.exists() else uploads_dir() / name / "dataset.yaml"
 
 
 def freeze_config(dataset: str, config_ref: str | None, run_dir: Path) -> tuple[str, str]:
@@ -131,7 +145,7 @@ def freeze_config(dataset: str, config_ref: str | None, run_dir: Path) -> tuple[
     so a run is reproducible even if configs/ changes later. Returns (config_ref for modules, sha256)."""
     frozen = run_dir / "dataset.yaml"
     if not frozen.exists():
-        src = repo_root() / (config_ref or f"configs/datasets/{dataset}.yaml")
+        src = repo_root() / config_ref if config_ref else dataset_config_path(dataset)
         cfg = load_dataset_config(src.resolve())
         frozen.write_text(f"# frozen by the gateway from {src.relative_to(repo_root())} (extends resolved). Do not edit.\n"
                           + yaml.safe_dump(cfg, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -376,20 +390,96 @@ def ask(run_id: str, question: str) -> dict[str, Any]:
 
 
 def list_datasets() -> list[dict[str, Any]]:
-    """Datasets that can be run: one per configs/datasets/<name>.yaml (drafts from uploads excluded)."""
+    """Datasets that can be run: configs/datasets/<name>.yaml, plus datasets added from the dashboard
+    (data/uploads/<name>/dataset.yaml). BO3's upload drafts (uploaded_*) are excluded."""
     out = []
-    for f in sorted((repo_root() / "configs" / "datasets").glob("*.yaml")):
-        if f.stem.startswith("uploaded_"):
+    found = [(f.stem, f, False) for f in sorted((repo_root() / "configs" / "datasets").glob("*.yaml"))]
+    found += [(f.parent.name, f, True) for f in sorted(uploads_dir().glob("*/dataset.yaml"))]
+    for name, f, uploaded in found:
+        if name.startswith("uploaded_"):
             continue
         try:
             cfg = load_dataset_config(f)
         except Exception:  # noqa: BLE001  a broken config is listed as unavailable, not hidden
-            out.append({"name": f.stem, "available": False, "note": "config could not be read"})
+            out.append({"name": name, "available": False, "uploaded": uploaded, "note": "config could not be read"})
             continue
         src = cfg.get("source") or {}
         files = list((src.get("tables") or {}).values())
         folder = repo_root() / str(src.get("path", ""))
         present = sum((folder / x).exists() for x in files)
-        out.append({"name": f.stem, "domain": cfg.get("domain"), "tables": len(files), "available": present == len(files),
+        out.append({"name": name, "domain": cfg.get("domain"), "tables": len(files), "available": present == len(files),
+                    "uploaded": uploaded, "based_on": (yaml.safe_load(f.read_text(encoding="utf-8")) or {}).get("extends"),
                     "note": "" if present == len(files) else f"data missing in {src.get('path')} ({present}/{len(files)} files)"})
     return out
+
+
+NAME_RULE = r"^[a-z][a-z0-9_]{1,39}$"
+
+
+def dataset_template(base: str) -> dict[str, Any]:
+    """What an upload based on `base` must contain: file name per table and the columns each file needs."""
+    import csv
+
+    cfg = load_dataset_config(dataset_config_path(base))
+    schema = cfg.get("expected_schema") or {}
+    folder = repo_root() / str(cfg.get("source", {}).get("path", ""))
+    out = {}
+    for t, f in (cfg.get("source", {}).get("tables") or {}).items():
+        cols = list(schema.get(t, {}))
+        if (folder / f).exists():  # "same structure" = every column of the base dataset's own file, not just the declared ones
+            with (folder / f).open(encoding="utf-8-sig", newline="") as fh:
+                cols = next(csv.reader(fh), cols)
+        out[t] = {"file": f, "columns": cols}
+    return out
+
+
+def add_dataset(name: str, base: str, files: dict[str, bytes]) -> dict[str, Any]:
+    """Save uploaded CSVs as a new dataset with the same structure as `base` (case 1: same columns, new rows).
+
+    Checks before writing anything: a safe, unused name; every file the base dataset expects; the required columns in
+    each file's header. Writes data/uploads/<name>/<files> and data/uploads/<name>/dataset.yaml (extends the base).
+    """
+    import csv
+    import io
+    import re
+
+    errors: list[str] = []
+    if not re.match(NAME_RULE, name or ""):
+        errors.append("name: 2-40 characters, lowercase letters, digits and _ , starting with a letter")
+    elif (repo_root() / "configs" / "datasets" / f"{name}.yaml").exists() or (uploads_dir() / name).exists():
+        errors.append(f"name '{name}' is already used: choose another one")
+    try:
+        template = dataset_template(base)
+    except Exception:  # noqa: BLE001
+        return {"ok": False, "errors": [f"unknown base dataset '{base}'"]}
+    by_file = {spec["file"]: (table, spec["columns"]) for table, spec in template.items()}
+    missing = [f for f in by_file if f not in files]
+    if missing:
+        errors.append(f"missing files (all {len(by_file)} are needed): {', '.join(missing)}")
+    extra = [f for f in files if f not in by_file]
+    if extra:
+        errors.append(f"unexpected files (names must match the base dataset): {', '.join(extra)}")
+    for fname, blob in files.items():
+        if fname not in by_file:
+            continue
+        table, needed = by_file[fname]
+        try:
+            header = next(csv.reader(io.StringIO(blob.decode("utf-8-sig", errors="replace").split("\n", 1)[0])))
+        except StopIteration:
+            errors.append(f"{fname}: empty file")
+            continue
+        lacking = [c for c in needed if c not in header]
+        if lacking:
+            errors.append(f"{fname} ({table}): missing columns {', '.join(lacking)}")
+    if errors:
+        return {"ok": False, "errors": errors}
+
+    folder = uploads_dir() / name
+    folder.mkdir(parents=True, exist_ok=True)
+    for fname, blob in files.items():
+        (folder / fname).write_bytes(blob)
+    rel = folder.resolve().relative_to(repo_root()).as_posix()
+    (folder / "dataset.yaml").write_text(
+        f"# Added from the dashboard: same structure as '{base}', new data. Local only (data/uploads is gitignored).\n"
+        f"extends: {base}.yaml\nname: {name}\nsource:\n  path: {rel}\n", encoding="utf-8")
+    return {"ok": True, "name": name, "files": len(files), "path": rel}

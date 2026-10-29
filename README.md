@@ -47,6 +47,13 @@ If the Kaggle download is blocked on your network, download
 [olistbr/brazilian-ecommerce](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) by hand, unzip the 9 CSV
 files into `data/raw/olist/`, and run `start.ps1 -Dataset olist` / `./start.sh olist`.
 
+### Test with your own data (same structure as Olist)
+
+In the dashboard sidebar, **Add a dataset**: choose the dataset it looks like (`olist`), give it a name, upload the CSV
+files (same file names and columns; the sidebar lists them), then **Start a new run** with the new dataset selected.
+The files are checked first (all files present, all columns present) and stored locally in `data/uploads/<name>/`.
+A 5-row test set is ready in [`tests/fixtures/upload_demo/`](tests/fixtures/upload_demo/).
+
 ### What to look at in the dashboard
 
 | tab | what it shows |

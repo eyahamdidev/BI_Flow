@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import threading
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
@@ -17,6 +18,17 @@ class RunBody(BaseModel):
     dataset: str = "olist"
     resume_run_id: str | None = None
     ingest_from: str | None = None  # DEV: reuse data/runs/<id>/00_ingest instead of the ingest module
+
+
+class UploadFile(BaseModel):
+    name: str
+    content_b64: str
+
+
+class NewDatasetBody(BaseModel):
+    name: str
+    base: str
+    files: list[UploadFile]
 
 
 class AskBody(BaseModel):
@@ -90,3 +102,21 @@ def api_ask(body: AskBody) -> dict[str, Any]:
 def api_datasets() -> list[dict[str, Any]]:
     """Datasets the dashboard can offer in its "Start a new run" dropdown (and whether their data is present)."""
     return runner.list_datasets()
+
+
+@app.get("/api/datasets/{base}/template")
+def api_dataset_template(base: str) -> dict[str, Any]:
+    """Files and columns a new dataset must have to reuse `base`'s structure (shown in the dashboard before upload)."""
+    try:
+        return runner.dataset_template(base)
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(404, f"unknown dataset '{base}'") from e
+
+
+@app.post("/api/datasets")
+def api_add_dataset(body: NewDatasetBody) -> dict[str, Any]:
+    """Add a dataset with the same structure as an existing one (CSV files sent base64-encoded in JSON)."""
+    import base64
+
+    files = {Path(f.name).name: base64.b64decode(f.content_b64) for f in body.files}  # file name only, no folders
+    return runner.add_dataset(body.name.strip(), body.base, files)
