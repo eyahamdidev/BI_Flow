@@ -33,7 +33,8 @@ Handler = Callable[[RunRequest], "RunResponse | dict[str, Any]"]
 
 def _is_mock(module: str) -> bool:
     """BIFLOW_MOCK_<MODULE> (e.g. BIFLOW_MOCK_ETL=0) wins over the global BIFLOW_MOCK, so modules go real one at a time."""
-    return os.getenv(f"BIFLOW_MOCK_{module.upper()}", os.getenv("BIFLOW_MOCK", "1")) == "1"
+    # an EMPTY per-module value counts as unset (falls back to the global switch)
+    return (os.getenv(f"BIFLOW_MOCK_{module.upper()}") or os.getenv("BIFLOW_MOCK", "1")) == "1"
 
 
 def create_app(

@@ -17,6 +17,10 @@ What happened when each module was merged and run inside the real pipeline (Dock
   f-string expressions breaks the image).
 - **The gateway checks outputs:** a real module that answers `ok` but whose declared output files do not exist is
   marked failed.
+- **LLM calls are bounded:** `LLM_TIMEOUT_S` (30) and `LLM_RETRIES` (3) per call in the shared helper; stages that
+  call the LLM many times also have a total budget and fall back to templates (never miss the stage budget).
+- **Docker networking:** if `docker info` shows an HTTP proxy, containers need `HTTPS_PROXY` (see `.env.example`).
+- **Dev loop:** `docker-compose.override.yml` mounts code: `docker compose restart <service>` after a change.
 - **Groq models:** the Llama models are gone from Groq; `config/models.yaml` api profile = `openai/gpt-oss-120b` /
   `openai/gpt-oss-20b`.
 
@@ -26,6 +30,12 @@ What happened when each module was merged and run inside the real pipeline (Dock
 - Fixed: the completeness check called every module's `/v1/meta` itself (spec rule 2: only the orchestrator calls
   modules). The gateway now passes `options.registered_steps`; the static list is only a fallback, now in sync with
   the modules. The eval keeps its own fixture registry (`EVAL_LINEAGE_STEPS`), so its targets stay meaningful.
+- Fixed: Explain named the largest POSITIVE segment as "largest contribution" even when the KPI fell (a +6527
+  segment for a -42490 revenue drop). Contributions are now ranked in the direction of the change, in one shared
+  helper used by the ranking, the field filler and the fact-checker; the amount after "went down" is absolute; the
+  explanation cache key includes a logic version so answers produced by the old logic are not reused.
+- Fixed: prose deadline (120 s) equalled the gateway budget (120 s), so the stage timed out; now 80 s / 25 s.
+- Fixed: "constant" (a logged cleaning strategy) was rejected as an evaluative word; words quoted from the facts pass.
 - Owner: on real events the fact-checker rejects step/rule names as claims (`rank:ingest_csv`, `rank:read_parquet`,
   `evaluative:constant`), and in one section the **template text itself fails the fact-check**. Tuned on synthetic
   events; worth a pass on a real `events.jsonl` (any `data/runs/<id>/lineage/events.jsonl`).
@@ -43,8 +53,10 @@ What happened when each module was merged and run inside the real pipeline (Dock
 
 - Fixed: `main.py` ignored the per-module mock switch.
 - Fixed: LLM `impute_median` crashed on an int column with no nulls (pandas 3 refuses 612.5 in int64).
-- Owner: full Olist clean takes ~206 s vs the 120 s budget (geolocation, 1M rows, is the likely cost). Blocks the
-  full-data benchmark.
+- Fixed: full Olist clean 206 s -> 45 s. `.replace(dict)` with thousands of accent fixes on 1M geolocation rows took
+  137 s; `.map()` does the same exact-value lookup. Role inference now works on distinct values (and a fixed 200k
+  sample for the numeric fraction). Output verified identical on all 9 tables.
+- Fixed: `eval/run_all.py` used `parents[3]` (= `/` in the container): `/v1/eval` never ran.
 - Owner: the timeout wrapper returns only after the work ends (`with ThreadPoolExecutor` waits), so a "120 s timeout"
   answered at 206 s.
 - Owner: `/health` calls the LLM provider on every request (1-5 s). Cache the result.
@@ -63,6 +75,17 @@ What happened when each module was merged and run inside the real pipeline (Dock
   later ingest wrote into a deleted temp folder while answering "ok". Restored in a `finally`.
 - Owner: quality score barely moves after cleaning (99.0 -> 99.1 on the sample) although the eval shows it reacts to
   heavy corruption (100 -> 88.5). Weights/dimensions may need tuning to show the cleaning gain.
+
+## BO5 Semantic & KPI and BO6 Analyst (were stubs: implemented in bo1/foundation)
+
+- BO5: `compute` (catalog SQL + dimension cuts, `n` per value), `index` / `map_question` (Chroma, embedder name in
+  metadata, built-in trigram embedding when no embedder is reachable, closed-menu LLM pick), `suggest_kpis` (draft
+  YAML). Eval: Recall@1 0.875, Recall@3 0.906 on 32 questions with the trigram embedder (a semantic embedder, e.g.
+  Ollama `nomic-embed-text`, is the next step; the network here blocked downloading one).
+- BO6: complete-month detection, trend, robust anomalies, driver decomposition (additive / mix+rate, sums exactly to
+  the change), rule-table recommendations, fact-checked narratives under a time budget, dashboard_config.
+  Eval: anomaly recall 1.0 / precision 1.0 on 20 planted series, driver sums 200/200.
+- Owners of BO5/BO6: please review and take over these modules; rules live in `configs/recommendations/`.
 
 ## BO1 (ours), for transparency
 

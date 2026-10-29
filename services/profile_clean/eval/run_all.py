@@ -11,7 +11,9 @@ from pathlib import Path
 SEED = 42
 os.environ.setdefault("FAKE_LLM", "1")
 
-REPO = Path(__file__).resolve().parents[3]
+SERVICE = Path(__file__).resolve().parents[1]  # services/profile_clean locally, /srv/service in the container
+# repo root = first parent holding configs/datasets (a fixed parents[3] is "/" inside the container)
+REPO = next((p for p in Path(__file__).resolve().parents if (p / "configs" / "datasets").is_dir()), SERVICE.parents[1])
 EVAL_DIR = Path(__file__).resolve().parent
 
 sys.path.insert(0, str(EVAL_DIR))
@@ -21,13 +23,13 @@ RESULTS.mkdir(parents=True, exist_ok=True)
 
 def _find_mini() -> Path:
     candidates = [
-        REPO / "services" / "profile_clean" / "tests" / "fixtures" / "olist_mini",
+        SERVICE / "tests" / "fixtures" / "olist_mini",
         REPO / "data" / "runs",
     ]
     for c in candidates:
         if (c / "products.parquet").exists():
             return c
-        if c.name == "runs":
+        if c.name == "runs" and c.is_dir():
             for run in sorted(c.iterdir(), reverse=True):
                 ing = run / "00_ingest"
                 if (ing / "products.parquet").exists():
@@ -42,11 +44,11 @@ def main() -> None:
     t0 = time.perf_counter()
     mini = _find_mini()
     if not list(mini.glob("*.parquet")):
-        sys.path.insert(0, str(REPO / "services" / "profile_clean"))
+        sys.path.insert(0, str(SERVICE))
         from tests.conftest import _build_olist_mini
 
         _build_olist_mini()
-        mini = REPO / "services" / "profile_clean" / "tests" / "fixtures" / "olist_mini"
+        mini = SERVICE / "tests" / "fixtures" / "olist_mini"
     corrupted = RESULTS / "corrupted"
     corrupted.mkdir(exist_ok=True)
 

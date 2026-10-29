@@ -23,3 +23,8 @@ services/profile_clean/eval/universal/corpus/
 services/profile_clean/eval/universal/results/
 .DS_Store
 *.egg-info/
+# runtime output under data/ (keep results worth sharing in docs/results/)
+data/.chroma/
+data/bench/
+data/eval/
+data/auditor/
