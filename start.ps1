@@ -26,8 +26,12 @@ if (-not (Test-Path .env)) {
 }
 
 Write-Host "Building and starting the services (the first time takes several minutes)..."
-docker compose --profile core up -d --build
-if ($LASTEXITCODE -ne 0) { Write-Host "Build failed (often a network hiccup): run .\start.ps1 again." -ForegroundColor Red; exit 1 }
+for ($try = 1; $try -le 3; $try++) {   # flaky networks: finished downloads are cached, so a retry continues
+    docker compose --profile core up -d --build
+    if ($LASTEXITCODE -eq 0) { break }
+    if ($try -eq 3) { Write-Host "Build failed 3 times (network?): run .\start.ps1 again later." -ForegroundColor Red; exit 1 }
+    Write-Host "Build attempt $try failed, retrying..." -ForegroundColor Yellow
+}
 
 Write-Host -NoNewline "Waiting for the services"
 $ports = 8000, 8101, 8102, 8103, 8104, 8105, 8106

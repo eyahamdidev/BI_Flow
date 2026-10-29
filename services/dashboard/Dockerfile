@@ -1,5 +1,6 @@
 FROM python:3.11-slim
-COPY --from=ghcr.io/astral-sh/uv:0.13.6 /uv /usr/local/bin/uv
+# uv (fast installer) from PyPI, not ghcr.io: one registry fewer, works on networks that block ghcr.io
+RUN pip install --no-cache-dir uv==0.13.6
 WORKDIR /srv
 COPY services/dashboard/requirements.lock /srv/requirements.lock
 RUN UV_HTTP_TIMEOUT=300 uv pip install --system --no-cache -r /srv/requirements.lock

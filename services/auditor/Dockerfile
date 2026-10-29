@@ -1,6 +1,6 @@
 FROM python:3.11-slim
-# uv installs from the lockfile ~10x faster than pip
-COPY --from=ghcr.io/astral-sh/uv:0.13.6 /uv /usr/local/bin/uv
+# uv (fast installer) from PyPI, not ghcr.io: one registry fewer, works on networks that block ghcr.io
+RUN pip install --no-cache-dir uv==0.13.6
 WORKDIR /srv
 
 # 1) Third-party deps from the lockfile. This layer is cached until requirements.lock changes.

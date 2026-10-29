@@ -27,7 +27,11 @@ if [ ! -f .env ]; then
 fi
 
 echo "Building and starting the services (the first time takes several minutes)..."
-docker compose --profile core up -d --build || { echo "Build failed (often a network hiccup): run ./start.sh again."; exit 1; }
+for try in 1 2 3; do   # flaky networks: finished downloads are cached, so a retry continues
+  docker compose --profile core up -d --build && break
+  [ "$try" = 3 ] && { echo "Build failed 3 times (network?): run ./start.sh again later."; exit 1; }
+  echo "Build attempt $try failed, retrying..."
+done
 
 printf "Waiting for the services"
 for _ in $(seq 1 90); do
