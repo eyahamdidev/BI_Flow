@@ -1,0 +1,59 @@
+{
+  "created": "2026-10-29T15:03:43",
+  "git_commit": "a6f26be",
+  "modules": {
+    "etl": {
+      "status": "ok",
+      "mock": false,
+      "metrics": {
+        "kpi_checks_passed": "5/5",
+        "kpi_checks": {
+          "revenue_delivered": {
+            "dbt": 151206.44,
+            "pandas": 151206.44,
+            "ok": true
+          },
+          "orders_delivered": {
+            "dbt": 963.0,
+            "pandas": 963.0,
+            "ok": true
+          },
+          "avg_delivery_days": {
+            "dbt": 12.456408,
+            "pandas": 12.456408,
+            "ok": true
+          },
+          "late_rate": {
+            "dbt": 0.062305,
+            "pandas": 0.062305,
+            "ok": true
+          },
+          "avg_review_score": {
+            "dbt": 4.156904,
+            "pandas": 4.156904,
+            "ok": true
+          }
+        },
+        "dbt_tests_pass_rate": 0.962,
+        "dbt_tests_failed": 0,
+        "reconciliation_ok": true,
+        "seconds": 18.84
+      },
+      "notes": []
+    },
+    "ingest_quality": {
+      "status": "ok",
+      "mock": false,
+      "metrics": {
+        "schema_error_detection_rate": 1.0,
+        "corrupted_inputs_tested": 20,
+        "score_monotonicity": true,
+        "score_defect_correlation": -1.0,
+        "baseline_score": 100.0,
+        "severely_corrupted_score": 88.5,
+        "reproducibility_rate": 1.0
+      },
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "created": "2026-10-29T15:01:29",
+  "git_commit": "a6f26be",
+  "modules": {
+    "analyst": {
+      "status": "partial",
+      "mock": true,
+      "metrics": {},
+      "notes": [
+        "no eval implemented yet"
+      ]
+    },
+    "auditor": {
+      "status": "partial",
+      "mock": true,
+      "metrics": {},
+      "notes": [
+        "no eval implemented yet"
+      ]
+    },
+    "etl": {
+      "status": "partial",
+      "mock": false,
+      "metrics": {},
+      "notes": [
+        "no eval implemented yet"
+      ]
+    },
+    "ingest_quality": {
+      "status": "ok",
+      "mock": false,
+      "metrics": {
+        "error": "attempted relative import beyond top-level package"
+      },
+      "notes": []
+    },
+    "profile_clean": {
+      "status": "partial",
+      "mock": false,
+      "metrics": {
+        "note": "eval subset not run",
+        "status": "partial"
+      },
+      "notes": [
+        "eval subset not run"
+      ]
+    },
+    "semantic_kpi": {
+      "status": "partial",
+      "mock": true,
+      "metrics": {},
+      "notes": [
+        "no eval implemented yet"
+      ]
+    }
+  }
+}

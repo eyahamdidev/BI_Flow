@@ -36,6 +36,9 @@ services:
     <<: *svc
     build: {context: ., dockerfile: services/etl/Dockerfile}
     ports: ["8101:8101"]
+    # + the committed sample: /v1/eval rebuilds it and checks the numbers against independent pandas
+    volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro",
+              "./tests/fixtures:/srv/tests/fixtures:ro"]
   auditor:
     <<: *svc
     build: {context: ., dockerfile: services/auditor/Dockerfile}

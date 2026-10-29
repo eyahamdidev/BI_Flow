@@ -13,7 +13,7 @@ from .mock_api import mock_api_app
 
 def _eval_fn():
     try:
-        from ..eval.eval_reliability import run_benchmark
+        from eval.eval_reliability import run_benchmark  # services/ingest_quality is on sys.path (not "..": beyond the app package)
         return run_benchmark()
     except Exception as e:
         return {"error": str(e)}

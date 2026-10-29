@@ -1,0 +1,153 @@
+{
+  "dataset": "olist_sample",
+  "runs": 5,
+  "run_ids": [
+    "20261029-145847-9240",
+    "20261029-145919-a50e",
+    "20261029-145940-ce24",
+    "20261029-150003-a8d0",
+    "20261029-150026-6740"
+  ],
+  "statuses": [
+    "ok",
+    "ok",
+    "ok",
+    "ok",
+    "ok"
+  ],
+  "provider": "api",
+  "git_commit": "a6f26be",
+  "config_sha256": "e9b9aa03b85f9a2718b427dc05591ea3e02d583450a759fe67388546b8237982",
+  "end_to_end_seconds": {
+    "p50": 22.81,
+    "p95": 32.53,
+    "all": [
+      32.53,
+      21.15,
+      22.81,
+      22.56,
+      25.15
+    ]
+  },
+  "per_stage_seconds": {
+    "ingest": {
+      "p50": 0.47,
+      "p95": 0.63,
+      "source": "real"
+    },
+    "validate_raw": {
+      "p50": 0.32,
+      "p95": 0.67,
+      "source": "real"
+    },
+    "profile": {
+      "p50": 1.06,
+      "p95": 1.44,
+      "source": "real"
+    },
+    "score_before": {
+      "p50": 0.37,
+      "p95": 1.09,
+      "source": "real"
+    },
+    "clean": {
+      "p50": 2.02,
+      "p95": 5.5,
+      "source": "real"
+    },
+    "validate": {
+      "p50": 0.39,
+      "p95": 0.43,
+      "source": "real"
+    },
+    "score_after": {
+      "p50": 0.69,
+      "p95": 0.99,
+      "source": "real"
+    },
+    "etl": {
+      "p50": 13.75,
+      "p95": 18.26,
+      "source": "real"
+    },
+    "kpi_compute": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "source": "mock"
+    },
+    "kpi_index": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "source": "mock"
+    },
+    "analyse": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "source": "mock"
+    },
+    "dashboard_config": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "source": "mock"
+    },
+    "lineage_graph": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "source": "mock"
+    },
+    "audit": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "source": "mock"
+    }
+  },
+  "llm": {
+    "cold_run_llm_seconds": 4.37,
+    "cached_runs_llm_seconds_p50": 2.91,
+    "cold_run_by_stage": {
+      "clean": 1.54,
+      "summarize": 2.83
+    },
+    "calls_and_cache_hits": [
+      {
+        "calls": 2,
+        "cache_hits": 0
+      },
+      {
+        "calls": 2,
+        "cache_hits": 1
+      },
+      {
+        "calls": 2,
+        "cache_hits": 1
+      },
+      {
+        "calls": 2,
+        "cache_hits": 1
+      },
+      {
+        "calls": 2,
+        "cache_hits": 1
+      }
+    ],
+    "cold_wall_seconds": 32.53,
+    "cached_wall_seconds_p50": 22.56
+  },
+  "reproducible": true,
+  "fingerprints": {
+    "dim_customer": "0bddbd729ac404f6",
+    "dim_date": "bb26815af7b13869",
+    "dim_product": "8327fe1c92e51b9e",
+    "dim_seller": "ed95cae81b96dc15",
+    "fact_order_items": "416bb212d2365ddf",
+    "fact_orders": "c6d1557b4bba4634"
+  },
+  "resume": {
+    "from": "etl",
+    "wall_seconds": 21.34,
+    "status": "ok",
+    "full_run_p50_seconds": 22.81,
+    "saved_pct": 6.4
+  },
+  "manual_baseline": null
+}
