@@ -1,0 +1,7 @@
+# Containers are Linux: keep LF line endings in the repo so shell scripts and YAML work everywhere.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.pdf binary
+*.parquet binary
+*.duckdb binary
