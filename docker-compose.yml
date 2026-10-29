@@ -7,7 +7,7 @@ x-svc: &svc
     - path: .env
       required: false
   environment: &env
-    BIFLOW_MOCK: ${BIFLOW_MOCK:-1}
+    BIFLOW_MOCK: ${BIFLOW_MOCK:-0}        # every module is implemented: real by default (CI/tests set 1)
     DATA_DIR: /srv/data          # same layout as the repo: YAML paths like data/raw/olist work unchanged
     URL_INGEST_QUALITY: http://ingest_quality:8104
     URL_PROFILE_CLEAN: http://profile_clean:8103

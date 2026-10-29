@@ -1,5 +1,5 @@
 # Second dataset (BO5 "scale across sectors"): urban mobility, UCI Bike Sharing (Capital Bikeshare, Washington DC),
-# daily rentals 2011-2012, via the public Microsoft ml-basics mirror (data/raw/bike_share/daily-bike-share.csv).
+# daily rentals 2011-2012, via the public Microsoft ml-basics mirror (data/demo/bike_share/daily-bike-share.csv).
 # Onboarded with CONFIG ONLY: this file + configs/marts/mobility + configs/kpis/mobility.yaml +
 # configs/recommendations/mobility.yaml. No Python change under services/.
 name: bike_share
@@ -9,7 +9,7 @@ recommendations_file: configs/recommendations/mobility.yaml
 
 source:
   type: csv
-  path: data/raw/bike_share
+  path: data/demo/bike_share          # committed demo copy (see data/demo/README.md)
   tables:
     rentals: daily-bike-share.csv
 

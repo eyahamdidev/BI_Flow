@@ -137,7 +137,23 @@ def _fixture(prompt_id: str) -> str | None:
 
 
 # ---------------------------------------------------------------- HTTP with retry
+_down_until = 0.0  # circuit breaker: after a connection failure, skip calls for a while instead of waiting each time
+
+
+def llm_configured() -> bool:
+    """False when API mode has no real key: every LLM step then uses its no-LLM fallback immediately."""
+    if provider() != "api":
+        return True
+    key = os.getenv("LLM_API_KEY", "").strip()
+    return bool(key) and not key.startswith(("sk-...", "gsk_PUT", "your"))
+
+
 def _post(path: str, payload: dict[str, Any], timeout: float | None = None, retries: int | None = None) -> dict[str, Any]:
+    global _down_until
+    if not llm_configured():
+        raise LLMUnavailable("no LLM API key configured (LLM_API_KEY): using the no-LLM fallback")
+    if time.monotonic() < _down_until:
+        raise LLMUnavailable("LLM endpoint unreachable a moment ago: using the no-LLM fallback")
     # Bounded so one slow provider cannot eat a stage's whole budget (was 60 s x 4 attempts = 4 min per call).
     timeout = timeout or float(os.getenv("LLM_TIMEOUT_S", "30"))
     retries = retries or int(os.getenv("LLM_RETRIES", "3"))
@@ -161,6 +177,8 @@ def _post(path: str, payload: dict[str, Any], timeout: float | None = None, retr
             last = e
             time.sleep(delay)
             delay *= 2
+    if isinstance(last, (httpx.ConnectError, httpx.ConnectTimeout)):
+        _down_until = time.monotonic() + 60  # do not make every following call wait for the same dead endpoint
     raise LLMUnavailable(str(last))
 
 
