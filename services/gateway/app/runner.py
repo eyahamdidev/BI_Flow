@@ -373,3 +373,23 @@ def ask(run_id: str, question: str) -> dict[str, Any]:
     }
     with httpx.Client() as client:
         return call_module(client, {"module": "semantic_kpi", "timeout_s": 30}, req)
+
+
+def list_datasets() -> list[dict[str, Any]]:
+    """Datasets that can be run: one per configs/datasets/<name>.yaml (drafts from uploads excluded)."""
+    out = []
+    for f in sorted((repo_root() / "configs" / "datasets").glob("*.yaml")):
+        if f.stem.startswith("uploaded_"):
+            continue
+        try:
+            cfg = load_dataset_config(f)
+        except Exception:  # noqa: BLE001  a broken config is listed as unavailable, not hidden
+            out.append({"name": f.stem, "available": False, "note": "config could not be read"})
+            continue
+        src = cfg.get("source") or {}
+        files = list((src.get("tables") or {}).values())
+        folder = repo_root() / str(src.get("path", ""))
+        present = sum((folder / x).exists() for x in files)
+        out.append({"name": f.stem, "domain": cfg.get("domain"), "tables": len(files), "available": present == len(files),
+                    "note": "" if present == len(files) else f"data missing in {src.get('path')} ({present}/{len(files)} files)"})
+    return out

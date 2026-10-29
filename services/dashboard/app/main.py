@@ -10,15 +10,29 @@ st.set_page_config(page_title="BIFlow", page_icon="📊", layout="wide")
 runs = loader.runs_with_kpis()
 with st.sidebar:
     st.title("BIFlow")
-    choice = st.selectbox("Run", (runs + ["(demo fixtures)"]) if runs else ["(demo fixtures)"])
+    options = (runs + ["(demo fixtures)"]) if runs else ["(demo fixtures)"]
+    choice = st.selectbox("Run", options, format_func=lambda r: r if r.startswith("(") else loader.run_label(r),
+                          help="Each run is a frozen result: the data, the config and every number at that time. "
+                               "Switch runs to see another dataset or an earlier result.")
     with st.expander("Start a new run"):
-        ds = st.text_input("Dataset", "olist_sample")
-        if st.button("Run pipeline"):
-            rid = gateway.start_run(ds)
-            if rid:
-                st.success(f"started run {rid}: refresh in a minute")
-            else:
-                st.error("gateway not reachable")
+        sets = gateway.datasets()
+        if not sets:
+            st.caption("gateway not reachable")
+        else:
+            names = [d["name"] for d in sets]
+            info = {d["name"]: d for d in sets}
+            ds = st.selectbox("Dataset", names, index=names.index("olist_sample") if "olist_sample" in names else 0,
+                              format_func=lambda n: f"{n} ({info[n].get('domain')})" + ("" if info[n]["available"] else " · data missing"),
+                              help="One entry per configs/datasets/<name>.yaml: the config says where the files are, "
+                                   "their columns, cleaning rules and KPIs.")
+            if not info[ds]["available"]:
+                st.warning(info[ds]["note"])
+            if st.button("Run pipeline", disabled=not info[ds]["available"]):
+                rid = gateway.start_run(ds)
+                if rid:
+                    st.success(f"started: refresh in a minute or two (run {rid})")
+                else:
+                    st.error("gateway not reachable")
 bundle = loader.load(None if choice.startswith("(") else choice)
 st.sidebar.caption(f"data source: {bundle.source}" + (f" · run {bundle.run_id}" if bundle.run_id else ""))
 

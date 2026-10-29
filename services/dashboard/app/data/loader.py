@@ -100,3 +100,23 @@ def load(run_id: str | None = None) -> Bundle:
         quality=_json(FIXTURES / "quality_score.json", {}),
         lineage=_json(FIXTURES / "lineage_graph.json", {}),
     )
+
+
+STATUS_WORD = {"ok": "ok", "failed": "failed", "running": "running"}
+
+
+def run_label(run_id: str) -> str:
+    """'olist · 29 Oct 2026 19:44 · ok' instead of the raw id (the id stays visible at the end)."""
+    m = _manifest(run_id)
+    try:
+        when = f"{run_id[6:8]}/{run_id[4:6]}/{run_id[0:4]} {run_id[9:11]}:{run_id[11:13]}"
+    except IndexError:
+        when = ""
+    status = m.get("status", "?")
+    if status == "running":  # no stage written for 30 min: the run was stopped, it will not finish
+        import time
+
+        mf = data_dir() / "runs" / run_id / "run_manifest.json"
+        if mf.exists() and time.time() - mf.stat().st_mtime > 1800:
+            status = "interrupted"
+    return f"{m.get('dataset', '?')} · {when} · {STATUS_WORD.get(status, status)}  ({run_id[-4:]})"

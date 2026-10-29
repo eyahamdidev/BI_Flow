@@ -29,3 +29,12 @@ def start_run(dataset: str = "olist") -> str | None:
         return httpx.post(f"{BASE}/api/runs", json={"dataset": dataset}, timeout=10).json()["run_id"]
     except Exception:  # noqa: BLE001
         return None
+
+
+def datasets() -> list[dict]:
+    """Datasets that can be run (from configs/datasets/ on the gateway), with whether their data is present."""
+    try:
+        r = httpx.get(f"{BASE}/api/datasets", timeout=10)
+        return r.json() if r.status_code == 200 else []
+    except httpx.HTTPError:
+        return []

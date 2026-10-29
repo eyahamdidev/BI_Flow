@@ -4,6 +4,26 @@ import streamlit as st
 from ..components.kpi_tile import fmt, tile
 from ..data.loader import Bundle
 
+STAGES = {  # pipeline stage -> (plain title, what it does)
+    "ingest": ("Load the raw files", "Reads the source tables (CSV, SQL or API) into the run."),
+    "validate_raw": ("Check the raw files", "Columns and types match what the dataset config expects."),
+    "profile": ("Scan the data (before cleaning)", "Missing values, duplicates, odd values per column."),
+    "score_before": ("Quality score before cleaning", "A 0-100 score: completeness, uniqueness, validity, consistency."),
+    "clean": ("Clean the data", "Fixes duplicates, dates, categories, missing values; flags outliers; logs every change."),
+    "profile_after": ("Scan the data again (after cleaning)", "Same scan, to show what cleaning changed."),
+    "validate": ("Check the cleaned data", "The cleaned tables meet the expected format."),
+    "score_after": ("Quality score after cleaning", "Same score, to measure the improvement."),
+    "etl": ("Build the analysis tables", "Joins the tables into one row per order (fact table) + dimensions; runs data tests."),
+    "kpi_compute": ("Calculate the KPIs", "Every KPI per month, in total and by state, category, payment type..."),
+    "kpi_index": ("Index the KPI definitions", "Makes KPIs searchable by plain questions (Explain tab)."),
+    "analyse": ("Find trends, anomalies and causes", "Trends, unusual months, what drove each change, recommendations."),
+    "dashboard_config": ("Prepare this dashboard", "Chooses the tiles and charts from the KPIs and insights."),
+    "lineage_graph": ("Map the data lineage", "Links every table, KPI and insight to where it came from."),
+    "audit": ("Write the audit report", "Explains in plain words what happened at each step (Lineage tab)."),
+}
+STATUS = {"ok": "✅ Done", "partial": "⚠️ Done, see notes", "failed": "❌ Failed", "skipped": "⏭ Skipped",
+          "running": "⏳ Running", "pending": "… Waiting"}
+
 
 def render(b: Bundle) -> None:
     m = b.manifest
@@ -29,8 +49,14 @@ def render(b: Bundle) -> None:
             with cols[i % 3]:
                 tile(d, b.values[(b.values.kpi_id == d["id"]) & (b.values.dimension == "total")])
     if m:
-        with st.expander("Pipeline stages"):
-            st.dataframe(pd.DataFrame([{"stage": k, "status": v["status"], "seconds": v.get("seconds"),
-                                        "source": "seeded" if v.get("seeded_from") else ("mock" if v.get("mock") else "real")}
-                                       for k, v in m["stages"].items()]), hide_index=True, width="stretch")
+        with st.expander("Pipeline stages: what happened to the data, step by step"):
+            rows = []
+            for i, (k, v) in enumerate(m["stages"].items(), start=1):
+                title, what = STAGES.get(k, (k, ""))
+                rows.append({"step": f"{i}. {title}", "what it does": what, "result": STATUS.get(v["status"], v["status"]),
+                             "seconds": v.get("seconds"),
+                             "ran with": "copied input (dev)" if v.get("seeded_from") else ("test stand-in" if v.get("mock") else "real module")})
+            st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+            st.caption("'Done, see notes' is not an error: the step worked and left something to look at "
+                       "(e.g. rows sent for human review). 'Failed' steps are still explained by the audit step.")
     st.caption(f"source: {b.source}" + (f" / run {b.run_id}" if b.run_id else " (demo fixtures)"))

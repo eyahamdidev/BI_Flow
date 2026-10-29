@@ -10,6 +10,7 @@ services:
       - "./config:/srv/config:ro"
       - "./prompts:/srv/prompts:ro"
       - "./.git:/srv/repo/.git:ro"
+      - "./tests/fixtures:/srv/tests/fixtures:ro"
       - "./services/gateway:/srv/service"
       - "./contracts/biflow_contracts:/usr/local/lib/python3.11/site-packages/biflow_contracts:ro"
   etl:

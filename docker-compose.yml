@@ -37,7 +37,8 @@ services:
     build: {context: ., dockerfile: services/gateway/Dockerfile, args: *build_args}
     ports: ["8000:8000"]
     # .git read-only so the run manifest can record the commit that produced each run
-    volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro", "./.git:/srv/repo/.git:ro"]
+    volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro", "./.git:/srv/repo/.git:ro",
+              "./tests/fixtures:/srv/tests/fixtures:ro"]
     environment:
       <<: *env
       GIT_DIR: /srv/repo/.git

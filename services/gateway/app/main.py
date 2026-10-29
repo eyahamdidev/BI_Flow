@@ -84,3 +84,9 @@ def api_explain(body: ExplainBody) -> dict[str, Any]:
 def api_ask(body: AskBody) -> dict[str, Any]:
     """Question in plain words -> KPI id (BO5), so the dashboard can explain "sales last month"."""
     return runner.ask(body.run_id, body.question)
+
+
+@app.get("/api/datasets")
+def api_datasets() -> list[dict[str, Any]]:
+    """Datasets the dashboard can offer in its "Start a new run" dropdown (and whether their data is present)."""
+    return runner.list_datasets()
