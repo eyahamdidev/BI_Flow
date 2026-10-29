@@ -16,6 +16,8 @@ x-svc: &svc
     URL_ANALYST: http://analyst:8106
     URL_AUDITOR: http://auditor:8102
     LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434/v1}
+    BIFLOW_CONFIG_DIR: /srv/config
+    BIFLOW_CACHE: /data/.cache/llm.sqlite   # on the mounted volume: survives rebuilds
   extra_hosts: ["host.docker.internal:host-gateway"]
   volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro"]
   profiles: ["core"]
@@ -25,6 +27,11 @@ services:
     <<: *svc
     build: {context: ., dockerfile: services/gateway/Dockerfile}
     ports: ["8000:8000"]
+    # .git read-only so the run manifest can record the commit that produced each run
+    volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./.git:/srv/repo/.git:ro"]
+    environment:
+      <<: *env
+      GIT_DIR: /srv/repo/.git
   etl:
     <<: *svc
     build: {context: ., dockerfile: services/etl/Dockerfile}

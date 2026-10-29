@@ -1,0 +1,13 @@
+# Keep the build context small and secret-free. Data and config are MOUNTED at runtime (docker-compose.yml).
+.git
+.env
+data/
+mlruns/
+.cache/
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/*.duckdb
+**/target/
+**/dbt_packages/
+**/logs/

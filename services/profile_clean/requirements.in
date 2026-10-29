@@ -4,3 +4,4 @@ numpy
 scikit-learn
 scipy
 # contracts are installed separately: pip install ../../contracts
+uvicorn

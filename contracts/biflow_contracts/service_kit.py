@@ -31,8 +31,9 @@ from .models import (
 Handler = Callable[[RunRequest], "RunResponse | dict[str, Any]"]
 
 
-def _is_mock() -> bool:
-    return os.getenv("BIFLOW_MOCK", "1") == "1"
+def _is_mock(module: str) -> bool:
+    """BIFLOW_MOCK_<MODULE> (e.g. BIFLOW_MOCK_ETL=0) wins over the global BIFLOW_MOCK, so modules go real one at a time."""
+    return os.getenv(f"BIFLOW_MOCK_{module.upper()}", os.getenv("BIFLOW_MOCK", "1")) == "1"
 
 
 def create_app(
@@ -57,7 +58,7 @@ def create_app(
 
     @app.get("/health")
     def health() -> dict[str, Any]:
-        return {"status": "ok", "module": module, "mock": _is_mock()}
+        return {"status": "ok", "module": module, "mock": _is_mock(module)}
 
     @app.get("/v1/meta", response_model=MetaResponse)
     def meta() -> MetaResponse:
@@ -67,7 +68,7 @@ def create_app(
             models=_models(),
             prompt_versions=prompt_versions or {},
             lineage_steps=lineage_steps or [],
-            mock=_is_mock(),
+            mock=_is_mock(module),
         )
 
     @app.post("/v1/run", response_model=RunResponse)
@@ -91,7 +92,7 @@ def create_app(
             return fail("BAD_INPUT", f"unknown mode '{req.mode}'; supported: {sorted(handlers)}", 400)
 
         try:
-            if _is_mock():
+            if _is_mock(module):
                 fx = mock_dir / f"{req.mode}.json"
                 if not fx.exists():
                     return fail("INTERNAL", f"mock fixture missing: {fx.name}", 500)
@@ -114,7 +115,7 @@ def create_app(
 
     @app.post("/v1/eval", response_model=EvalResponse)
     def run_eval() -> EvalResponse:
-        if _is_mock() or eval_fn is None:
+        if _is_mock(module) or eval_fn is None:
             return EvalResponse(module=module, status="partial", notes=["no eval implemented yet"])
         return EvalResponse(module=module, status="ok", metrics=eval_fn())
 

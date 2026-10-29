@@ -2,3 +2,4 @@ networkx
 jinja2
 pyyaml
 # contracts are installed separately: pip install ../../contracts
+uvicorn

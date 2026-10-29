@@ -5,3 +5,4 @@ pandas
 pyarrow
 jinja2
 # contracts are installed separately: pip install ../../contracts
+uvicorn

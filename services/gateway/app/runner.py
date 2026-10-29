@@ -43,10 +43,26 @@ def _now() -> str:
 
 
 def _git_commit() -> str | None:
+    """Short commit hash. Uses `git` if installed, else reads the .git files directly (the container has no git)."""
     try:
         return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], stderr=subprocess.DEVNULL, text=True).strip()
     except Exception:  # noqa: BLE001
-        return None
+        pass
+    try:
+        git_dir = Path(os.getenv("GIT_DIR", ".git"))
+        head = (git_dir / "HEAD").read_text().strip()
+        if not head.startswith("ref: "):
+            return head[:7]  # detached HEAD holds the hash itself
+        ref = head[5:]
+        ref_file = git_dir / ref
+        if ref_file.exists():
+            return ref_file.read_text().strip()[:7]
+        for line in (git_dir / "packed-refs").read_text().splitlines():  # refs packed by `git gc`
+            if line.endswith(" " + ref):
+                return line.split()[0][:7]
+    except Exception:  # noqa: BLE001
+        pass
+    return None
 
 
 def _sha256(p: Path) -> str | None:
