@@ -1,12 +1,13 @@
-# stage -> module -> mode. Owner: BO1. Sequential for now; port to LangGraph nodes in Phase 2.
+# stage -> module -> mode. Owner: BO1. Compiled into a LangGraph StateGraph by runner.build_graph() (one node per stage).
 # always: true  = still runs after an upstream failure so the failure is explained (Auditor).
 # timeout_s follows the spec budgets (2.3).
 stages:
   - {name: ingest,           module: ingest_quality, mode: ingest,           timeout_s: 60}
+  - {name: validate_raw,     module: ingest_quality, mode: validate,         timeout_s: 60,  options: {stage: raw}}   # input contract: catch bad files before 6 stages run
   - {name: profile,          module: profile_clean,  mode: profile,          timeout_s: 60,  options: {stage: before}}
   - {name: score_before,     module: ingest_quality, mode: score,            timeout_s: 60,  options: {stage: before}}
   - {name: clean,            module: profile_clean,  mode: clean,            timeout_s: 120}
-  - {name: validate,         module: ingest_quality, mode: validate,         timeout_s: 60}
+  - {name: validate,         module: ingest_quality, mode: validate,         timeout_s: 60,  options: {stage: clean}}  # output contract on cleaned data
   - {name: score_after,      module: ingest_quality, mode: score,            timeout_s: 60,  options: {stage: after}}
   - {name: etl,              module: etl,            mode: run,              timeout_s: 180}
   - {name: kpi_compute,      module: semantic_kpi,   mode: compute,          timeout_s: 90}

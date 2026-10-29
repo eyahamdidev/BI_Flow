@@ -3,6 +3,6 @@ uvicorn
 httpx
 pyyaml
 pydantic
-# langgraph   # BO1: swap runner.py loop for LangGraph nodes (Phase 2)
+langgraph
 # typer
 # mlflow

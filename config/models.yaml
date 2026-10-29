@@ -9,9 +9,9 @@ profiles:
     llm_main: llama3.2:3b
     llm_fast: llama3.2:3b
     embedder: nomic-embed-text
-  api:                          # any OpenAI-compatible provider. Names below are Groq examples: confirm on day 1.
-    llm_main: llama-3.3-70b-versatile
-    llm_fast: llama-3.1-8b-instant
+  api:                          # any OpenAI-compatible provider. Names below are Groq, checked 2026-10-29 (GET /models).
+    llm_main: openai/gpt-oss-120b   # was llama-3.3-70b-versatile: removed from Groq's catalog
+    llm_fast: openai/gpt-oss-20b    # was llama-3.1-8b-instant: removed. Alternative to benchmark: qwen/qwen3.8-27b
     embedder: null              # most chat APIs have no embeddings: use EMBED_PROVIDER=ollama or local
 
 embedder_options:

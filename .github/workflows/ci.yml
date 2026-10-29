@@ -51,4 +51,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
       - run: pip install -e contracts uvicorn pytest httpx pyyaml
+      # the smoke test starts every module in this interpreter: modules import their real libraries
+      # (duckdb, pandas, langgraph...) even in mock mode, so install each module's dependencies
+      - run: for s in ingest_quality profile_clean etl semantic_kpi analyst auditor gateway; do pip install -r services/$s/requirements.in; done
       - run: python -m pytest tests/smoke -q

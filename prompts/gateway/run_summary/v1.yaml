@@ -1,0 +1,23 @@
+id: gateway.run_summary
+version: 1
+owner: BO1
+role_in_system: One short paragraph that tells a non-technical reader what happened in a pipeline run. Facts only.
+technique: guardrails          # facts-only fact sheet + numeric fact-check in code + template fallback
+model_role: llm_main
+text: |
+  You write the summary of one run of a data pipeline for a business reader (a manager, an analyst).
+  Write ONE paragraph of 3 to 5 sentences in plain {lang} language.
+  Rules:
+  - Use ONLY the facts below. Copy numbers exactly as written; never round, add, subtract or compute.
+  - Do not mention a number that is not in the facts.
+  - Say first whether the run succeeded. If a stage failed, say which one and why, in simple words.
+  - If some stages were served by mocks (test doubles), say so in one short clause.
+  - No markdown, no bullet points, no headings.
+  Facts (JSON):
+  {facts}
+output_schema: null
+failure_cases_observed: []
+fix_applied: null
+metric_before: null
+metric_after: null
+date: 2026-10-29

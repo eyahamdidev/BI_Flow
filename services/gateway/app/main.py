@@ -16,6 +16,7 @@ app = FastAPI(title="BIFlow gateway")
 class RunBody(BaseModel):
     dataset: str = "olist"
     resume_run_id: str | None = None
+    ingest_from: str | None = None  # DEV: reuse data/runs/<id>/00_ingest instead of the ingest module
 
 
 class ExplainBody(BaseModel):
@@ -35,6 +36,12 @@ def meta() -> dict[str, Any]:
     return {"module": "gateway", "stages": [s["name"] for s in runner.load_graph()]}
 
 
+@app.get("/api/graph")
+def api_graph() -> dict[str, str]:
+    """The pipeline graph as Mermaid text (the dashboard or docs can render it)."""
+    return {"mermaid": runner.build_graph().get_graph().draw_mermaid()}
+
+
 @app.post("/api/runs")
 def start_run(body: RunBody) -> dict[str, str]:
     import uuid
@@ -42,7 +49,9 @@ def start_run(body: RunBody) -> dict[str, str]:
 
     run_id = body.resume_run_id or datetime.now().strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:4]
     threading.Thread(
-        target=runner.run_pipeline, kwargs=dict(dataset=body.dataset, run_id=run_id, resume=bool(body.resume_run_id)), daemon=True
+        target=runner.run_pipeline,
+        kwargs=dict(dataset=body.dataset, run_id=run_id, resume=bool(body.resume_run_id), ingest_from=body.ingest_from),
+        daemon=True,
     ).start()
     return {"run_id": run_id}
 

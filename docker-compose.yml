@@ -19,7 +19,7 @@ x-svc: &svc
     BIFLOW_CONFIG_DIR: /srv/config
     BIFLOW_CACHE: /data/.cache/llm.sqlite   # on the mounted volume: survives rebuilds
   extra_hosts: ["host.docker.internal:host-gateway"]
-  volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro"]
+  volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro"]
   profiles: ["core"]
 
 services:
@@ -28,7 +28,7 @@ services:
     build: {context: ., dockerfile: services/gateway/Dockerfile}
     ports: ["8000:8000"]
     # .git read-only so the run manifest can record the commit that produced each run
-    volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./.git:/srv/repo/.git:ro"]
+    volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro", "./.git:/srv/repo/.git:ro"]
     environment:
       <<: *env
       GIT_DIR: /srv/repo/.git
