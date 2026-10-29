@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from .completeness import completeness
+from .constants import EVAL_LINEAGE_STEPS
 from .factcheck import fact_check, missing_numbers, unsupported_claims
 from .io_utils import load_events
 from .templates import explain_template
@@ -49,7 +50,8 @@ def _labelled_recall(items: list[dict[str, Any]]) -> dict[str, Any]:
 
 def eval_metrics() -> dict[str, Any]:
     events, _warnings = load_events(_EVAL / "events.jsonl")
-    coverage = completeness(events, {"offline_registry": True})
+    registry = [step for steps in EVAL_LINEAGE_STEPS.values() for step in steps]
+    coverage = completeness(events, {"registered_steps": registry})
 
     planted_doc = json.loads((_EVAL / "bad_prose.json").read_text(encoding="utf-8"))
     planted = planted_doc.get("items") if isinstance(planted_doc, dict) else planted_doc

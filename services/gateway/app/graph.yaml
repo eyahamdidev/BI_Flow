@@ -7,6 +7,7 @@ stages:
   - {name: profile,          module: profile_clean,  mode: profile,          timeout_s: 60,  options: {stage: before}}
   - {name: score_before,     module: ingest_quality, mode: score,            timeout_s: 60,  options: {stage: before}}
   - {name: clean,            module: profile_clean,  mode: clean,            timeout_s: 120}
+  - {name: profile_after,    module: profile_clean,  mode: profile,          timeout_s: 60,  options: {stage: after}}  # before/after profile diff = cleaning evidence
   - {name: validate,         module: ingest_quality, mode: validate,         timeout_s: 60,  options: {stage: clean}}  # output contract on cleaned data
   - {name: score_after,      module: ingest_quality, mode: score,            timeout_s: 60,  options: {stage: after}}
   - {name: etl,              module: etl,            mode: run,              timeout_s: 180}

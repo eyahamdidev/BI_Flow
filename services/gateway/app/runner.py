@@ -157,7 +157,8 @@ def module_health(client: httpx.Client, modules: set[str]) -> dict[str, dict[str
     for m in sorted(modules):
         try:
             h = client.get(f"{module_url(m)}/v1/meta", timeout=10).json()
-            out[m] = {"up": True, "mock": bool(h.get("mock")), "contract_version": h.get("contract_version")}
+            out[m] = {"up": True, "mock": bool(h.get("mock")), "contract_version": h.get("contract_version"),
+                      "lineage_steps": h.get("lineage_steps") or []}
         except Exception:  # noqa: BLE001
             out[m] = {"up": False, "mock": None}
     return out
@@ -212,10 +213,17 @@ def _stage_node(stage: dict[str, Any], ctx: _Ctx):
         if st["status"] == "ok" and (ctx.resume or st.get("seeded_from")):
             return state  # done in an earlier attempt (or seeded): keep it
 
+        options = dict(stage.get("options", {}))
+        if stage["module"] == "auditor":
+            # Rule 2: modules never call each other. The Auditor's completeness check needs every module's registered
+            # lineage steps; the gateway already read them from /v1/meta, so it passes them instead.
+            options.setdefault("registered_steps", sorted({
+                step for mod, info in manifest["modules"].items() if mod != "auditor" for step in info.get("lineage_steps", [])
+            }))
         req = {
             "request_id": str(uuid.uuid4()), "run_id": manifest["run_id"], "dataset": manifest["dataset"],
             "mode": stage["mode"], "config_ref": ctx.config_ref, "inputs": dict(manifest["artifacts"]),
-            "options": stage.get("options", {}), "lang": ctx.lang,
+            "options": options, "lang": ctx.lang,
         }
         st.clear()
         st.update(status="running", started=_now(), module=stage["module"],
@@ -237,6 +245,13 @@ def _stage_node(stage: dict[str, Any], ctx: _Ctx):
         st["finished"] = _now()
 
         failed = state["failed"]
+        if resp.get("status") in ("ok", "partial"):
+            # Trust but verify: a module that says "ok" must have written every output it declares.
+            # (mocks are exempt: they return canned paths without writing files)
+            missing = [] if st.get("mock") else [a["path"] for a in resp.get("outputs", []) if not (data_dir() / a["path"]).exists()]
+            if missing:
+                resp = {**resp, "status": "error", "error": {
+                    "code": "INTERNAL", "message": f"module answered {resp['status']} but declared outputs are missing: {missing[:3]}"}}
         if resp.get("status") in ("ok", "partial"):
             st["status"] = resp["status"]
             st["metrics"] = resp.get("metrics", {})

@@ -24,6 +24,22 @@ from biflow_contracts import RunRequest
 
 
 def run_benchmark() -> dict[str, Any]:
+    """Runs inside the LIVE service (POST /v1/eval): it must leave the process exactly as it found it.
+    The benchmark points DATA_DIR at a temporary folder; restore it afterwards, otherwise every later ingest writes
+    into a deleted temp folder while still answering "ok" (seen in integration: profile then found no input)."""
+    import os
+
+    saved = os.environ.get("DATA_DIR")
+    try:
+        return _run_benchmark()
+    finally:
+        if saved is None:
+            os.environ.pop("DATA_DIR", None)
+        else:
+            os.environ["DATA_DIR"] = saved
+
+
+def _run_benchmark() -> dict[str, Any]:
     with tempfile.TemporaryDirectory() as tmp_str:
         tmp_dir = Path(tmp_str)
         data_dir = tmp_dir / "data"

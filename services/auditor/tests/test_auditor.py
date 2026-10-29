@@ -263,11 +263,16 @@ def test_citations_and_row_continuity():
 def test_static_registry_matches_other_modules():
     for module, expected in STATIC_LINEAGE_STEPS.items():
         tree = ast.parse((ROOT / "services" / module / "app" / "main.py").read_text(encoding="utf-8"))
+        assigns = {t.id: n.value for n in ast.walk(tree) if isinstance(n, ast.Assign) for t in n.targets if isinstance(t, ast.Name)}
         found = None
         for node in ast.walk(tree):
             if isinstance(node, ast.keyword) and node.arg == "lineage_steps":
-                found = ast.literal_eval(node.value)
-        assert found == expected
+                value = assigns.get(node.value.id, node.value) if isinstance(node.value, ast.Name) else node.value
+                if isinstance(value, ast.Call) and getattr(value.func, "id", "") == "sorted":  # e.g. sorted({...})
+                    found = sorted(ast.literal_eval(value.args[0]))
+                else:
+                    found = ast.literal_eval(value)
+        assert found == expected, module
 
 
 def test_upstream_follows_raw_clean_dbt_and_sql():
