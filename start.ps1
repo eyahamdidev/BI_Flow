@@ -25,6 +25,14 @@ if (-not (Test-Path .env)) {
     }
 }
 
+# Docker Desktop may route all container traffic (also image builds) through its own proxy: pass it on automatically.
+$proxy = (docker info --format "{{.HTTPSProxy}}" 2>$null)
+if ($proxy -and -not (Select-String -Path .env -Pattern '^HTTPS_PROXY=' -Quiet)) {
+    if ($proxy -notmatch '^https?://') { $proxy = "http://$proxy" }
+    Add-Content .env "`n# added by start.ps1: Docker reports an HTTP proxy`nHTTPS_PROXY=$proxy`nHTTP_PROXY=$proxy"
+    Write-Host "Docker uses a proxy ($proxy): added to .env."
+}
+
 Write-Host "Building and starting the services (the first time takes several minutes)..."
 for ($try = 1; $try -le 3; $try++) {   # flaky networks: finished downloads are cached, so a retry continues
     docker compose --profile core up -d --build

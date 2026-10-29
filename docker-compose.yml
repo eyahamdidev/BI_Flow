@@ -2,6 +2,11 @@
 # docker compose --profile core --profile ollama up   (adds a local Ollama container)
 # docker compose --profile core --profile ml up       (adds MLflow)
 # Developers who run Ollama natively skip the `ollama` profile and set LLM_BASE_URL in .env.
+# Build-time proxy (only if your Docker requires one; empty = direct). The start scripts fill it in .env automatically.
+x-build-args: &build_args
+  HTTP_PROXY: ${HTTP_PROXY:-}
+  HTTPS_PROXY: ${HTTPS_PROXY:-}
+
 x-svc: &svc
   env_file:
     - path: .env
@@ -29,7 +34,7 @@ x-svc: &svc
 services:
   gateway:
     <<: *svc
-    build: {context: ., dockerfile: services/gateway/Dockerfile}
+    build: {context: ., dockerfile: services/gateway/Dockerfile, args: *build_args}
     ports: ["8000:8000"]
     # .git read-only so the run manifest can record the commit that produced each run
     volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro", "./.git:/srv/repo/.git:ro"]
@@ -38,36 +43,36 @@ services:
       GIT_DIR: /srv/repo/.git
   etl:
     <<: *svc
-    build: {context: ., dockerfile: services/etl/Dockerfile}
+    build: {context: ., dockerfile: services/etl/Dockerfile, args: *build_args}
     ports: ["8101:8101"]
     # + the committed sample: /v1/eval rebuilds it and checks the numbers against independent pandas
     volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro",
               "./tests/fixtures:/srv/tests/fixtures:ro"]
   auditor:
     <<: *svc
-    build: {context: ., dockerfile: services/auditor/Dockerfile}
+    build: {context: ., dockerfile: services/auditor/Dockerfile, args: *build_args}
     ports: ["8102:8102"]
   profile_clean:
     <<: *svc
-    build: {context: ., dockerfile: services/profile_clean/Dockerfile}
+    build: {context: ., dockerfile: services/profile_clean/Dockerfile, args: *build_args}
     ports: ["8103:8103"]
   ingest_quality:
     <<: *svc
-    build: {context: ., dockerfile: services/ingest_quality/Dockerfile}
+    build: {context: ., dockerfile: services/ingest_quality/Dockerfile, args: *build_args}
     ports: ["8104:8104"]
     # + the committed sample, so `--dataset olist_sample` can ingest it (configs/datasets/olist_sample.yaml)
     volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro",
               "./tests/fixtures:/srv/tests/fixtures:ro"]
   semantic_kpi:
     <<: *svc
-    build: {context: ., dockerfile: services/semantic_kpi/Dockerfile}
+    build: {context: ., dockerfile: services/semantic_kpi/Dockerfile, args: *build_args}
     ports: ["8105:8105"]
   analyst:
     <<: *svc
-    build: {context: ., dockerfile: services/analyst/Dockerfile}
+    build: {context: ., dockerfile: services/analyst/Dockerfile, args: *build_args}
     ports: ["8106:8106"]
   dashboard:
-    build: {context: ., dockerfile: services/dashboard/Dockerfile}
+    build: {context: ., dockerfile: services/dashboard/Dockerfile, args: *build_args}
     environment: {DATA_DIR: /srv/data, GATEWAY_URL: "http://gateway:8000"}
     volumes: ["./data:/srv/data:ro"]
     ports: ["8501:8501"]
