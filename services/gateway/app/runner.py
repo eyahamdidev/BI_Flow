@@ -99,6 +99,46 @@ def _gateway_event(run_id: str, step: str, **kw: Any) -> dict[str, Any]:
             "method": "deterministic", **kw}
 
 
+def repo_root() -> Path:
+    """Folder holding configs/ (repo root locally, /srv in the container)."""
+    here = Path(__file__).resolve()
+    for p in [here, *here.parents]:
+        if (p / "configs" / "datasets").is_dir():
+            return p
+    return Path.cwd().resolve()
+
+
+def _deep_merge(base: dict[str, Any], over: dict[str, Any]) -> dict[str, Any]:
+    out = dict(base)
+    for k, v in over.items():
+        out[k] = _deep_merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
+    return out
+
+
+def load_dataset_config(path: Path, _seen: tuple[Path, ...] = ()) -> dict[str, Any]:
+    """Read a dataset YAML, resolving `extends: other.yaml` (deep merge, child wins; chains allowed)."""
+    if path in _seen:
+        raise ValueError(f"circular `extends`: {' -> '.join(map(str, (*_seen, path)))}")
+    cfg = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    parent = cfg.pop("extends", None)
+    if parent:
+        cfg = _deep_merge(load_dataset_config((path.parent / parent).resolve(), (*_seen, path)), cfg)
+    return cfg
+
+
+def freeze_config(dataset: str, config_ref: str | None, run_dir: Path) -> tuple[str, str]:
+    """Resolve the dataset config ONCE per run and freeze it in the run folder. Every module reads the frozen copy,
+    so a run is reproducible even if configs/ changes later. Returns (config_ref for modules, sha256)."""
+    frozen = run_dir / "dataset.yaml"
+    if not frozen.exists():
+        src = repo_root() / (config_ref or f"configs/datasets/{dataset}.yaml")
+        cfg = load_dataset_config(src.resolve())
+        frozen.write_text(f"# frozen by the gateway from {src.relative_to(repo_root())} (extends resolved). Do not edit.\n"
+                          + yaml.safe_dump(cfg, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    ref = frozen.resolve().relative_to(repo_root()).as_posix() if frozen.resolve().is_relative_to(repo_root()) else str(frozen)
+    return ref, _sha256(frozen)
+
+
 def new_manifest(run_id: str, dataset: str) -> dict[str, Any]:
     return {
         "run_id": run_id, "dataset": dataset, "created": _now(), "git_commit": _git_commit(),
@@ -271,14 +311,21 @@ def build_graph(ctx: _Ctx | None = None):
 
 
 def run_pipeline(dataset: str, run_id: str | None = None, resume: bool = False, config_ref: str | None = None,
-                 ingest_from: str | None = None, lang: str = "en") -> dict[str, Any]:
+                 ingest_from: str | None = None, lang: str = "en", rerun_from: str | None = None) -> dict[str, Any]:
     run_id = run_id or datetime.now().strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:4]
     run_dir = data_dir() / "runs" / run_id
     (run_dir / "lineage").mkdir(parents=True, exist_ok=True)
     mf_path = run_dir / "run_manifest.json"
     manifest = json.loads(mf_path.read_text()) if (resume and mf_path.exists()) else new_manifest(run_id, dataset)
     manifest["status"] = "running"
-    config_ref = config_ref or f"configs/datasets/{dataset}.yaml"
+    if resume and rerun_from:  # `--from STAGE`: redo that stage and everything after it, keep what came before
+        names = [s["name"] for s in load_graph()]
+        if rerun_from not in names:
+            raise ValueError(f"unknown stage '{rerun_from}'; stages: {names}")
+        for n in names[names.index(rerun_from):]:
+            manifest["stages"][n] = {"status": "pending"}
+    config_ref, manifest["config_sha256"] = freeze_config(dataset, config_ref, run_dir)
+    manifest["config_ref"] = config_ref
 
     with httpx.Client() as client:
         manifest["modules"] = module_health(client, {s["module"] for s in load_graph()})

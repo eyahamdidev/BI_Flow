@@ -16,7 +16,7 @@ COPY config /srv/config
 COPY configs /srv/configs
 COPY services/etl /srv/service
 WORKDIR /srv/service
-ENV BIFLOW_MOCK=1 DATA_DIR=/data BIFLOW_CONFIG_DIR=/srv/config PYTHONUNBUFFERED=1 \
+ENV BIFLOW_MOCK=1 DATA_DIR=/srv/data BIFLOW_CONFIG_DIR=/srv/config PYTHONUNBUFFERED=1 \
     DBT_SEND_ANONYMOUS_USAGE_STATS=false DO_NOT_TRACK=1
 EXPOSE 8101
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8101"]

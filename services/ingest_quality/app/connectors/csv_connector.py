@@ -30,7 +30,8 @@ class CSVConnector(BaseConnector):
                 else:
                     raise FileNotFoundError(f"CSV file not found for table '{table_name}': {file_path}")
 
-            df = pd.read_csv(file_path, low_memory=False)
+            text_cols = (self.config.get("text_columns") or {}).get(table_name, [])
+            df = pd.read_csv(file_path, low_memory=False, dtype={c: "string" for c in text_cols} or None)
             dataframes[table_name] = df
 
         return dataframes

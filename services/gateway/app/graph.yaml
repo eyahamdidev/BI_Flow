@@ -3,7 +3,7 @@
 # timeout_s follows the spec budgets (2.3).
 stages:
   - {name: ingest,           module: ingest_quality, mode: ingest,           timeout_s: 60}
-  - {name: validate_raw,     module: ingest_quality, mode: validate,         timeout_s: 60,  options: {stage: raw}}   # input contract: catch bad files before 6 stages run
+  - {name: validate_raw,     module: ingest_quality, mode: validate,         timeout_s: 60,  options: {stage: ingest}} # input contract: catch bad files before 6 stages run
   - {name: profile,          module: profile_clean,  mode: profile,          timeout_s: 60,  options: {stage: before}}
   - {name: score_before,     module: ingest_quality, mode: score,            timeout_s: 60,  options: {stage: before}}
   - {name: clean,            module: profile_clean,  mode: clean,            timeout_s: 120}

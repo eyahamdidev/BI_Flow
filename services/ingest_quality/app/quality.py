@@ -14,7 +14,13 @@ from biflow_contracts import Artifact, LineageEvent, RunRequest, RunResponse
 
 
 def _get_repo_root() -> Path:
-    return Path(__file__).resolve().parents[3]
+    # Search upward for the folder holding configs/datasets: the repo root locally, /srv in the container.
+    # (A fixed parents[3] pointed at "/" inside the container, where the code lives in /srv/service/app.)
+    here = Path(__file__).resolve()
+    for p in [here, *here.parents]:
+        if (p / "configs" / "datasets").is_dir():
+            return p
+    return Path.cwd().resolve()
 
 
 def _get_data_dir() -> Path:
@@ -286,7 +292,9 @@ def execute_score(req: RunRequest) -> RunResponse:
     # Save artifact quality_score.json
     out_dir = data_dir / "runs" / req.run_id / "00_ingest"
     out_dir.mkdir(parents=True, exist_ok=True)
-    score_file = out_dir / "quality_score.json"
+    # one file per stage: score_before and score_after must not overwrite each other (dashboard shows before/after)
+    stage_tag = "".join(ch for ch in str(req.options.get("stage", "before")) if ch.isalnum() or ch == "_")
+    score_file = out_dir / f"quality_score_{stage_tag}.json"
 
     score_artifact_data = {
         "timestamp": _now(),
@@ -300,7 +308,7 @@ def execute_score(req: RunRequest) -> RunResponse:
     }
     score_file.write_text(json.dumps(score_artifact_data, indent=2), encoding="utf-8")
     score_hash = _sha256(score_file)
-    rel_path = f"runs/{req.run_id}/00_ingest/quality_score.json"
+    rel_path = f"runs/{req.run_id}/00_ingest/quality_score_{stage_tag}.json"
 
     outputs = [
         Artifact(

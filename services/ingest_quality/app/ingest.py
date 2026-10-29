@@ -15,8 +15,13 @@ from .connectors import get_connector
 
 
 def _get_repo_root() -> Path:
-    # services/ingest_quality/app/ingest.py -> root is 3 levels up
-    return Path(__file__).resolve().parents[3]
+    # Search upward for the folder holding configs/datasets: the repo root locally, /srv in the container.
+    # (A fixed parents[3] pointed at "/" inside the container, where the code lives in /srv/service/app.)
+    here = Path(__file__).resolve()
+    for p in [here, *here.parents]:
+        if (p / "configs" / "datasets").is_dir():
+            return p
+    return Path.cwd().resolve()
 
 
 def _get_data_dir() -> Path:
@@ -56,7 +61,13 @@ def execute_ingest(req: RunRequest) -> RunResponse:
         raise ValueError(f"Dataset config missing 'source' section in {config_path}")
 
     # Load tables using appropriate connector
-    connector = get_connector(source_cfg, root_dir=repo_root)
+    # Columns declared `str` in expected_schema are read as text: otherwise pandas turns zip "01037" into 1037
+    # and validation (which expects str) fails. Everything else keeps pandas' type inference.
+    text_columns = {
+        table: [c for c, spec in (cols or {}).items() if (spec.get("type") if isinstance(spec, dict) else spec) == "str"]
+        for table, cols in (ds_cfg.get("expected_schema") or {}).items()
+    }
+    connector = get_connector({**source_cfg, "text_columns": text_columns}, root_dir=repo_root)
     dfs = connector.load()
 
     # Destination folder under data/runs/<run_id>/00_ingest/

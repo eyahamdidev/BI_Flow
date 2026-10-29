@@ -1,0 +1,14 @@
+# Manual baseline (protocol: docs/manual_baseline.md). Minutes per step, measured by a person on the full Olist data.
+# Leave null until measured: `biflow bench` then reports "not measured yet" instead of inventing a ratio.
+measured_by: null        # name of the team member
+date: null
+dataset: olist (full, data/raw/olist)
+steps:
+  load: null
+  profile: null
+  clean: null
+  model: null
+  check: null
+  kpis: null
+  explain: null
+notes: null

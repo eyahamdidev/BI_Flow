@@ -5,6 +5,6 @@ COPY services/dashboard/requirements.lock /srv/requirements.lock
 RUN UV_HTTP_TIMEOUT=300 uv pip install --system --no-cache -r /srv/requirements.lock
 COPY services/dashboard /srv/service
 WORKDIR /srv/service
-ENV DATA_DIR=/data GATEWAY_URL=http://gateway:8000 PYTHONUNBUFFERED=1
+ENV DATA_DIR=/srv/data GATEWAY_URL=http://gateway:8000 PYTHONUNBUFFERED=1
 EXPOSE 8501
 CMD ["streamlit", "run", "app/main.py", "--server.port=8501", "--server.address=0.0.0.0"]

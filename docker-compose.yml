@@ -8,7 +8,7 @@ x-svc: &svc
       required: false
   environment: &env
     BIFLOW_MOCK: ${BIFLOW_MOCK:-1}
-    DATA_DIR: /data
+    DATA_DIR: /srv/data          # same layout as the repo: YAML paths like data/raw/olist work unchanged
     URL_INGEST_QUALITY: http://ingest_quality:8104
     URL_PROFILE_CLEAN: http://profile_clean:8103
     URL_ETL: http://etl:8101
@@ -17,9 +17,9 @@ x-svc: &svc
     URL_AUDITOR: http://auditor:8102
     LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434/v1}
     BIFLOW_CONFIG_DIR: /srv/config
-    BIFLOW_CACHE: /data/.cache/llm.sqlite   # on the mounted volume: survives rebuilds
+    BIFLOW_CACHE: /srv/data/.cache/llm.sqlite   # on the mounted volume: survives rebuilds
   extra_hosts: ["host.docker.internal:host-gateway"]
-  volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro"]
+  volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro"]
   profiles: ["core"]
 
 services:
@@ -28,7 +28,7 @@ services:
     build: {context: ., dockerfile: services/gateway/Dockerfile}
     ports: ["8000:8000"]
     # .git read-only so the run manifest can record the commit that produced each run
-    volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro", "./.git:/srv/repo/.git:ro"]
+    volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro", "./.git:/srv/repo/.git:ro"]
     environment:
       <<: *env
       GIT_DIR: /srv/repo/.git
@@ -48,6 +48,9 @@ services:
     <<: *svc
     build: {context: ., dockerfile: services/ingest_quality/Dockerfile}
     ports: ["8104:8104"]
+    # + the committed sample, so `--dataset olist_sample` can ingest it (configs/datasets/olist_sample.yaml)
+    volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro",
+              "./tests/fixtures:/srv/tests/fixtures:ro"]
   semantic_kpi:
     <<: *svc
     build: {context: ., dockerfile: services/semantic_kpi/Dockerfile}
@@ -58,8 +61,8 @@ services:
     ports: ["8106:8106"]
   dashboard:
     build: {context: ., dockerfile: services/dashboard/Dockerfile}
-    environment: {DATA_DIR: /data, GATEWAY_URL: "http://gateway:8000"}
-    volumes: ["./data:/data:ro"]
+    environment: {DATA_DIR: /srv/data, GATEWAY_URL: "http://gateway:8000"}
+    volumes: ["./data:/srv/data:ro"]
     ports: ["8501:8501"]
     profiles: ["core"]
 

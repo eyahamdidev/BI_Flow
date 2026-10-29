@@ -1,0 +1,7 @@
+# The 1% Olist sample (tests/fixtures/olist_sample, made by scripts/make_sample.py) for fast dev runs and the smoke test.
+# `extends` is resolved by the gateway: it deep-merges this file over olist.yaml and freezes the result in
+# data/runs/<run_id>/dataset.yaml, which is the config every module reads for that run.
+extends: olist.yaml
+name: olist_sample
+source:
+  path: tests/fixtures/olist_sample

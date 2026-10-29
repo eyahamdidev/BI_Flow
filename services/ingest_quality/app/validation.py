@@ -15,7 +15,13 @@ from biflow_contracts import Artifact, ErrorInfo, LineageEvent, RunRequest, RunR
 
 
 def _get_repo_root() -> Path:
-    return Path(__file__).resolve().parents[3]
+    # Search upward for the folder holding configs/datasets: the repo root locally, /srv in the container.
+    # (A fixed parents[3] pointed at "/" inside the container, where the code lives in /srv/service/app.)
+    here = Path(__file__).resolve()
+    for p in [here, *here.parents]:
+        if (p / "configs" / "datasets").is_dir():
+            return p
+    return Path.cwd().resolve()
 
 
 def _get_data_dir() -> Path:
@@ -49,8 +55,12 @@ def _map_pandera_type(type_name: str) -> pa.DataType | type:
     return pa.String
 
 
-def build_pandera_schema(table_schema_cfg: dict[str, Any]) -> pa.DataFrameSchema:
-    """Builds a Pandera DataFrameSchema from the dataset YAML expected_schema definition."""
+def build_pandera_schema(table_schema_cfg: dict[str, Any], coerce: bool = False) -> pa.DataFrameSchema:
+    """Builds a Pandera DataFrameSchema from the dataset YAML expected_schema definition.
+
+    coerce=False (cleaned data, output contract): the column must ALREADY have the declared type.
+    coerce=True  (raw ingest, input contract): the column must be CONVERTIBLE to the declared type. A raw CSV holds
+    dates as text; the cleaner parses them. Values that cannot be converted are still reported as errors."""
     columns: dict[str, pa.Column] = {}
 
     for col_name, spec in table_schema_cfg.items():
@@ -68,10 +78,10 @@ def build_pandera_schema(table_schema_cfg: dict[str, Any]) -> pa.DataFrameSchema
             pa_dtype,
             nullable=nullable,
             required=required,
-            coerce=False,
+            coerce=coerce,
         )
 
-    return pa.DataFrameSchema(columns=columns, strict=False, coerce=False)
+    return pa.DataFrameSchema(columns=columns, strict=False, coerce=coerce)
 
 
 def _load_table_dataframes(req: RunRequest, expected_tables: list[str]) -> tuple[dict[str, pd.DataFrame], str]:
@@ -165,7 +175,8 @@ def execute_validate(req: RunRequest) -> RunResponse:
 
         tables_checked += 1
         df = dfs[table_name]
-        schema = build_pandera_schema(col_specs)
+        # raw ingest output = input contract (convertible); anything else (clean) = output contract (strict)
+        schema = build_pandera_schema(col_specs, coerce=stage_used in ("ingest", "00_ingest", "raw"))
 
         # Pre-check columns present and nullability
         for col_name, col_spec in col_specs.items():
@@ -227,7 +238,9 @@ def execute_validate(req: RunRequest) -> RunResponse:
 
     out_dir = data_dir / "runs" / req.run_id / "00_ingest"
     out_dir.mkdir(parents=True, exist_ok=True)
-    report_file = out_dir / "validation_report.json"
+    # one file per stage: validate_raw and validate (clean) must not overwrite each other
+    stage_tag = "".join(ch for ch in str(req.options.get("stage") or stage_used) if ch.isalnum() or ch == "_")
+    report_file = out_dir / f"validation_report_{stage_tag}.json"
 
     report_data = {
         "timestamp": _now(),
@@ -241,7 +254,7 @@ def execute_validate(req: RunRequest) -> RunResponse:
     }
     report_file.write_text(json.dumps(report_data, indent=2), encoding="utf-8")
     report_hash = _sha256(report_file)
-    report_rel_path = f"runs/{req.run_id}/00_ingest/validation_report.json"
+    report_rel_path = f"runs/{req.run_id}/00_ingest/validation_report_{stage_tag}.json"
 
     outputs = [
         Artifact(

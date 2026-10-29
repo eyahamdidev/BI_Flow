@@ -39,6 +39,13 @@ def _error(code: str, message: str, **extra: Any) -> dict[str, Any]:
     return {"status": "error", "error": {"code": code, "message": message}, **extra}
 
 
+def _fingerprint(con: duckdb.DuckDBPyConnection, table: str) -> str:
+    """Hash of a table's CONTENT, independent of row order. SUM of row hashes (XOR would cancel out duplicated rows);
+    HUGEINT avoids overflow; reduced to 64 bits for display."""
+    total = con.execute(f'SELECT sum(hash(t)::HUGEINT) FROM "{table}" t').fetchone()[0] or 0
+    return f"{total % (1 << 64):016x}"
+
+
 def _pick_inputs(req: RunRequest, tables: list[str]) -> tuple[dict[str, str], list[str]]:
     """table -> parquet path. Prefers `<input_stage>.<table>` (default clean), as named by the gateway."""
     stage = req.options.get("input_stage", "clean")
@@ -124,6 +131,9 @@ def run(req: RunRequest) -> dict[str, Any]:
             have = {r[0] for r in con.execute(f'DESCRIBE "{mart}"').fetchall()}
             if missing_cols := [c for c in cols if c not in have]:
                 contract_missing[mart] = missing_cols
+        # Fingerprint = hash of each mart's CONTENT, independent of row order: same input + same config must give
+        # the same fingerprints (reproducibility check for benchmarks and BO4).
+        fingerprints = {name: _fingerprint(con, name) for name in sorted(built) if name.startswith(("fact_", "dim_"))}
         root = cfg.get("sample", {}).get("root", {"table": "orders", "key": "order_id"})
         recon = None
         if f"stg_{root['table']}" in built and f"fact_{root['table']}" in built:
@@ -177,6 +187,7 @@ def run(req: RunRequest) -> dict[str, Any]:
         "dbt_tests_warned": by_status.get("warn", 0),
         "dbt_tests_failed": by_status.get("fail", 0) + by_status.get("error", 0),
         "reconciliation_ok": recon["ok"] if recon else None,
+        "fingerprints": fingerprints,
         "rows": marts_rows,
         "seconds_load": round(load_s, 2),
         "seconds_dbt": round(dbt_s, 2),

@@ -16,6 +16,6 @@ COPY config /srv/config
 COPY configs /srv/configs
 COPY services/gateway /srv/service
 WORKDIR /srv/service
-ENV BIFLOW_MOCK=1 DATA_DIR=/data BIFLOW_CONFIG_DIR=/srv/config PYTHONUNBUFFERED=1
+ENV BIFLOW_MOCK=1 DATA_DIR=/srv/data BIFLOW_CONFIG_DIR=/srv/config PYTHONUNBUFFERED=1
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
