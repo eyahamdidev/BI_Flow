@@ -37,6 +37,8 @@ jobs:
         with: {python-version: "3.11"}
       - run: pip install -e contracts uvicorn pytest
       - run: pip install -r services/${{ matrix.service }}/requirements.in
+      - if: matrix.service == 'profile_clean'
+        run: pip install -r services/profile_clean/requirements-dev.txt
       - run: python -m pytest -q
         working-directory: services/${{ matrix.service }}
 

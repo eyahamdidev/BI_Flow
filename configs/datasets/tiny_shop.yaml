@@ -1,0 +1,25 @@
+name: tiny_shop
+domain: demo
+source:
+  type: csv
+  path: tests/fixtures/tiny_shop
+  tables:
+    orders: orders.csv
+    products: products.csv
+expected_schema:
+  orders:
+    order_id: str
+    amount: float
+  products:
+    product_id: str
+    label: str
+relationships:
+  - {from: orders.product_id, to: products.product_id}
+cleaning_rules:
+  primary_keys:
+    orders: order_id
+    products: product_id
+  null_strategy:
+    products.label: {strategy: constant, value: unknown}
+  drop_exact_duplicates: [orders]
+  llm_advisory: {enabled: false}

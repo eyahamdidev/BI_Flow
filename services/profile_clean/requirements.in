@@ -3,5 +3,10 @@ pyarrow
 numpy
 scikit-learn
 scipy
-# contracts are installed separately: pip install ../../contracts
+pyyaml
+httpx
+jsonschema
 uvicorn
+# contracts are installed separately (Dockerfile / CI): pip install ../../contracts
+# dev tools (ruff, playground, PDF report) live in requirements-dev.txt
+# optional: ydata-profiling

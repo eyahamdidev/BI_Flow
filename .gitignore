@@ -13,8 +13,13 @@ chroma/
 data/raw/*
 data/runs/*
 data/uploads/*
+data/decisions/*
 !data/raw/.gitkeep
 !data/runs/.gitkeep
 !data/uploads/.gitkeep
+configs/datasets/uploaded_*.yaml
+services/profile_clean/eval/results/
+services/profile_clean/eval/universal/corpus/
+services/profile_clean/eval/universal/results/
 .DS_Store
 *.egg-info/

@@ -1,50 +1,111 @@
-# Profiler + Cleaner
+# profile_clean (BO3)
 
-| | |
-|---|---|
-| Owner | **BO3** |
-| Module name | `profile_clean` |
-| Port | `8103` |
-| Stack | pandas, scikit-learn, scipy, pyyaml (optional ydata-profiling minimal=True) |
-| LLM | yes (via `biflow_llm`, always with a fallback) |
+Profiler + cleaner on port **8103**. Modes: `profile`, `clean`.
 
-## Modes (`POST /v1/run`, field `mode`)
+## Setup
 
-| mode | what it does |
-|---|---|
-| `profile` | Profile every table (types, nulls, dupes, outliers, FK orphans). options.stage=before|after. Writes profile.json (+ optional profile.html). |
-| `clean` | Rule layer (YAML) + ML layer (imputers/outliers) + advisory LLM layer (closed menu). Writes cleaned parquet, quality_log.json, review_queue.json. in - dropped = out. |
-
-## Run it
-
-```bash
-# from repo root
-make venv SERVICE=profile_clean                 # creates services/profile_clean/.venv and installs deps
-make run SERVICE=profile_clean                  # uvicorn on :8103 (BIFLOW_MOCK=1 by default)
-BIFLOW_MOCK=0 make run SERVICE=profile_clean    # real handlers (raise NotImplementedError until you write them)
-make test SERVICE=profile_clean                 # contract test
+```powershell
+cd services/profile_clean
+python -m venv .venv
+.venv\Scripts\pip install -e ..\..\contracts uvicorn pytest
+.venv\Scripts\pip install -r requirements.in
 ```
 
-## Definition of done for this module
+## Run
 
-See the spec sections for BO3 in `docs/BIFlow_Technical_Spec.md` (acceptance criteria and metrics are the definition of done).
-
-## TODO checklist
-
-- [ ] Profiler (column/table/cross-table) + before/after diff
-- [ ] Rule layer driven by `cleaning_rules` in configs/datasets/olist.yaml
-- [ ] ML layer: median/KNN/Iterative imputers, IQR/MAD/LOF/IsolationForest (flag, don't delete)
-- [ ] Advisory LLM layer: closed-menu JSON, applied only if YAML allows, else review_queue.json
-- [ ] Corruption generator + imputer/outlier benchmark (eval/)
-- [ ] Row reconciliation: in - dropped = out, every dropped id logged
-
-## Folder map
-
+```powershell
+$env:DATA_DIR = "..\..\data"
+$env:BIFLOW_MOCK = "0"
+$env:FAKE_LLM = "1"
+.venv\Scripts\uvicorn app.main:app --port 8103
 ```
-app/main.py        wiring (do not change the endpoints)
-app/handlers.py    YOUR CODE: one function per mode
-mock/<mode>.json   fixture served when BIFLOW_MOCK=1 (keep it in sync with the real output shape)
-prompts/           versioned prompts (see prompts/_template.yaml at repo root)
-eval/              labelled sets + eval script used by POST /v1/eval
-tests/             contract test (+ yours)
+
+Mock-only service (orchestrator stub):
+
+```powershell
+$env:BIFLOW_MOCK = "1"
+.venv\Scripts\uvicorn mock.app.main:app --port 8103
 ```
+
+## Tests
+
+```powershell
+$env:FAKE_LLM = "1"
+.venv\Scripts\python -m pytest -q
+.venv\Scripts\ruff check app tests
+```
+
+## Eval / benchmarks
+
+```powershell
+$env:FAKE_LLM = "1"
+.venv\Scripts\python eval\run_all.py --fast
+```
+
+Results: `eval/results/benchmark_table.md`, `eval/results/runs.jsonl`.
+
+**Live LLM eval (optional):** set `FAKE_LLM=0`, configure `.env` (`LLM_PROVIDER`, `LLM_BASE_URL`), then:
+
+```powershell
+.venv\Scripts\python eval\bench_llm_advisory.py
+```
+
+## Docker
+
+From repo root: `docker compose --profile core build profile_clean` (syntax validated; requires Docker).
+
+## Playground (Streamlit dev UI, port 8503)
+
+Start the service (8103), then the playground:
+
+```powershell
+$env:DATA_DIR = "..\..\data"
+$env:BIFLOW_MOCK = "0"
+$env:FAKE_LLM = "1"
+.venv\Scripts\uvicorn app.main:app --port 8103
+
+# another terminal:
+.venv\Scripts\pip install -r requirements-dev.txt
+.venv\Scripts\streamlit run playground.py --server.port 8503 --server.headless true
+```
+
+Open http://localhost:8503 — use **Load demo data** if `data/runs/<run_id>/00_ingest/` is empty, then run Profile → Clean → Profile (after).
+
+### Using your own CSV
+
+1. Open the **My uploads** tab.
+2. Upload one or more CSV/TSV/TXT files (optional size limit in the sidebar).
+3. Review the **parse report** (encoding, delimiter, skipped lines, type inference) and adjust overrides if needed; click **Ingest to run folder**.
+4. Review or edit the **draft dataset YAML** (Validate / Reset to generated); LLM advisory is **off by default** for uploads.
+5. Click **Run everything** (Profile → Clean → Profile after) and inspect before/after cards, review queue, changed cells, and downloads (CSV, parquet, zip, logs).
+
+**Privacy:** If `LLM_PROVIDER=api` (not local Ollama), enabling LLM in the YAML can send column names and sample values to a third-party API — the UI shows a warning and requires explicit consent before turning LLM on.
+
+### Safety guarantees and column roles
+
+Cleaning uses deterministic **column roles** (`id`, `categorical`, `binary_flag`, `discrete_count`, `continuous_numeric`, etc.) in generated YAML (`expected_schema.<table>.<col>.role`). The service applies a **type-safety guard** that blocks numeric imputation/outlier flagging on strings, ids, and categoricals even if the YAML requests it (entries go to `review_queue.json`). Original column dtypes are preserved; imputation is cast back to the source type; flags are boolean (`__imputed`, `__outlier`, `__high_null`). See `docs/bo3_fix_notes.md` and `tests/test_cross_dataset_safety.py`.
+
+### How recognition works
+
+Each column gets `role`, `semantic_type`, `confidence`, and `evidence` in `recognition_report.json` (profile and clean). Actions with confidence ≥ 0.9 (configurable in YAML) may auto-apply safe standardisation, sentinel→null, and case/accent category maps; everything else goes to the **review queue**. Approved mappings are stored in `data/decisions/<dataset_slug>.yaml` and merged on the next run.
+
+### Supported inputs and issue types
+
+Upload: CSV/TSV/TXT, Parquet, JSON/JSONL, Excel (first sheet). Detected issue classes include hidden sentinels, currency/percent strings, category variants, duplicates, whitespace/Unicode noise, and ambiguous dates (review, never silent guess).
+
+### Eval
+
+```powershell
+.venv\Scripts\python eval\universal\make_torture_corpus.py
+.venv\Scripts\python eval\universal\run_metrics.py   # full corpus report
+make eval-universal   # alias if wired in Makefile; else command above
+```
+
+Fast pytest subset: `tests/test_universal_corpus_fast.py`.
+
+## Endpoints
+
+- `GET /health` — `llm: ok|unreachable|disabled`
+- `GET /v1/meta` — modes, models, prompt versions, `lineage_steps`
+- `POST /v1/run` — `mode=profile|clean`
+- `POST /v1/eval` — fast benchmark subset
