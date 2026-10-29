@@ -67,6 +67,16 @@ relationships:               # BO1 renders staging/join SQL from this block; BO4
   - {from: orders.customer_id,      to: customers.customer_id}
   - {from: products.product_category_name, to: category_translation.product_category_name}
 
+sample:                      # BO1: scripts/make_sample.py (small FK-consistent copy for tests and fast dev runs)
+  root: {table: orders, key: order_id}         # sample the root, then follow `relationships` + `extra_links`
+  cover: [order_status]                        # every value of these root columns appears at least `min_per_value` times
+  min_per_value: 2
+  keep_full: [category_translation]            # small lookup tables copied whole
+  max_rows_per_key: {geolocation: 3}           # geolocation has up to ~1000 rows per zip prefix: keep 3 (still has duplicates)
+  extra_links:                                 # soft links that are not true FKs (zip prefix is not unique in geolocation)
+    - {from: customers.customer_zip_code_prefix, to: geolocation.geolocation_zip_code_prefix}
+    - {from: sellers.seller_zip_code_prefix,     to: geolocation.geolocation_zip_code_prefix}
+
 cleaning_rules:              # BO3: rule layer. strategies: drop | constant | median | mode | flag_only
   parse_dates: [order_purchase_timestamp, order_approved_at, order_delivered_carrier_date, order_delivered_customer_date, order_estimated_delivery_date]
   drop_exact_duplicates: [geolocation, order_reviews]
