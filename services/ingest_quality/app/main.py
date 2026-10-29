@@ -8,12 +8,25 @@ from pathlib import Path
 from biflow_contracts.service_kit import create_app
 
 from . import handlers as h
+from .mock_api import mock_api_app
+
+
+def _eval_fn():
+    try:
+        from ..eval.eval_reliability import run_benchmark
+        return run_benchmark()
+    except Exception as e:
+        return {"error": str(e)}
+
 
 app = create_app(
     module="ingest_quality",
     handlers={"ingest": h.ingest, "validate": h.validate, "score": h.score},
     mock_dir=Path(__file__).parent.parent / "mock",
-    lineage_steps=["ingest_csv", "validate_schema", "score"],
-    prompt_versions={},  # e.g. {"ingest_quality.example": "v1"}
-    eval_fn=None,  # set to a function returning a metrics dict once eval/ exists
+    lineage_steps=["ingest_csv", "ingest_sql", "ingest_api", "validate_schema", "score"],
+    prompt_versions={},
+    eval_fn=_eval_fn,
 )
+
+# Mount mock API server for API connector demos and integration tests
+app.mount("/mock_api", mock_api_app)
