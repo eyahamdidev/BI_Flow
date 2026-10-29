@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from ..components.kpi_tile import fmt, tile
+from ..components.notes import REVIEW_ISSUES, plain, stage_notes
 from ..data.loader import Bundle
 
 STAGES = {  # pipeline stage -> (plain title, what it does)
@@ -57,6 +58,39 @@ def render(b: Bundle) -> None:
                              "seconds": v.get("seconds"),
                              "ran with": "copied input (dev)" if v.get("seeded_from") else ("test stand-in" if v.get("mock") else "real module")})
             st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
-            st.caption("'Done, see notes' is not an error: the step worked and left something to look at "
-                       "(e.g. rows sent for human review). 'Failed' steps are still explained by the audit step.")
+            st.caption("'Done, see notes' is not an error: the step worked and left something to look at. "
+                       "The notes are just below. 'Failed' steps are still explained by the audit step.")
+        notes = stage_notes(m)
+        review = _review_queue(b)
+        if notes or review:
+            st.markdown("**Notes per step**")
+            for i, (k, v) in enumerate(m["stages"].items(), start=1):
+                items = notes.get(k, [])
+                extra = review if k == "clean" else []
+                if not items and not extra:
+                    continue
+                title = STAGES.get(k, (k, ""))[0]
+                with st.expander(f"{STATUS.get(v['status'], v['status'])[:2]} {i}. {title}: {len(items) + (1 if extra else 0)} note(s)"):
+                    for note in items:
+                        st.markdown(f"- {plain(note)}")
+                    if extra:
+                        st.markdown(f"- **{len(extra)} item(s) need a human decision** (nothing was changed automatically):")
+                        st.dataframe(pd.DataFrame([{"table": r.get("table"), "column": r.get("column"),
+                                                    "what was found": REVIEW_ISSUES.get(r.get("issue"), r.get("issue")),
+                                                    "suggested action": r.get("suggested_action"), "why it was not applied": r.get("reason")}
+                                                   for r in extra]), hide_index=True, width="stretch")
     st.caption(f"source: {b.source}" + (f" / run {b.run_id}" if b.run_id else " (demo fixtures)"))
+
+
+def _review_queue(b: Bundle) -> list[dict]:
+    """The cleaning step's human-review queue (review_queue.json), via the run's artifact list."""
+    import json
+
+    from ..data.loader import data_dir
+
+    rel = (b.manifest.get("artifacts") or {}).get("clean.review_queue")
+    p = data_dir() / rel if rel else None
+    try:
+        return json.loads(p.read_text(encoding="utf-8")) if p and p.exists() else []
+    except (OSError, ValueError):
+        return []

@@ -270,7 +270,9 @@ def _stage_node(stage: dict[str, Any], ctx: _Ctx):
             st["status"] = resp["status"]
             st["metrics"] = resp.get("metrics", {})
             st["llm_calls"] = resp.get("llm_calls", [])
-            manifest["warnings"] += [f"{stage['name']}: {w}" for w in resp.get("warnings", [])]
+            # each step owns its notes: a re-run (resume / --from) replaces them instead of piling up duplicates
+            st["warnings"] = list(resp.get("warnings", []))
+            manifest["warnings"] = [f"{n}: {w}" for n, s_ in manifest["stages"].items() for w in s_.get("warnings", [])]
             for a in resp.get("outputs", []):
                 a["sha256"] = a.get("sha256") or _sha256(data_dir() / a["path"])  # gateway verifies what it can
                 manifest["artifacts"][f"{stage['name']}.{a['name']}"] = a["path"]
