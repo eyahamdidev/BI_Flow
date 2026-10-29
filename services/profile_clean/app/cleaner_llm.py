@@ -112,7 +112,12 @@ def run_llm_advisory(
         df = tables[sug.table]
         if sug.action == "impute_median" and pd.api.types.is_numeric_dtype(df[sug.column]):
             mask = df[sug.column].isna()
-            df.loc[mask, sug.column] = df[sug.column].median()
+            if mask.any():
+                med = df[sug.column].median()
+                # an int column cannot hold a fractional median (pandas 3 raises): widen to float first
+                if pd.api.types.is_integer_dtype(df[sug.column]) and float(med) != int(med):
+                    df[sug.column] = df[sug.column].astype("float64")
+                df.loc[mask, sug.column] = med
             lineage.emit("llm_advisory", rule=sug.action, rows_affected=int(mask.sum()), method="llm_assisted")
         elif sug.action == "impute_mode":
             mask = df[sug.column].isna()
