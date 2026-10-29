@@ -28,3 +28,6 @@ data/.chroma/
 data/bench/
 data/eval/
 data/auditor/
+
+# Python build output (e.g. pip installing contracts/)
+build/
