@@ -113,7 +113,8 @@ writes lineage events, and the run manifest labels each stage real / mock / seed
 
 Results and evidence: [`docs/results/`](docs/results/) (benchmark, evaluations) · design: [`docs/BIFlow_Technical_Spec.md`](docs/BIFlow_Technical_Spec.md) ·
 rules: [`docs/RULES.md`](docs/RULES.md) · integration log: [`docs/INTEGRATION_NOTES.md`](docs/INTEGRATION_NOTES.md) ·
-manual baseline protocol: [`docs/manual_baseline.md`](docs/manual_baseline.md)
+manual baseline protocol: [`docs/manual_baseline.md`](docs/manual_baseline.md) ·
+future work: [`docs/FUTURE_WORK.md`](docs/FUTURE_WORK.md)
 
 ## For developers
 
