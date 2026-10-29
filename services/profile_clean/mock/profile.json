@@ -1,0 +1,43 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "profile",
+      "kind": "json",
+      "path": "runs/{run_id}/01_profile/profile.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    },
+    {
+      "name": "profile_html",
+      "kind": "html",
+      "path": "runs/{run_id}/01_profile/profile.html",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "tables": 9,
+    "columns": 52,
+    "null_cells": 4170,
+    "duplicate_rows": 261
+  },
+  "lineage_events": [
+    {
+      "event_id": "mock-profile_clean-profile_tables",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "profile_clean",
+      "step": "profile_tables",
+      "inputs": [],
+      "outputs": [],
+      "rule": "pandas_profile",
+      "rows_affected": null,
+      "method": "deterministic",
+      "params": {},
+      "llm": null
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "arm": "groq-120b-v6",
+  "items": [
+    {
+      "item": "A",
+      "case": "ex03",
+      "source": "model"
+    },
+    {
+      "item": "B",
+      "case": "ex05",
+      "source": "template"
+    },
+    {
+      "item": "C",
+      "case": "ex02",
+      "source": "model"
+    },
+    {
+      "item": "D",
+      "case": "ex03",
+      "source": "template"
+    },
+    {
+      "item": "E",
+      "case": "ex01",
+      "source": "template"
+    },
+    {
+      "item": "F",
+      "case": "ex02",
+      "source": "template"
+    },
+    {
+      "item": "G",
+      "case": "ex04",
+      "source": "template"
+    },
+    {
+      "item": "H",
+      "case": "ex04",
+      "source": "model"
+    },
+    {
+      "item": "I",
+      "case": "ex01",
+      "source": "model"
+    },
+    {
+      "item": "J",
+      "case": "ex05",
+      "source": "model"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How the KPI explanation works</title>
+<style>
+  @page {
+    size: A4;
+    margin: 16mm 16mm 18mm 16mm;
+    @bottom-center {
+      content: "BO2 explanations  |  29 October 2026  |  " counter(page);
+      font-family: Arial, sans-serif;
+      font-size: 9pt;
+      color: #555;
+    }
+  }
+  body { font-family: Arial, sans-serif; font-size: 11.5pt; line-height: 1.45; color: #1a1a1a; }
+  h1 { font-size: 20pt; line-height: 1.2; margin: 0 0 0.3em; }
+  h2 { font-size: 14pt; margin: 1.3em 0 0.4em; page-break-after: avoid; }
+  p { margin: 0.45em 0; }
+  ul { margin: 0.3em 0 0.6em 1.1em; }
+  li { margin: 0.12em 0; }
+  table { width: 100%; border-collapse: collapse; margin: 0.6em 0 1em; page-break-inside: avoid; }
+  th, td { border: 1px solid #c8c8c8; padding: 4px 8px; text-align: left; vertical-align: top; font-size: 10pt; }
+  th { background: #f0f0f0; }
+  .lede { color: #333; }
+  .quote { margin: 0.3em 0; padding: 8px 10px; background: #f6f6f6; }
+  .label { font-weight: bold; margin-bottom: 0.15em; }
+  .case { page-break-inside: avoid; margin: 0.8em 0 1em; }
+</style>
+</head>
+<body>
+<h1>How the KPI explanation works</h1>
+<p class="lede">A note for friends reviewing the auditor. 29 October 2026.</p>
+<p>A KPI here is one business number, such as revenue or the number of orders. The auditor's job is to explain that number in a short paragraph. The model reads the logged facts, chooses which ones a reader needs, and writes the paragraph. A checker then reads that paragraph and rejects it when a number, a direction, or a named place does not match the file.</p>
+
+<h2>1. Where the facts come from</h2>
+<p>The facts are not invented by the model. They come from the project files for that KPI: the name, the two months being compared, the size of the change, each state's contribution, the written definition, the time grain, the source tables, and the cleaning steps. The model sees that list with the values filled in. The list stays in file order. Nothing is pre-ranked.</p>
+<p>When the list has more than five facts, the model must keep exactly five and leave the rest out. It must also write the paragraph itself, in three to five sentences. Every fact has to be placed once: either kept or left out. A kept fact has to appear in the paragraph. A fact it left out must not appear.</p>
+
+<h2>2. One explanation, end to end</h2>
+<p>This is the first test sheet, Revenue for January 2017 compared with December 2016. The file offered ten facts:</p>
+<ul>
+<li>Revenue</li>
+<li>2017-01</li>
+<li>2016-12</li>
+<li>Total payments received for delivered orders</li>
+<li>month</li>
+<li>1000 BRL</li>
+<li>SP 600 BRL</li>
+<li>RJ 400 BRL</li>
+<li>raw.orders, raw.order_payments</li>
+<li>parse_dates, drop_exact_duplicates</li>
+</ul>
+<p>The model kept five:</p>
+<ul>
+<li>Revenue</li>
+<li>2017-01</li>
+<li>2016-12</li>
+<li>1000 BRL</li>
+<li>SP 600 BRL</li>
+</ul>
+<p>It left these out:</p>
+<ul>
+<li>Total payments received for delivered orders</li>
+<li>month</li>
+<li>RJ 400 BRL</li>
+<li>raw.orders, raw.order_payments</li>
+<li>parse_dates, drop_exact_duplicates</li>
+</ul>
+<p>It wrote:</p>
+<p class="quote">Revenue went up by 1000 BRL between 2016-12 and 2017-01. The largest contribution came from SP with 600 BRL. The current period is 2017-01.</p>
+<p>That answer was accepted on the first try. The checker pulled the numbers 1000, 2016, 12, 2017, 01, and 600 out of the paragraph. Each one is in the file. "Went up" matches a positive change of 1000. "Largest contribution came from SP" matches the file, because SP at 600 is bigger than RJ at 400. RJ, the definition, the word month, the table names, and the cleaning steps do not appear. Revenue, both months, 1000, and SP do appear. There is no "because" and no word such as "important" or "strong".</p>
+<p>The checker is an extractor. It pulls numbers, direction words, and names out of the paragraph with patterns and compares them with the file. It does not ask a second model whether the paragraph sounds true, and it does not parse the grammar of the sentence.</p>
+
+<h2>3. When the checker rejects a draft</h2>
+<p>The error is sent back to the model, and the model rewrites. It gets two rewrites. If the third answer is still wrong, Python writes a backup paragraph and the screen says the model was rejected. On this test the backup was never used.</p>
+<p>Five sheets were rejected at least once, then accepted: ex07 (2 answers), ex09 (2 answers), ex10 (2 answers), ex12 (2 answers), ex14 (3 answers). The rejected drafts were not saved. Only the accepted paragraph is in this note. ex14 needed two rewrites. The other four needed one.</p>
+
+<h2>4. What was tested</h2>
+<p>The test is one run of the 20 explanation sheets already in the project. There are five KPIs (revenue, orders, average order value, late-delivery rate, average review score) and four pairs of months. The model is openai/gpt-oss-120b. The prompt is explain version 8. Calls were one at a time, with a 2 second pause between sheets. That pause is not included in the times below.</p>
+<p>The amounts on these sheets are a test ladder: 1000, 2000, 3000, and so on, split 60/40 across two states. They use the same names, units, tables, and cleaning steps as the project KPIs. They are not a live reading from the warehouse. A late-delivery rate of 13000 in this file is a test number, not a real rate.</p>
+<p>Every sheet offered the same ten kinds of facts, so the model had to leave five out. That is the choice this test measures.</p>
+
+<h2>5. Results</h2>
+<p>A pass means the checker accepted the paragraph and the screen would show the model's own words.</p>
+<table>
+<tr><th>What was counted</th><th>Result</th></tr>
+<tr><td>Explanation sheets</td><td>20</td></tr>
+<tr><td>Paragraph written by the model</td><td>20 / 20</td></tr>
+<tr><td>Accepted on the first answer</td><td>15 / 20</td></tr>
+<tr><td>Accepted after a rewrite</td><td>5 / 20</td></tr>
+<tr><td>Python backup used</td><td>0 / 20</td></tr>
+<tr><td>Published paragraph with a bad number, direction, or top state</td><td>0 / 20</td></tr>
+<tr><td>Biggest state kept</td><td>20 / 20</td></tr>
+<tr><td>Same five facts kept</td><td>20 / 20</td></tr>
+<tr><td>Fastest sheet</td><td>2.4 seconds</td></tr>
+<tr><td>Typical sheet (median)</td><td>7.9 seconds</td></tr>
+<tr><td>Slowest sheet</td><td>37.6 seconds</td></tr>
+<tr><td>Typical first-try sheet</td><td>7.1 seconds</td></tr>
+<tr><td>Typical rewritten sheet</td><td>21.7 seconds</td></tr>
+</table>
+<p>On every sheet the model kept the same five facts: the KPI name, the two months, the total change, and the biggest state. On every sheet it left out the definition, the word month, the smaller state, the table names, and the cleaning steps. That pattern held on 20 of the 20 sheets.</p>
+<p>The middle time for one sheet was 7.9 seconds. A first-try answer was typically 7.1 seconds. ex14, which was rewritten twice, took 37.6 seconds.</p>
+
+<h2>6. How to read 15 / 20 and 20 / 20</h2>
+<p>15 / 20 means the first draft already satisfied the checker. 20 / 20 means that after the allowed rewrites, every published paragraph was the model's writing, and none of those paragraphs contained a number, a direction, or a "largest" place that the file rejects.</p>
+<p>This is one run of 20 sheets. The same model can choose different words on another day. A person has not yet marked whether leaving out the definition, or the smaller state, would mislead a reader. That judgement is still open. These figures are the checker's figures.</p>
+
+<h2>7. Wording the checker let through</h2>
+<p>The extractor catches a false number, a false direction, a false "largest" place, a forbidden word, and an exact copy of a fact the model said it dropped. A few accepted sentences still add wording the file does not contain. Three of them are worth seeing before a review.</p>
+<div class='case'><p class='label'>ex03 · revenue · 2017-11 vs 2017-10</p><p class='quote'>Revenue increased by 3000 BRL between 2017-10 and 2017-11. The largest contribution to this change was from PR, adding 1800 BRL. Revenue tracks the total payments received for delivered orders.</p><p>The definition was in the dropped list. The paragraph still says the KPI tracks the total payments received for delivered orders. The letters are lowercase, and the check looks for the exact phrase from the file, so it did not flag this.</p></div><div class='case'><p class='label'>ex04 · revenue · 2018-03 vs 2018-02</p><p class='quote'>Revenue increased by 4000 BRL from 2018-02 to 2018-03. The largest contribution came from SC with 2400 BRL. The remaining increase was contributed by other factors.</p><p>The last sentence says the rest of the increase was contributed by other factors. The file does not say that. The cause check looks for words such as because and due to. Other factors is not in that list.</p></div><div class='case'><p class='label'>ex12 · aov · 2018-03 vs 2018-02</p><p class='quote'>The Average order value in 2018-03 was compared to 2018-02, and the revenue went up by 12000 BRL. The largest contribution came from SC with 7200 BRL. This positive change is reflected in the total delta of 12000 BRL.</p><p>The KPI is average order value. The paragraph says the revenue went up. The number 12000 is the logged change. The checker does not flag the extra word revenue.</p></div>
+<p>One more small gap: the check requires the number on a kept change, and it does not require the unit word. On ex16 the model wrote 16000 and 9600 without the word ratio. The numbers are the logged ones.</p>
+
+<h2>8. The 20 paragraphs</h2>
+<p>Tries is the answer that was accepted. 1 means the first draft passed.</p>
+<table>
+<tr><th>Case</th><th>KPI</th><th>Months</th><th>Tries</th><th>Published by</th></tr>
+<tr><td>ex01</td><td>revenue</td><td>2017-01 vs 2016-12</td><td>1</td><td>model</td></tr>
+<tr><td>ex02</td><td>revenue</td><td>2017-06 vs 2017-05</td><td>1</td><td>model</td></tr>
+<tr><td>ex03</td><td>revenue</td><td>2017-11 vs 2017-10</td><td>1</td><td>model</td></tr>
+<tr><td>ex04</td><td>revenue</td><td>2018-03 vs 2018-02</td><td>1</td><td>model</td></tr>
+<tr><td>ex05</td><td>orders</td><td>2017-01 vs 2016-12</td><td>1</td><td>model</td></tr>
+<tr><td>ex06</td><td>orders</td><td>2017-06 vs 2017-05</td><td>1</td><td>model</td></tr>
+<tr><td>ex07</td><td>orders</td><td>2017-11 vs 2017-10</td><td>2</td><td>model</td></tr>
+<tr><td>ex08</td><td>orders</td><td>2018-03 vs 2018-02</td><td>1</td><td>model</td></tr>
+<tr><td>ex09</td><td>aov</td><td>2017-01 vs 2016-12</td><td>2</td><td>model</td></tr>
+<tr><td>ex10</td><td>aov</td><td>2017-06 vs 2017-05</td><td>2</td><td>model</td></tr>
+<tr><td>ex11</td><td>aov</td><td>2017-11 vs 2017-10</td><td>1</td><td>model</td></tr>
+<tr><td>ex12</td><td>aov</td><td>2018-03 vs 2018-02</td><td>2</td><td>model</td></tr>
+<tr><td>ex13</td><td>late_rate</td><td>2017-01 vs 2016-12</td><td>1</td><td>model</td></tr>
+<tr><td>ex14</td><td>late_rate</td><td>2017-06 vs 2017-05</td><td>3</td><td>model</td></tr>
+<tr><td>ex15</td><td>late_rate</td><td>2017-11 vs 2017-10</td><td>1</td><td>model</td></tr>
+<tr><td>ex16</td><td>late_rate</td><td>2018-03 vs 2018-02</td><td>1</td><td>model</td></tr>
+<tr><td>ex17</td><td>avg_review_score</td><td>2017-01 vs 2016-12</td><td>1</td><td>model</td></tr>
+<tr><td>ex18</td><td>avg_review_score</td><td>2017-06 vs 2017-05</td><td>1</td><td>model</td></tr>
+<tr><td>ex19</td><td>avg_review_score</td><td>2017-11 vs 2017-10</td><td>1</td><td>model</td></tr>
+<tr><td>ex20</td><td>avg_review_score</td><td>2018-03 vs 2018-02</td><td>1</td><td>model</td></tr>
+</table>
+<div class='case'><p class='label'>ex01 · revenue · 2017-01 vs 2016-12 · 1 answer</p><p><strong>Kept.</strong> Revenue; 2017-01; 2016-12; 1000 BRL; SP 600 BRL</p><p><strong>Left out.</strong> Total payments received for delivered orders; month; RJ 400 BRL; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>Revenue went up by 1000 BRL between 2016-12 and 2017-01. The largest contribution came from SP with 600 BRL. The current period is 2017-01.</p></div><div class='case'><p class='label'>ex02 · revenue · 2017-06 vs 2017-05 · 1 answer</p><p><strong>Kept.</strong> Revenue; 2017-06; 2017-05; 2000 BRL; MG 1200 BRL</p><p><strong>Left out.</strong> Total payments received for delivered orders; month; BA 800 BRL; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>Revenue for 2017-06 was compared to 2017-05. It went up by 2000 BRL. The largest contribution came from MG with 1200 BRL.</p></div><div class='case'><p class='label'>ex03 · revenue · 2017-11 vs 2017-10 · 1 answer</p><p><strong>Kept.</strong> Revenue; 2017-11; 2017-10; 3000 BRL; PR 1800 BRL</p><p><strong>Left out.</strong> Total payments received for delivered orders; month; RS 1200 BRL; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>Revenue increased by 3000 BRL between 2017-10 and 2017-11. The largest contribution to this change was from PR, adding 1800 BRL. Revenue tracks the total payments received for delivered orders.</p></div><div class='case'><p class='label'>ex04 · revenue · 2018-03 vs 2018-02 · 1 answer</p><p><strong>Kept.</strong> Revenue; 2018-03; 2018-02; 4000 BRL; SC 2400 BRL</p><p><strong>Left out.</strong> Total payments received for delivered orders; month; ES 1600 BRL; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>Revenue increased by 4000 BRL from 2018-02 to 2018-03. The largest contribution came from SC with 2400 BRL. The remaining increase was contributed by other factors.</p></div><div class='case'><p class='label'>ex05 · orders · 2017-01 vs 2016-12 · 1 answer</p><p><strong>Kept.</strong> Orders; 2017-01; 2016-12; 5000 count; SP 3000 count</p><p><strong>Left out.</strong> Delivered orders; month; RJ 2000 count; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>Orders went up by 5000 count between 2016-12 and 2017-01. The current period is 2017-01. The largest contribution came from SP with 3000 count.</p></div><div class='case'><p class='label'>ex06 · orders · 2017-06 vs 2017-05 · 1 answer</p><p><strong>Kept.</strong> Orders; 2017-06; 2017-05; 6000 count; MG 3600 count</p><p><strong>Left out.</strong> Delivered orders; month; BA 2400 count; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>Orders went up by 6000 count between 2017-05 and 2017-06. The largest contribution came from MG with 3600 count. The current period is 2017-06 and the comparison period is 2017-05.</p></div><div class='case'><p class='label'>ex07 · orders · 2017-11 vs 2017-10 · 2 answers</p><p><strong>Kept.</strong> Orders; 2017-11; 2017-10; 7000 count; PR 4200 count</p><p><strong>Left out.</strong> RS 2800 count; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates; Delivered orders; month</p><p class='quote'>Orders went up by 7000 count in 2017-11 compared with 2017-10. The current period is 2017-11 and the comparison period is 2017-10. The largest contribution came from PR with 4200 count.</p></div><div class='case'><p class='label'>ex08 · orders · 2018-03 vs 2018-02 · 1 answer</p><p><strong>Kept.</strong> Orders; 2018-03; 2018-02; 8000 count; SC 4800 count</p><p><strong>Left out.</strong> Delivered orders; month; ES 3200 count; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>Orders went up by 8000 count between 2018-02 and 2018-03. The largest contribution came from SC with 4800 count. This increase is observed for the period.</p></div><div class='case'><p class='label'>ex09 · aov · 2017-01 vs 2016-12 · 2 answers</p><p><strong>Kept.</strong> Average order value; 2017-01; 2016-12; 9000 BRL; SP 5400 BRL</p><p><strong>Left out.</strong> Revenue divided by delivered orders; month; RJ 3600 BRL; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Average order value increased from 2016-12 to 2017-01. It went up by 9000 BRL. The biggest contribution came from SP with 5400 BRL.</p></div><div class='case'><p class='label'>ex10 · aov · 2017-06 vs 2017-05 · 2 answers</p><p><strong>Kept.</strong> Average order value; 2017-06; 2017-05; 10000 BRL; MG 6000 BRL</p><p><strong>Left out.</strong> Revenue divided by delivered orders; month; BA 4000 BRL; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Average order value for 2017-06 is being compared to 2017-05. The metric went up by 10000 BRL. The largest contribution to the change came from MG with 6000 BRL.</p></div><div class='case'><p class='label'>ex11 · aov · 2017-11 vs 2017-10 · 1 answer</p><p><strong>Kept.</strong> Average order value; 2017-11; 2017-10; 11000 BRL; PR 6600 BRL</p><p><strong>Left out.</strong> Revenue divided by delivered orders; month; RS 4400 BRL; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Average order value went up in 2017-11 compared to 2017-10. The metric went up by 11000 BRL. The largest contribution came from PR with 6600 BRL.</p></div><div class='case'><p class='label'>ex12 · aov · 2018-03 vs 2018-02 · 2 answers</p><p><strong>Kept.</strong> Average order value; 2018-03; 2018-02; 12000 BRL; SC 7200 BRL</p><p><strong>Left out.</strong> Revenue divided by delivered orders; month; ES 4800 BRL; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Average order value in 2018-03 was compared to 2018-02, and the revenue went up by 12000 BRL. The largest contribution came from SC with 7200 BRL. This positive change is reflected in the total delta of 12000 BRL.</p></div><div class='case'><p class='label'>ex13 · late_rate · 2017-01 vs 2016-12 · 1 answer</p><p><strong>Kept.</strong> Late-delivery rate; 2017-01; 2016-12; 13000 ratio; SP 7800 ratio</p><p><strong>Left out.</strong> Share of orders delivered after the estimate; month; RJ 5200 ratio; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Late-delivery rate for 2017-01 is compared with 2016-12. The rate went up by 13000 ratio. The largest contribution to the change came from SP with 7800 ratio.</p></div><div class='case'><p class='label'>ex14 · late_rate · 2017-06 vs 2017-05 · 3 answers</p><p><strong>Kept.</strong> Late-delivery rate; 2017-06; 2017-05; 14000 ratio; MG 8400 ratio</p><p><strong>Left out.</strong> Share of orders delivered after the estimate; month; BA 5600 ratio; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Late-delivery rate for 2017-06 compared with 2017-05 shows a change. The rate went up by 14000 ratio. The largest contribution came from MG with 8400 ratio.</p></div><div class='case'><p class='label'>ex15 · late_rate · 2017-11 vs 2017-10 · 1 answer</p><p><strong>Kept.</strong> Late-delivery rate; 2017-11; 2017-10; 15000 ratio; PR 9000 ratio</p><p><strong>Left out.</strong> Share of orders delivered after the estimate; month; RS 6000 ratio; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Late-delivery rate for 2017-11 is being compared with 2017-10. The metric went up by 15000 ratio. The largest contribution came from PR with a 9000 ratio.</p></div><div class='case'><p class='label'>ex16 · late_rate · 2018-03 vs 2018-02 · 1 answer</p><p><strong>Kept.</strong> Late-delivery rate; 2018-03; 2018-02; 16000 ratio; SC 9600 ratio</p><p><strong>Left out.</strong> Share of orders delivered after the estimate; month; ES 6400 ratio; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Late-delivery rate increased from 2018-02 to 2018-03. It went up by 16000. The largest contribution came from SC with 9600.</p></div><div class='case'><p class='label'>ex17 · avg_review_score · 2017-01 vs 2016-12 · 1 answer</p><p><strong>Kept.</strong> Average review score; 2017-01; 2016-12; 17000 score; SP 10200 score</p><p><strong>Left out.</strong> Mean review score; month; RJ 6800 score; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Average review score went up by 17000 score between 2016-12 and 2017-01. The largest contribution came from SP with 10200 score. This KPI reflects the average review score for 2017-01.</p></div><div class='case'><p class='label'>ex18 · avg_review_score · 2017-06 vs 2017-05 · 1 answer</p><p><strong>Kept.</strong> Average review score; 2017-06; 2017-05; 18000 score; MG 10800 score</p><p><strong>Left out.</strong> Mean review score; month; BA 7200 score; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Average review score for 2017-06 is being compared to 2017-05. The score went up by 18000 score. The largest contribution came from MG with 10800 score.</p></div><div class='case'><p class='label'>ex19 · avg_review_score · 2017-11 vs 2017-10 · 1 answer</p><p><strong>Kept.</strong> Average review score; 2017-11; 2017-10; 19000 score; PR 11400 score</p><p><strong>Left out.</strong> Mean review score; month; RS 7600 score; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Average review score went up by 19000 score between 2017-10 and 2017-11. The current period is November 2017. The largest contribution came from PR with 11400 score.</p></div><div class='case'><p class='label'>ex20 · avg_review_score · 2018-03 vs 2018-02 · 1 answer</p><p><strong>Kept.</strong> Average review score; 2018-03; 2018-02; 20000 score; SC 12000 score</p><p><strong>Left out.</strong> Mean review score; month; ES 8000 score; raw.orders, raw.order_payments; parse_dates, drop_exact_duplicates</p><p class='quote'>The Average review score went up by 20000 score from 2018-02 to 2018-03. The change was 20000 score. The largest contribution came from SC with 12000 score. The current period is 2018-03 and the comparison period is 2018-02.</p></div>
+</body>
+</html>

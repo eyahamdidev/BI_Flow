@@ -1,0 +1,381 @@
+{
+  "note": "Live calls only. qwen2.5:7b-instruct was not installed, so it is absent. llama3.2:latest is the installed 2.0 GB model. The template arm's fallback_rate is 0 because that arm is the code template, not a failed model call.",
+  "template": {
+    "n": 20,
+    "errors": 0,
+    "first_try_pass_rate": 1.0,
+    "fallback_rate": 0.0,
+    "latency_ms_p50": 0.8,
+    "latency_ms_p95": 1.7,
+    "rows": [
+      {
+        "id": "ex01",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 2.5,
+        "error": null
+      },
+      {
+        "id": "ex02",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.8,
+        "error": null
+      },
+      {
+        "id": "ex03",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 1.0,
+        "error": null
+      },
+      {
+        "id": "ex04",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.7,
+        "error": null
+      },
+      {
+        "id": "ex05",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.9,
+        "error": null
+      },
+      {
+        "id": "ex06",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 1.0,
+        "error": null
+      },
+      {
+        "id": "ex07",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.9,
+        "error": null
+      },
+      {
+        "id": "ex08",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.6,
+        "error": null
+      },
+      {
+        "id": "ex09",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 1.7,
+        "error": null
+      },
+      {
+        "id": "ex10",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 1.0,
+        "error": null
+      },
+      {
+        "id": "ex11",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 1.4,
+        "error": null
+      },
+      {
+        "id": "ex12",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.8,
+        "error": null
+      },
+      {
+        "id": "ex13",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.7,
+        "error": null
+      },
+      {
+        "id": "ex14",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.7,
+        "error": null
+      },
+      {
+        "id": "ex15",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.6,
+        "error": null
+      },
+      {
+        "id": "ex16",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.6,
+        "error": null
+      },
+      {
+        "id": "ex17",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.6,
+        "error": null
+      },
+      {
+        "id": "ex18",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.6,
+        "error": null
+      },
+      {
+        "id": "ex19",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.8,
+        "error": null
+      },
+      {
+        "id": "ex20",
+        "source": "template",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.6,
+        "error": null
+      }
+    ]
+  },
+  "llama3.2:latest": {
+    "n": 20,
+    "errors": 0,
+    "first_try_pass_rate": 0.5,
+    "fallback_rate": 0.2,
+    "latency_ms_p50": 11382.9,
+    "latency_ms_p95": 17820.7,
+    "rows": [
+      {
+        "id": "ex01",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 5978.3,
+        "error": null
+      },
+      {
+        "id": "ex02",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "latency_ms": 11708.2,
+        "error": null
+      },
+      {
+        "id": "ex03",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 5840.9,
+        "error": null
+      },
+      {
+        "id": "ex04",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: rank:the",
+        "latency_ms": 11382.9,
+        "error": null
+      },
+      {
+        "id": "ex05",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 5624.2,
+        "error": null
+      },
+      {
+        "id": "ex06",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 5659.9,
+        "error": null
+      },
+      {
+        "id": "ex07",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 6494.3,
+        "error": null
+      },
+      {
+        "id": "ex08",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "latency_ms": 12903.7,
+        "error": null
+      },
+      {
+        "id": "ex09",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: rank:the",
+        "latency_ms": 16826.1,
+        "error": null
+      },
+      {
+        "id": "ex10",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": null,
+        "latency_ms": 18452.8,
+        "error": null
+      },
+      {
+        "id": "ex11",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "latency_ms": 12284.2,
+        "error": null
+      },
+      {
+        "id": "ex12",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": null,
+        "latency_ms": 17804.9,
+        "error": null
+      },
+      {
+        "id": "ex13",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 5608.6,
+        "error": null
+      },
+      {
+        "id": "ex14",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 5642.9,
+        "error": null
+      },
+      {
+        "id": "ex15",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "latency_ms": 11537.3,
+        "error": null
+      },
+      {
+        "id": "ex16",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 5892.5,
+        "error": null
+      },
+      {
+        "id": "ex17",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 6396.6,
+        "error": null
+      },
+      {
+        "id": "ex18",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: rank:the",
+        "latency_ms": 17820.7,
+        "error": null
+      },
+      {
+        "id": "ex19",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: rank:the",
+        "latency_ms": 16305.8,
+        "error": null
+      },
+      {
+        "id": "ex20",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "latency_ms": 5867.1,
+        "error": null
+      }
+    ]
+  },
+  "judge": {
+    "model": "llama3.2:latest",
+    "n": 15,
+    "recall": 0.5333,
+    "regex_misses": [
+      "h02",
+      "h04",
+      "h05",
+      "h06",
+      "h08",
+      "h09",
+      "h11",
+      "h12",
+      "h13",
+      "h15"
+    ],
+    "judge_catches_of_regex_misses": 5
+  }
+}

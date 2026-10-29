@@ -1,0 +1,65 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "quality_log",
+      "kind": "json",
+      "path": "runs/{run_id}/02_clean/quality_log.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    },
+    {
+      "name": "review_queue",
+      "kind": "json",
+      "path": "runs/{run_id}/02_clean/review_queue.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    },
+    {
+      "name": "orders",
+      "kind": "parquet",
+      "path": "runs/{run_id}/02_clean/orders.parquet",
+      "rows": 99441,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "rows_dropped": 0,
+    "cells_imputed": 2316,
+    "outliers_flagged": 412,
+    "needs_review": 3
+  },
+  "lineage_events": [
+    {
+      "event_id": "mock-profile_clean-translate_category_names",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "profile_clean",
+      "step": "translate_category_names",
+      "inputs": [],
+      "outputs": [],
+      "rule": "map(product_category_name_translation)",
+      "rows_affected": 610,
+      "method": "deterministic",
+      "params": {},
+      "llm": null
+    },
+    {
+      "event_id": "mock-profile_clean-impute_product_weight",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "profile_clean",
+      "step": "impute_product_weight",
+      "inputs": [],
+      "outputs": [],
+      "rule": "knn_impute(product_weight_g,k=5)",
+      "rows_affected": 2,
+      "method": "ml",
+      "params": {},
+      "llm": null
+    }
+  ]
+}

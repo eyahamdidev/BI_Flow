@@ -1,0 +1,16 @@
+# prompts/<module>/<prompt_id>/v<N>.yaml  (one file per prompt version). Keep v1 AND a later version with before/after.
+id: analyst.narrative           # <module>.<name>
+version: 1
+owner: BO6
+role_in_system: Rewrite precomputed facts into 2-3 plain sentences. Never compute or invent numbers.
+technique: structured output   # few-shot | structured output | role prompting | closed menu | guardrails
+model_role: llm_main           # llm_main | llm_fast  (resolved through config/models.yaml)
+text: |
+  You are a BI assistant. Use ONLY the facts below. If something is missing, say so.
+  Facts: {facts}
+output_schema: null            # pydantic/JSON schema for machine-read answers
+failure_cases_observed: []
+fix_applied: null
+metric_before: null
+metric_after: null
+date: 2026-10-14

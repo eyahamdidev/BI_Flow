@@ -1,0 +1,56 @@
+{
+  "key": "e6b6667cab6675877ace58cf5018f2816b863702e141a80efe68d2d4df640da7",
+  "response_sha256": "516194d41d4fadfda4adfc8c8e69f9e6b91a66f42b9cd3c04da2e81681f617ca",
+  "text": "Revenue a en baisse de -800 BRL entre 2017-03 et 2017-04. La plus grande contribution vient de SP (-300 BRL). La deuxième plus grande contribution vient de RJ (-500 BRL). Revenue est défini comme : Total payments received for delivered orders Le chiffre provient de raw.orders ; les étapes de nettoyage enregistrées sont parse_dates.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Revenue a en baisse de -800 BRL entre 2017-03 et 2017-04.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "La plus grande contribution vient de SP (-300 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "La deuxième plus grande contribution vient de RJ (-500 BRL).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Revenue est défini comme : Total payments received for delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "Le chiffre provient de raw.orders ; les étapes de nettoyage enregistrées sont parse_dates.",
+      "fact_ids": [
+        "lineage.raw_tables",
+        "lineage.cleaning_rules"
+      ],
+      "frame": "F5"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

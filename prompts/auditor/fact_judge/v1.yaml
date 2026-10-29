@@ -1,0 +1,22 @@
+# prompts/auditor/fact_judge/v1.yaml
+id: auditor.fact_judge
+version: 1
+owner: BO2
+role_in_system: Optional second opinion on wording. Uses llm_fast, a different role from the writer.
+technique: closed menu
+model_role: llm_fast
+text: |
+  Section: {section}
+  Language: {language}
+  Fact sheet:
+  {facts}
+  Paragraph:
+  {prose}
+  Reply with PASS if every claim is supported by the fact sheet. Reply with FAIL if the paragraph adds a cause, a comparison, or a quantity the sheet does not state.
+  The first word must be PASS or FAIL.
+output_schema: null
+failure_cases_observed: []
+fix_applied: null
+metric_before: null
+metric_after: null
+date: 2026-10-25

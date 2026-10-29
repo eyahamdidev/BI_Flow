@@ -1,0 +1,41 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "kpi_values",
+      "kind": "parquet",
+      "path": "runs/{run_id}/04_kpi/kpi_values.parquet",
+      "rows": 2184,
+      "sha256": null,
+      "label": null
+    },
+    {
+      "name": "kpi_definitions",
+      "kind": "json",
+      "path": "runs/{run_id}/04_kpi/kpi_definitions.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "kpis": 11,
+    "periods": 24
+  },
+  "lineage_events": [
+    {
+      "event_id": "mock-semantic_kpi-compute_kpi",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "semantic_kpi",
+      "step": "compute_kpi",
+      "inputs": [],
+      "outputs": [],
+      "rule": "SELECT ... FROM fact_orders",
+      "rows_affected": null,
+      "method": "deterministic",
+      "params": {},
+      "llm": null
+    }
+  ]
+}

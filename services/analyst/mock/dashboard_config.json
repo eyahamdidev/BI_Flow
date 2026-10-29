@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "dashboard_config",
+      "kind": "json",
+      "path": "runs/{run_id}/06_dashboard/dashboard_config.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "tiles": 11,
+    "charts": 22
+  },
+  "lineage_events": []
+}

@@ -1,0 +1,73 @@
+# docker compose --profile core up --build            (all services, mocks on)
+# docker compose --profile core --profile ollama up   (adds a local Ollama container)
+# docker compose --profile core --profile ml up       (adds MLflow)
+# Developers who run Ollama natively skip the `ollama` profile and set LLM_BASE_URL in .env.
+x-svc: &svc
+  env_file:
+    - path: .env
+      required: false
+  environment: &env
+    BIFLOW_MOCK: ${BIFLOW_MOCK:-1}
+    DATA_DIR: /data
+    URL_INGEST_QUALITY: http://ingest_quality:8104
+    URL_PROFILE_CLEAN: http://profile_clean:8103
+    URL_ETL: http://etl:8101
+    URL_SEMANTIC_KPI: http://semantic_kpi:8105
+    URL_ANALYST: http://analyst:8106
+    URL_AUDITOR: http://auditor:8102
+    LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434/v1}
+  extra_hosts: ["host.docker.internal:host-gateway"]
+  volumes: ["./data:/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro"]
+  profiles: ["core"]
+
+services:
+  gateway:
+    <<: *svc
+    build: {context: ., dockerfile: services/gateway/Dockerfile}
+    ports: ["8000:8000"]
+  etl:
+    <<: *svc
+    build: {context: ., dockerfile: services/etl/Dockerfile}
+    ports: ["8101:8101"]
+  auditor:
+    <<: *svc
+    build: {context: ., dockerfile: services/auditor/Dockerfile}
+    ports: ["8102:8102"]
+  profile_clean:
+    <<: *svc
+    build: {context: ., dockerfile: services/profile_clean/Dockerfile}
+    ports: ["8103:8103"]
+  ingest_quality:
+    <<: *svc
+    build: {context: ., dockerfile: services/ingest_quality/Dockerfile}
+    ports: ["8104:8104"]
+  semantic_kpi:
+    <<: *svc
+    build: {context: ., dockerfile: services/semantic_kpi/Dockerfile}
+    ports: ["8105:8105"]
+  analyst:
+    <<: *svc
+    build: {context: ., dockerfile: services/analyst/Dockerfile}
+    ports: ["8106:8106"]
+  dashboard:
+    build: {context: ., dockerfile: services/dashboard/Dockerfile}
+    environment: {DATA_DIR: /data, GATEWAY_URL: "http://gateway:8000"}
+    volumes: ["./data:/data:ro"]
+    ports: ["8501:8501"]
+    profiles: ["core"]
+
+  ollama:
+    image: ollama/ollama:latest
+    ports: ["11434:11434"]
+    volumes: ["ollama:/root/.ollama"]
+    profiles: ["ollama"]
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri file:///mlruns
+    ports: ["5000:5000"]
+    volumes: ["./mlruns:/mlruns"]
+    profiles: ["ml"]
+
+volumes:
+  ollama:

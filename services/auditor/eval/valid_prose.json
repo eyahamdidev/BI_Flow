@@ -1,0 +1,62 @@
+{
+  "note": "Author-written controls. Each sentence is supported by its sheet. This is the false-reject set, not a held-out set.",
+  "default_sheet": {
+    "kpi_id": "revenue",
+    "period": "2017-11",
+    "total_delta": 12,
+    "share": 0.08,
+    "orders": 40,
+    "coverage_pct": 100,
+    "definition": {"name": "Revenue", "unit": "BRL", "description": "Total payments received"},
+    "lineage": {
+      "raw_tables": ["raw.orders"],
+      "cleaning_rules": ["parse_dates", "drop_exact_duplicates"]
+    },
+    "drivers": {
+      "total_delta": 12,
+      "contributions": [
+        {"dimension_value": "SP", "delta": 9},
+        {"dimension_value": "RJ", "delta": 3}
+      ]
+    }
+  },
+  "sentences": [
+    {"id": "v01", "prose": "The logged change is 12."},
+    {"id": "v02", "prose": "Revenue went up by 12."},
+    {"id": "v03", "prose": "Revenue climbed by 12."},
+    {"id": "v04", "prose": "Revenue rose by 12."},
+    {"id": "v05", "prose": "Revenue grew by 12."},
+    {"id": "v06", "prose": "Revenue gained 12."},
+    {"id": "v07", "prose": "The change increased by 12."},
+    {"id": "v08", "prose": "Revenue did not fall."},
+    {"id": "v09", "prose": "Revenue is not down."},
+    {"id": "v10", "prose": "The logged share is 8%."},
+    {"id": "v11", "prose": "Coverage is 100 percent."},
+    {"id": "v12", "prose": "The largest contribution is SP."},
+    {"id": "v13", "prose": "The largest contribution came from SP."},
+    {"id": "v14", "prose": "The top driver is SP."},
+    {"id": "v15", "prose": "The largest logged contribution is SP at 9."},
+    {"id": "v16", "prose": "Orders moved in SP."},
+    {"id": "v17", "prose": "RJ contributed 3."},
+    {"id": "v18", "prose": "SP contributed 9."},
+    {"id": "v19", "prose": "The logged contributions are SP at 9 and RJ at 3."},
+    {"id": "v20", "prose": "The path starts at raw.orders."},
+    {"id": "v21", "prose": "Cleaning applies parse_dates."},
+    {"id": "v22", "prose": "Cleaning applies drop_exact_duplicates."},
+    {"id": "v23", "prose": "40 orders were logged."},
+    {"id": "v24", "prose": "The period is 2017-11."},
+    {"id": "v25", "prose": "Le revenu a augmenté de 12."},
+    {"id": "v26", "prose": "Le revenu est en hausse."},
+    {"id": "v27", "prose": "The unit on the logged change is BRL."},
+    {"id": "v28", "prose": "Revenue is higher by 12."},
+    {"id": "v29", "prose": "The dataset raw.orders was logged."},
+    {
+      "id": "v30",
+      "prose": "The change was caused by late_delivery.",
+      "fact_sheet": {
+        "total_delta": 12,
+        "rule_id": "late_delivery"
+      }
+    }
+  ]
+}

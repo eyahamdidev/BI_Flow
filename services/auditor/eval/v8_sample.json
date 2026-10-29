@@ -1,0 +1,889 @@
+{
+  "prompt": "auditor.explain_kpi@v8",
+  "model": "openai/gpt-oss-120b",
+  "n": 20,
+  "pause_seconds": 2.0,
+  "note": "One run. No human faithfulness labels. A pass means the checker accepted the paragraph.",
+  "rows": [
+    {
+      "id": "ex01",
+      "kpi_id": "revenue",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Revenue",
+        "2017-01",
+        "2016-12",
+        "Total payments received for delivered orders",
+        "month",
+        "1000 BRL",
+        "SP 600 BRL",
+        "RJ 400 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Revenue",
+        "2017-01",
+        "2016-12",
+        "1000 BRL",
+        "SP 600 BRL"
+      ],
+      "dropped": [
+        "Total payments received for delivered orders",
+        "month",
+        "RJ 400 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "Revenue went up by 1000 BRL between 2016-12 and 2017-01. The largest contribution came from SP with 600 BRL. The current period is 2017-01.",
+      "checker_issues": [],
+      "largest": [
+        "SP"
+      ],
+      "latency_ms": 3656.0
+    },
+    {
+      "id": "ex02",
+      "kpi_id": "revenue",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Revenue",
+        "2017-06",
+        "2017-05",
+        "Total payments received for delivered orders",
+        "month",
+        "2000 BRL",
+        "MG 1200 BRL",
+        "BA 800 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Revenue",
+        "2017-06",
+        "2017-05",
+        "2000 BRL",
+        "MG 1200 BRL"
+      ],
+      "dropped": [
+        "Total payments received for delivered orders",
+        "month",
+        "BA 800 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "Revenue for 2017-06 was compared to 2017-05. It went up by 2000 BRL. The largest contribution came from MG with 1200 BRL.",
+      "checker_issues": [],
+      "largest": [
+        "MG"
+      ],
+      "latency_ms": 3504.4
+    },
+    {
+      "id": "ex03",
+      "kpi_id": "revenue",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Revenue",
+        "2017-11",
+        "2017-10",
+        "Total payments received for delivered orders",
+        "month",
+        "3000 BRL",
+        "PR 1800 BRL",
+        "RS 1200 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Revenue",
+        "2017-11",
+        "2017-10",
+        "3000 BRL",
+        "PR 1800 BRL"
+      ],
+      "dropped": [
+        "Total payments received for delivered orders",
+        "month",
+        "RS 1200 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "Revenue increased by 3000 BRL between 2017-10 and 2017-11. The largest contribution to this change was from PR, adding 1800 BRL. Revenue tracks the total payments received for delivered orders.",
+      "checker_issues": [],
+      "largest": [
+        "PR"
+      ],
+      "latency_ms": 3580.8
+    },
+    {
+      "id": "ex04",
+      "kpi_id": "revenue",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Revenue",
+        "2018-03",
+        "2018-02",
+        "Total payments received for delivered orders",
+        "month",
+        "4000 BRL",
+        "SC 2400 BRL",
+        "ES 1600 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Revenue",
+        "2018-03",
+        "2018-02",
+        "4000 BRL",
+        "SC 2400 BRL"
+      ],
+      "dropped": [
+        "Total payments received for delivered orders",
+        "month",
+        "ES 1600 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "Revenue increased by 4000 BRL from 2018-02 to 2018-03. The largest contribution came from SC with 2400 BRL. The remaining increase was contributed by other factors.",
+      "checker_issues": [],
+      "largest": [
+        "SC"
+      ],
+      "latency_ms": 2746.7
+    },
+    {
+      "id": "ex05",
+      "kpi_id": "orders",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Orders",
+        "2017-01",
+        "2016-12",
+        "Delivered orders",
+        "month",
+        "5000 count",
+        "SP 3000 count",
+        "RJ 2000 count",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Orders",
+        "2017-01",
+        "2016-12",
+        "5000 count",
+        "SP 3000 count"
+      ],
+      "dropped": [
+        "Delivered orders",
+        "month",
+        "RJ 2000 count",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "Orders went up by 5000 count between 2016-12 and 2017-01. The current period is 2017-01. The largest contribution came from SP with 3000 count.",
+      "checker_issues": [],
+      "largest": [
+        "SP"
+      ],
+      "latency_ms": 2397.0
+    },
+    {
+      "id": "ex06",
+      "kpi_id": "orders",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Orders",
+        "2017-06",
+        "2017-05",
+        "Delivered orders",
+        "month",
+        "6000 count",
+        "MG 3600 count",
+        "BA 2400 count",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Orders",
+        "2017-06",
+        "2017-05",
+        "6000 count",
+        "MG 3600 count"
+      ],
+      "dropped": [
+        "Delivered orders",
+        "month",
+        "BA 2400 count",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "Orders went up by 6000 count between 2017-05 and 2017-06. The largest contribution came from MG with 3600 count. The current period is 2017-06 and the comparison period is 2017-05.",
+      "checker_issues": [],
+      "largest": [
+        "MG"
+      ],
+      "latency_ms": 2637.8
+    },
+    {
+      "id": "ex07",
+      "kpi_id": "orders",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Orders",
+        "2017-11",
+        "2017-10",
+        "Delivered orders",
+        "month",
+        "7000 count",
+        "PR 4200 count",
+        "RS 2800 count",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 2,
+      "first_try": false,
+      "warning": null,
+      "kept": [
+        "Orders",
+        "2017-11",
+        "2017-10",
+        "7000 count",
+        "PR 4200 count"
+      ],
+      "dropped": [
+        "RS 2800 count",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates",
+        "Delivered orders",
+        "month"
+      ],
+      "text": "Orders went up by 7000 count in 2017-11 compared with 2017-10. The current period is 2017-11 and the comparison period is 2017-10. The largest contribution came from PR with 4200 count.",
+      "checker_issues": [],
+      "largest": [
+        "PR"
+      ],
+      "latency_ms": 7925.7
+    },
+    {
+      "id": "ex08",
+      "kpi_id": "orders",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Orders",
+        "2018-03",
+        "2018-02",
+        "Delivered orders",
+        "month",
+        "8000 count",
+        "SC 4800 count",
+        "ES 3200 count",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Orders",
+        "2018-03",
+        "2018-02",
+        "8000 count",
+        "SC 4800 count"
+      ],
+      "dropped": [
+        "Delivered orders",
+        "month",
+        "ES 3200 count",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "Orders went up by 8000 count between 2018-02 and 2018-03. The largest contribution came from SC with 4800 count. This increase is observed for the period.",
+      "checker_issues": [],
+      "largest": [
+        "SC"
+      ],
+      "latency_ms": 7372.7
+    },
+    {
+      "id": "ex09",
+      "kpi_id": "aov",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Average order value",
+        "2017-01",
+        "2016-12",
+        "Revenue divided by delivered orders",
+        "month",
+        "9000 BRL",
+        "SP 5400 BRL",
+        "RJ 3600 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 2,
+      "first_try": false,
+      "warning": null,
+      "kept": [
+        "Average order value",
+        "2017-01",
+        "2016-12",
+        "9000 BRL",
+        "SP 5400 BRL"
+      ],
+      "dropped": [
+        "Revenue divided by delivered orders",
+        "month",
+        "RJ 3600 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Average order value increased from 2016-12 to 2017-01. It went up by 9000 BRL. The biggest contribution came from SP with 5400 BRL.",
+      "checker_issues": [],
+      "largest": [
+        "SP"
+      ],
+      "latency_ms": 21713.1
+    },
+    {
+      "id": "ex10",
+      "kpi_id": "aov",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Average order value",
+        "2017-06",
+        "2017-05",
+        "Revenue divided by delivered orders",
+        "month",
+        "10000 BRL",
+        "MG 6000 BRL",
+        "BA 4000 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 2,
+      "first_try": false,
+      "warning": null,
+      "kept": [
+        "Average order value",
+        "2017-06",
+        "2017-05",
+        "10000 BRL",
+        "MG 6000 BRL"
+      ],
+      "dropped": [
+        "Revenue divided by delivered orders",
+        "month",
+        "BA 4000 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Average order value for 2017-06 is being compared to 2017-05. The metric went up by 10000 BRL. The largest contribution to the change came from MG with 6000 BRL.",
+      "checker_issues": [],
+      "largest": [
+        "MG"
+      ],
+      "latency_ms": 22209.9
+    },
+    {
+      "id": "ex11",
+      "kpi_id": "aov",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Average order value",
+        "2017-11",
+        "2017-10",
+        "Revenue divided by delivered orders",
+        "month",
+        "11000 BRL",
+        "PR 6600 BRL",
+        "RS 4400 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Average order value",
+        "2017-11",
+        "2017-10",
+        "11000 BRL",
+        "PR 6600 BRL"
+      ],
+      "dropped": [
+        "Revenue divided by delivered orders",
+        "month",
+        "RS 4400 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Average order value went up in 2017-11 compared to 2017-10. The metric went up by 11000 BRL. The largest contribution came from PR with 6600 BRL.",
+      "checker_issues": [],
+      "largest": [
+        "PR"
+      ],
+      "latency_ms": 11709.1
+    },
+    {
+      "id": "ex12",
+      "kpi_id": "aov",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Average order value",
+        "2018-03",
+        "2018-02",
+        "Revenue divided by delivered orders",
+        "month",
+        "12000 BRL",
+        "SC 7200 BRL",
+        "ES 4800 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 2,
+      "first_try": false,
+      "warning": null,
+      "kept": [
+        "Average order value",
+        "2018-03",
+        "2018-02",
+        "12000 BRL",
+        "SC 7200 BRL"
+      ],
+      "dropped": [
+        "Revenue divided by delivered orders",
+        "month",
+        "ES 4800 BRL",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Average order value in 2018-03 was compared to 2018-02, and the revenue went up by 12000 BRL. The largest contribution came from SC with 7200 BRL. This positive change is reflected in the total delta of 12000 BRL.",
+      "checker_issues": [],
+      "largest": [
+        "SC"
+      ],
+      "latency_ms": 17294.3
+    },
+    {
+      "id": "ex13",
+      "kpi_id": "late_rate",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Late-delivery rate",
+        "2017-01",
+        "2016-12",
+        "Share of orders delivered after the estimate",
+        "month",
+        "13000 ratio",
+        "SP 7800 ratio",
+        "RJ 5200 ratio",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Late-delivery rate",
+        "2017-01",
+        "2016-12",
+        "13000 ratio",
+        "SP 7800 ratio"
+      ],
+      "dropped": [
+        "Share of orders delivered after the estimate",
+        "month",
+        "RJ 5200 ratio",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Late-delivery rate for 2017-01 is compared with 2016-12. The rate went up by 13000 ratio. The largest contribution to the change came from SP with 7800 ratio.",
+      "checker_issues": [],
+      "largest": [
+        "SP"
+      ],
+      "latency_ms": 10363.6
+    },
+    {
+      "id": "ex14",
+      "kpi_id": "late_rate",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Late-delivery rate",
+        "2017-06",
+        "2017-05",
+        "Share of orders delivered after the estimate",
+        "month",
+        "14000 ratio",
+        "MG 8400 ratio",
+        "BA 5600 ratio",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 3,
+      "first_try": false,
+      "warning": null,
+      "kept": [
+        "Late-delivery rate",
+        "2017-06",
+        "2017-05",
+        "14000 ratio",
+        "MG 8400 ratio"
+      ],
+      "dropped": [
+        "Share of orders delivered after the estimate",
+        "month",
+        "BA 5600 ratio",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Late-delivery rate for 2017-06 compared with 2017-05 shows a change. The rate went up by 14000 ratio. The largest contribution came from MG with 8400 ratio.",
+      "checker_issues": [],
+      "largest": [
+        "MG"
+      ],
+      "latency_ms": 37620.9
+    },
+    {
+      "id": "ex15",
+      "kpi_id": "late_rate",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Late-delivery rate",
+        "2017-11",
+        "2017-10",
+        "Share of orders delivered after the estimate",
+        "month",
+        "15000 ratio",
+        "PR 9000 ratio",
+        "RS 6000 ratio",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Late-delivery rate",
+        "2017-11",
+        "2017-10",
+        "15000 ratio",
+        "PR 9000 ratio"
+      ],
+      "dropped": [
+        "Share of orders delivered after the estimate",
+        "month",
+        "RS 6000 ratio",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Late-delivery rate for 2017-11 is being compared with 2017-10. The metric went up by 15000 ratio. The largest contribution came from PR with a 9000 ratio.",
+      "checker_issues": [],
+      "largest": [
+        "PR"
+      ],
+      "latency_ms": 17955.8
+    },
+    {
+      "id": "ex16",
+      "kpi_id": "late_rate",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Late-delivery rate",
+        "2018-03",
+        "2018-02",
+        "Share of orders delivered after the estimate",
+        "month",
+        "16000 ratio",
+        "SC 9600 ratio",
+        "ES 6400 ratio",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Late-delivery rate",
+        "2018-03",
+        "2018-02",
+        "16000 ratio",
+        "SC 9600 ratio"
+      ],
+      "dropped": [
+        "Share of orders delivered after the estimate",
+        "month",
+        "ES 6400 ratio",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Late-delivery rate increased from 2018-02 to 2018-03. It went up by 16000. The largest contribution came from SC with 9600.",
+      "checker_issues": [],
+      "largest": [
+        "SC"
+      ],
+      "latency_ms": 7913.3
+    },
+    {
+      "id": "ex17",
+      "kpi_id": "avg_review_score",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Average review score",
+        "2017-01",
+        "2016-12",
+        "Mean review score",
+        "month",
+        "17000 score",
+        "SP 10200 score",
+        "RJ 6800 score",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Average review score",
+        "2017-01",
+        "2016-12",
+        "17000 score",
+        "SP 10200 score"
+      ],
+      "dropped": [
+        "Mean review score",
+        "month",
+        "RJ 6800 score",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Average review score went up by 17000 score between 2016-12 and 2017-01. The largest contribution came from SP with 10200 score. This KPI reflects the average review score for 2017-01.",
+      "checker_issues": [],
+      "largest": [
+        "SP"
+      ],
+      "latency_ms": 7065.1
+    },
+    {
+      "id": "ex18",
+      "kpi_id": "avg_review_score",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Average review score",
+        "2017-06",
+        "2017-05",
+        "Mean review score",
+        "month",
+        "18000 score",
+        "MG 10800 score",
+        "BA 7200 score",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Average review score",
+        "2017-06",
+        "2017-05",
+        "18000 score",
+        "MG 10800 score"
+      ],
+      "dropped": [
+        "Mean review score",
+        "month",
+        "BA 7200 score",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Average review score for 2017-06 is being compared to 2017-05. The score went up by 18000 score. The largest contribution came from MG with 10800 score.",
+      "checker_issues": [],
+      "largest": [
+        "MG"
+      ],
+      "latency_ms": 14161.0
+    },
+    {
+      "id": "ex19",
+      "kpi_id": "avg_review_score",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Average review score",
+        "2017-11",
+        "2017-10",
+        "Mean review score",
+        "month",
+        "19000 score",
+        "PR 11400 score",
+        "RS 7600 score",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Average review score",
+        "2017-11",
+        "2017-10",
+        "19000 score",
+        "PR 11400 score"
+      ],
+      "dropped": [
+        "Mean review score",
+        "month",
+        "RS 7600 score",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Average review score went up by 19000 score between 2017-10 and 2017-11. The current period is November 2017. The largest contribution came from PR with 11400 score.",
+      "checker_issues": [],
+      "largest": [
+        "PR"
+      ],
+      "latency_ms": 5629.2
+    },
+    {
+      "id": "ex20",
+      "kpi_id": "avg_review_score",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "lang": "en",
+      "n_facts": 10,
+      "offered": [
+        "Average review score",
+        "2018-03",
+        "2018-02",
+        "Mean review score",
+        "month",
+        "20000 score",
+        "SC 12000 score",
+        "ES 8000 score",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "source": "llm",
+      "attempts": 1,
+      "first_try": true,
+      "warning": null,
+      "kept": [
+        "Average review score",
+        "2018-03",
+        "2018-02",
+        "20000 score",
+        "SC 12000 score"
+      ],
+      "dropped": [
+        "Mean review score",
+        "month",
+        "ES 8000 score",
+        "raw.orders, raw.order_payments",
+        "parse_dates, drop_exact_duplicates"
+      ],
+      "text": "The Average review score went up by 20000 score from 2018-02 to 2018-03. The change was 20000 score. The largest contribution came from SC with 12000 score. The current period is 2018-03 and the comparison period is 2018-02.",
+      "checker_issues": [],
+      "largest": [
+        "SC"
+      ],
+      "latency_ms": 7862.5
+    }
+  ]
+}

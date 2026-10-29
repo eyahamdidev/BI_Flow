@@ -1,0 +1,48 @@
+{
+  "key": "e663a109677dc74111545f80e64bf08e8cf622d04cf3be2c6c6d52cf68b6856e",
+  "response_sha256": "932175bf9c08577cdb935ff0150485d7f86acca979a784374b1e299cecb6b160",
+  "text": "Orders went up by 40 orders between 2017-10 and 2017-11. The largest contribution came from BA (25 orders). The second largest contribution came from MG (15 orders). Orders is defined as: Count of delivered orders",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Orders went up by 40 orders between 2017-10 and 2017-11.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from BA (25 orders).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from MG (15 orders).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Orders is defined as: Count of delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

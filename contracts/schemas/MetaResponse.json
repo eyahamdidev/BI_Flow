@@ -1,0 +1,55 @@
+{
+  "properties": {
+    "contract_version": {
+      "default": "0.1",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "lineage_steps": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Lineage Steps",
+      "type": "array"
+    },
+    "mock": {
+      "default": false,
+      "title": "Mock",
+      "type": "boolean"
+    },
+    "models": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "default": {},
+      "title": "Models",
+      "type": "object"
+    },
+    "modes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Modes",
+      "type": "array"
+    },
+    "module": {
+      "title": "Module",
+      "type": "string"
+    },
+    "prompt_versions": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "default": {},
+      "title": "Prompt Versions",
+      "type": "object"
+    }
+  },
+  "required": [
+    "module",
+    "modes"
+  ],
+  "title": "MetaResponse",
+  "type": "object"
+}

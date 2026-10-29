@@ -1,0 +1,12 @@
+name: biflow
+version: '0.1.0'
+config-version: 2
+profile: biflow
+model-paths: ['models']
+test-paths: ['tests']
+models:
+  biflow:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

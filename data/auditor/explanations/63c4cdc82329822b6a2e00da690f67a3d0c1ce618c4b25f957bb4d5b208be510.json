@@ -1,0 +1,56 @@
+{
+  "key": "63c4cdc82329822b6a2e00da690f67a3d0c1ce618c4b25f957bb4d5b208be510",
+  "response_sha256": "883db71519a3b62119b71b7a8d64345ffe03bc984c049ae0941347351838e4c9",
+  "text": "Orders went up by 7000 count between 2017-10 and 2017-11. The largest contribution came from PR (4200 count). The second largest contribution came from RS (2800 count). Orders is defined as: Delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Orders went up by 7000 count between 2017-10 and 2017-11.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from PR (4200 count).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from RS (2800 count).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Orders is defined as: Delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+      "fact_ids": [
+        "lineage.raw_tables",
+        "lineage.cleaning_rules"
+      ],
+      "frame": "F5"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

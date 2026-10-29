@@ -1,0 +1,55 @@
+{
+  "key": "c593d49c6590199c1f23efa0ff757310a55e3007af0da1ab9483a6fd017b7e7b",
+  "response_sha256": "6e2be3dcb4c5861992a861cd94166d2112580bd193ba4a277c81767ced5fc724",
+  "text": "Review score went up by 2 points between 2017-08 and 2017-09. The largest contribution came from SP (2 points). The second largest contribution came from MG (0 points). Review score is defined as: Mean review score of delivered orders Caveat on record: Delivered orders only",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Review score went up by 2 points between 2017-08 and 2017-09.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from SP (2 points).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from MG (0 points).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Review score is defined as: Mean review score of delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "Caveat on record: Delivered orders only",
+      "fact_ids": [
+        "definition.caveats"
+      ],
+      "frame": "F7"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

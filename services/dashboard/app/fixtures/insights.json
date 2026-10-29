@@ -1,0 +1,46 @@
+[
+  {
+    "id": "i1",
+    "kpi_id": "revenue",
+    "type": "anomaly",
+    "period": "2017-11",
+    "severity": "review",
+    "facts": {
+      "expected": 301000,
+      "actual": 466000
+    },
+    "narrative": "Revenue in November 2017 was well above the expected level (mock data).",
+    "rule_id": null,
+    "source": "model"
+  },
+  {
+    "id": "i2",
+    "kpi_id": "late_rate",
+    "type": "recommendation",
+    "period": "2017-11",
+    "severity": "high",
+    "facts": {
+      "top_drivers": [
+        "RJ",
+        "SP"
+      ]
+    },
+    "narrative": "Review carrier performance and shipping promises for RJ and SP (mock).",
+    "rule_id": "late_rate_up_region",
+    "source": "both"
+  },
+  {
+    "id": "i3",
+    "kpi_id": "avg_review_score",
+    "type": "trend",
+    "period": "2018-08",
+    "severity": "info",
+    "facts": {
+      "slope_per_month": -0.014,
+      "p": 0.003
+    },
+    "narrative": "Average review score has drifted down slowly over the period (mock).",
+    "rule_id": null,
+    "source": "rule"
+  }
+]

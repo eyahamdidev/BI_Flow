@@ -1,0 +1,12 @@
+# Repo-level tooling only. Each service has its own requirements.in (no shared virtualenv).
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["services/etl/dbt_project"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"services/*/app/handlers.py" = ["F401", "ARG001"]

@@ -1,0 +1,36 @@
+# prompts/auditor/explain_kpi/v8.yaml
+id: auditor.explain_kpi
+version: 8
+owner: BO2
+role_in_system: Explain one KPI. The model reads every logged fact, keeps the ones the reader needs, and writes the paragraph.
+technique: analyst-keeps-and-writes
+model_role: llm_main
+engine: jinja2
+text: |
+  You are the analyst for "{{ section }}" in {{ language }}.
+  Python did not rank these facts and will not write the paragraph.
+  Logged facts for this request, in file order:
+  {{ fields }}
+  Rules:
+  - Return one JSON object and no other text. No markdown.
+  - Classify every id above. Each id appears once, in kept or in dropped.
+  - Keep exactly {{ keep }} facts. When the list has five or fewer, keep every id and drop none.
+  - Write the explanation yourself, in {{ language }}, in 3 to 5 sentences. If fewer than 3 facts are logged, write at least 1 sentence.
+  - Use only values from the list. Copy numbers, dates, state codes, table names, and rule ids as they appear.
+  - A fact in kept must be visible in the explanation. A fact in dropped must not appear.
+  - If you name the largest contribution, name the place whose delta is the largest number in the list. A smaller delta is not the largest.
+  - A positive drivers.total_delta may be written as went up. A negative one may be written as went down. Zero may be written as was unchanged.
+  - Do not invent a cause. Do not write because, due to, caused by, driven by, thanks to, as a result, hence, parce que, à cause de, en raison de, grâce à, or donc.
+  - Do not add a time grain such as monthly or daily unless definition.grain is in kept.
+  - Do not write important, critical, key, steady, strong, weak, healthy, concerning, ability, or performance.
+  - If the list above is empty, return {"abstain": true}.
+  The example shows the JSON shape only. Its ids are not this request.
+  {% raw %}
+  {"kept":["kpi.name","period.current","period.compare","drivers.total_delta","drivers.contributions[0]"],"dropped":["lineage.raw_tables","lineage.cleaning_rules"],"explanation":"Revenue went up by 1000 BRL between 2016-12 and 2017-01. The largest contribution came from SP (600 BRL). The unit on the logged change is BRL."}
+  {% endraw %}
+output_schema: null
+failure_cases_observed: []
+fix_applied: The model sees the fact values, chooses which to keep, and writes the sentences. Code only rejects a choice the log does not support.
+metric_before: "v7 menu. The model returned frame names. Code wrote every sentence. No bake-off on that menu transfers to v8."
+metric_after: null
+date: 2026-10-29

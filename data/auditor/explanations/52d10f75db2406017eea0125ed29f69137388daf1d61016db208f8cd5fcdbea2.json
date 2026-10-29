@@ -1,0 +1,55 @@
+{
+  "key": "52d10f75db2406017eea0125ed29f69137388daf1d61016db208f8cd5fcdbea2",
+  "response_sha256": "ea0e6589a5a8806a32b714bd9e717b027677d8bb2b2c2a571e1633c7f7e3c7f9",
+  "text": "Late rate went up by 4 pp between 2017-07 and 2017-08. The largest contribution came from SP (3 pp). The second largest contribution came from RJ (1 pp). Late rate is defined as: Share of orders delivered after the estimated date The logged rule for this change is late_delivery.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Late rate went up by 4 pp between 2017-07 and 2017-08.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from SP (3 pp).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from RJ (1 pp).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Late rate is defined as: Share of orders delivered after the estimated date",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "The logged rule for this change is late_delivery.",
+      "fact_ids": [
+        "rule_id"
+      ],
+      "frame": "F6"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

@@ -1,0 +1,17 @@
+# stage -> module -> mode. Owner: BO1. Sequential for now; port to LangGraph nodes in Phase 2.
+# always: true  = still runs after an upstream failure so the failure is explained (Auditor).
+# timeout_s follows the spec budgets (2.3).
+stages:
+  - {name: ingest,           module: ingest_quality, mode: ingest,           timeout_s: 60}
+  - {name: profile,          module: profile_clean,  mode: profile,          timeout_s: 60,  options: {stage: before}}
+  - {name: score_before,     module: ingest_quality, mode: score,            timeout_s: 60,  options: {stage: before}}
+  - {name: clean,            module: profile_clean,  mode: clean,            timeout_s: 120}
+  - {name: validate,         module: ingest_quality, mode: validate,         timeout_s: 60}
+  - {name: score_after,      module: ingest_quality, mode: score,            timeout_s: 60,  options: {stage: after}}
+  - {name: etl,              module: etl,            mode: run,              timeout_s: 180}
+  - {name: kpi_compute,      module: semantic_kpi,   mode: compute,          timeout_s: 90}
+  - {name: kpi_index,        module: semantic_kpi,   mode: index,            timeout_s: 60}
+  - {name: analyse,          module: analyst,        mode: analyse,          timeout_s: 120}
+  - {name: dashboard_config, module: analyst,        mode: dashboard_config, timeout_s: 60}
+  - {name: lineage_graph,    module: auditor,        mode: graph,            timeout_s: 120, always: true}
+  - {name: audit,            module: auditor,        mode: audit,            timeout_s: 120, always: true}

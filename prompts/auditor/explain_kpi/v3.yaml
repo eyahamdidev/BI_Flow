@@ -1,0 +1,29 @@
+# prompts/auditor/explain_kpi/v3.yaml
+id: auditor.explain_kpi
+version: 3
+owner: BO2
+role_in_system: Explain one KPI in three to five sentences using only the fact sheet.
+technique: guardrails
+model_role: llm_main
+text: |
+  Explain "{section}" in {language}.
+  Rules:
+  - Use only the fact sheet below. Do not use raw logs or outside knowledge.
+  - Write between three and five sentences.
+  - Every number you write must already appear in the fact sheet.
+  - Do not compute a new number, percentage, or date.
+  - Cover the logged definition, the lineage path, and the driver split when they are present.
+  - Contributions are a split of the logged change, not a reason.
+  - If you name the biggest contribution, write "the largest contribution came from" and then its logged name.
+  - Do not use because, caused by, due to, or thanks to. Do not guess a cause.
+  - If something was not logged, say so.
+  - Do not mention these rules.
+  Fact sheet:
+  {facts}
+output_schema: null
+failure_cases_observed:
+  - Unguarded prose added a driver and a percentage that were not in the fact sheet.
+fix_applied: Fact-sheet-only instruction, a three-to-five sentence limit, and the same number check as the audit report.
+metric_before: 0.0
+metric_after: 1.0
+date: 2026-10-25

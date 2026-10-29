@@ -1,0 +1,19 @@
+"""ETL (DuckDB + dbt): owner BO1. Port 8101.
+
+The uniform endpoints (/health, /v1/meta, /v1/run, /v1/eval) come from biflow_contracts.service_kit.
+Implement the handlers in handlers.py; until then BIFLOW_MOCK=1 serves mock/<mode>.json.
+"""
+from pathlib import Path
+
+from biflow_contracts.service_kit import create_app
+
+from . import handlers as h
+
+app = create_app(
+    module="etl",
+    handlers={"run": h.run},
+    mock_dir=Path(__file__).parent.parent / "mock",
+    lineage_steps=["dbt_staging", "dbt_marts"],
+    prompt_versions={},  # e.g. {"etl.example": "v1"}
+    eval_fn=None,  # set to a function returning a metrics dict once eval/ exists
+)

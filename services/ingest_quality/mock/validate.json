@@ -1,0 +1,33 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "validation_report",
+      "kind": "json",
+      "path": "runs/{run_id}/00_ingest/validation_report.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "schema_errors": 0,
+    "tables_checked": 9
+  },
+  "lineage_events": [
+    {
+      "event_id": "mock-ingest_quality-validate_schema",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "ingest_quality",
+      "step": "validate_schema",
+      "inputs": [],
+      "outputs": [],
+      "rule": "pandera(expected_schema)",
+      "rows_affected": null,
+      "method": "deterministic",
+      "params": {},
+      "llm": null
+    }
+  ]
+}

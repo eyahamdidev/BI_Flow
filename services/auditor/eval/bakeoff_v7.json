@@ -1,0 +1,2663 @@
+{
+  "prompt_id": "auditor.explain_kpi@v7",
+  "temperature": 0,
+  "seed": 7,
+  "reasoning_effort": "low on the api provider; omitted for ollama",
+  "gate": {
+    "passed": false,
+    "api_default": "v6",
+    "ollama_default": "v4",
+    "low_ram_default": "v4",
+    "reason": "The 120B runs did not both reach first-try 1.00 and fallback 0.00, so the api profile stays on v6.",
+    "local": {
+      "llama-8b": false,
+      "llama-3b": false
+    },
+    "ollama_note": "The ollama profile's configured model is qwen2.5:7b-instruct, which was not in this bake-off, so that profile stays on v4."
+  },
+  "omission": {
+    "f3_offered": 20,
+    "f3_omitted": 0,
+    "f6_offered": 0,
+    "f6_picked": 0,
+    "f7_offered": 0,
+    "f7_picked": 0
+  },
+  "checker_comparison": {
+    "held_out_before_rules": 0.3333,
+    "held_out_after_rules_on_same_captions": 0.7333,
+    "fresh_checker_recall": 0.0667,
+    "not_producible_by_v7": true,
+    "note": "These captions are free prose. v7 can publish only the fixed frames, so none of these sentences is a v7 output."
+  },
+  "arms": {
+    "groq-120b": {
+      "n": 20,
+      "first_try_pass_rate": 1.0,
+      "pass_after_retry_rate": 0.0,
+      "fallback_rate": 0.0,
+      "latency_ms_p50": 1201.3,
+      "latency_ms_p95": 1469.5,
+      "tokens": 10804,
+      "http_429": 0,
+      "f3_offered": 20,
+      "f3_omitted": 0,
+      "f6_offered": 0,
+      "f6_picked": 0,
+      "f7_offered": 0,
+      "f7_picked": 0,
+      "runs": 2,
+      "identical_frame_lists": 12,
+      "identical_text": 12,
+      "both_runs_first_try_1": false,
+      "both_runs_fallback_0": false,
+      "second_run": {
+        "n": 20,
+        "first_try_pass_rate": 0.95,
+        "pass_after_retry_rate": 0.0,
+        "fallback_rate": 0.05,
+        "latency_ms_p50": 3335.4,
+        "latency_ms_p95": 13831.0,
+        "tokens": 10246,
+        "http_429": 10,
+        "f3_offered": 20,
+        "f3_omitted": 0,
+        "f6_offered": 0,
+        "f6_picked": 0,
+        "f7_offered": 0,
+        "f7_picked": 0
+      },
+      "model": "openai/gpt-oss-120b",
+      "provider": "api",
+      "rows": [
+        {
+          "id": "ex01",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 1000 BRL between 2016-12 and 2017-01. The second largest contribution came from RJ (400 BRL). The largest contribution came from SP (600 BRL).",
+          "latency_ms": 1358.5,
+          "tokens": 534
+        },
+        {
+          "id": "ex02",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 2000 BRL between 2017-05 and 2017-06. The largest contribution came from MG (1200 BRL). The second largest contribution came from BA (800 BRL). Revenue is defined as: Total payments received for delivered orders",
+          "latency_ms": 1131.1,
+          "tokens": 549
+        },
+        {
+          "id": "ex03",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 3000 BRL between 2017-10 and 2017-11. The largest contribution came from PR (1800 BRL). The second largest contribution came from RS (1200 BRL). Revenue is defined as: Total payments received for delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1133.0,
+          "tokens": 495
+        },
+        {
+          "id": "ex04",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 4000 BRL between 2018-02 and 2018-03. The largest contribution came from SC (2400 BRL). The second largest contribution came from ES (1600 BRL). Revenue is defined as: Total payments received for delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1049.4,
+          "tokens": 506
+        },
+        {
+          "id": "ex05",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 5000 count between 2016-12 and 2017-01. The largest contribution came from SP (3000 count). The second largest contribution came from RJ (2000 count). Orders is defined as: Delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1121.0,
+          "tokens": 495
+        },
+        {
+          "id": "ex06",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 6000 count between 2017-05 and 2017-06. The largest contribution came from MG (3600 count). The second largest contribution came from BA (2400 count). Orders is defined as: Delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1077.3,
+          "tokens": 585
+        },
+        {
+          "id": "ex07",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 7000 count between 2017-10 and 2017-11. The largest contribution came from PR (4200 count). The second largest contribution came from RS (2800 count). Orders is defined as: Delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1201.3,
+          "tokens": 495
+        },
+        {
+          "id": "ex08",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 8000 count between 2018-02 and 2018-03. The largest contribution came from SC (4800 count). The second largest contribution came from ES (3200 count). Orders is defined as: Delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1190.2,
+          "tokens": 493
+        },
+        {
+          "id": "ex09",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 9000 BRL between 2016-12 and 2017-01. The second largest contribution came from RJ (3600 BRL). The largest contribution came from SP (5400 BRL). Average order value is defined as: Revenue divided by delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1199.6,
+          "tokens": 519
+        },
+        {
+          "id": "ex10",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 10000 BRL between 2017-05 and 2017-06. The largest contribution came from MG (6000 BRL). The second largest contribution came from BA (4000 BRL). Average order value is defined as: Revenue divided by delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1162.0,
+          "tokens": 550
+        },
+        {
+          "id": "ex11",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 11000 BRL between 2017-10 and 2017-11. The largest contribution came from PR (6600 BRL). The second largest contribution came from RS (4400 BRL). Average order value is defined as: Revenue divided by delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1458.1,
+          "tokens": 532
+        },
+        {
+          "id": "ex12",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 12000 BRL between 2018-02 and 2018-03. The second largest contribution came from ES (4800 BRL). The largest contribution came from SC (7200 BRL). Average order value is defined as: Revenue divided by delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1146.7,
+          "tokens": 547
+        },
+        {
+          "id": "ex13",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 13000 ratio between 2016-12 and 2017-01. The second largest contribution came from RJ (5200 ratio). The largest contribution came from SP (7800 ratio).",
+          "latency_ms": 1224.4,
+          "tokens": 543
+        },
+        {
+          "id": "ex14",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 14000 ratio between 2017-05 and 2017-06. The largest contribution came from MG (8400 ratio). The second largest contribution came from BA (5600 ratio). Late-delivery rate is defined as: Share of orders delivered after the estimate The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1842.8,
+          "tokens": 618
+        },
+        {
+          "id": "ex15",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 15000 ratio between 2017-10 and 2017-11. The largest contribution came from PR (9000 ratio). The second largest contribution came from RS (6000 ratio). Late-delivery rate is defined as: Share of orders delivered after the estimate The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1202.7,
+          "tokens": 579
+        },
+        {
+          "id": "ex16",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 16000 ratio between 2018-02 and 2018-03. The largest contribution came from SC (9600 ratio). The second largest contribution came from ES (6400 ratio). Late-delivery rate is defined as: Share of orders delivered after the estimate The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1254.2,
+          "tokens": 588
+        },
+        {
+          "id": "ex17",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 17000 score between 2016-12 and 2017-01. The second largest contribution came from RJ (6800 score). The largest contribution came from SP (10200 score). Average review score is defined as: Mean review score The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1242.7,
+          "tokens": 537
+        },
+        {
+          "id": "ex18",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 18000 score between 2017-05 and 2017-06. The largest contribution came from MG (10800 score). The second largest contribution came from BA (7200 score). Average review score is defined as: Mean review score The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1174.5,
+          "tokens": 561
+        },
+        {
+          "id": "ex19",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 19000 score between 2017-10 and 2017-11. The second largest contribution came from RS (7600 score). The largest contribution came from PR (11400 score). Average review score is defined as: Mean review score The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1242.6,
+          "tokens": 554
+        },
+        {
+          "id": "ex20",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 20000 score between 2018-02 and 2018-03. The largest contribution came from SC (12000 score). The second largest contribution came from ES (8000 score). Average review score is defined as: Mean review score The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1469.5,
+          "tokens": 524
+        }
+      ],
+      "rows_run_b": [
+        {
+          "id": "ex01",
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex02",
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex03",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex04",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex05",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex06",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex07",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex08",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex09",
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex10",
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex11",
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex12",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F5"
+          ],
+          "source": "fallback",
+          "first_try_pass": null
+        },
+        {
+          "id": "ex13",
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex14",
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex15",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex16",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex17",
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex18",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex19",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        },
+        {
+          "id": "ex20",
+          "frames": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "source": "llm",
+          "first_try_pass": true
+        }
+      ]
+    },
+    "groq-20b": {
+      "n": 20,
+      "first_try_pass_rate": 1.0,
+      "pass_after_retry_rate": 0.0,
+      "fallback_rate": 0.0,
+      "latency_ms_p50": 2178.0,
+      "latency_ms_p95": 3318.6,
+      "tokens": 10301,
+      "http_429": 0,
+      "f3_offered": 20,
+      "f3_omitted": 0,
+      "f6_offered": 0,
+      "f6_picked": 0,
+      "f7_offered": 0,
+      "f7_picked": 0,
+      "model": "openai/gpt-oss-20b",
+      "provider": "api",
+      "rows": [
+        {
+          "id": "ex01",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 1000 BRL between 2016-12 and 2017-01. The second largest contribution came from RJ (400 BRL). The largest contribution came from SP (600 BRL).",
+          "latency_ms": 1626.5,
+          "tokens": 502
+        },
+        {
+          "id": "ex02",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 2000 BRL between 2017-05 and 2017-06. The second largest contribution came from BA (800 BRL). The largest contribution came from MG (1200 BRL). Revenue is defined as: Total payments received for delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 3318.6,
+          "tokens": 523
+        },
+        {
+          "id": "ex03",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 3000 BRL between 2017-10 and 2017-11. The second largest contribution came from RS (1200 BRL). The largest contribution came from PR (1800 BRL). Revenue is defined as: Total payments received for delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 3085.2,
+          "tokens": 501
+        },
+        {
+          "id": "ex04",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 4000 BRL between 2018-02 and 2018-03. The second largest contribution came from ES (1600 BRL). The largest contribution came from SC (2400 BRL). Revenue is defined as: Total payments received for delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 2317.5,
+          "tokens": 523
+        },
+        {
+          "id": "ex05",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 5000 count between 2016-12 and 2017-01. The second largest contribution came from RJ (2000 count). The largest contribution came from SP (3000 count).",
+          "latency_ms": 2421.4,
+          "tokens": 501
+        },
+        {
+          "id": "ex06",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 6000 count between 2017-05 and 2017-06. The second largest contribution came from BA (2400 count). The largest contribution came from MG (3600 count).",
+          "latency_ms": 1947.2,
+          "tokens": 501
+        },
+        {
+          "id": "ex07",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 7000 count between 2017-10 and 2017-11. The second largest contribution came from RS (2800 count). The largest contribution came from PR (4200 count).",
+          "latency_ms": 1971.7,
+          "tokens": 507
+        },
+        {
+          "id": "ex08",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 8000 count between 2018-02 and 2018-03. The second largest contribution came from ES (3200 count). The largest contribution came from SC (4800 count).",
+          "latency_ms": 2572.0,
+          "tokens": 507
+        },
+        {
+          "id": "ex09",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 9000 BRL between 2016-12 and 2017-01. The second largest contribution came from RJ (3600 BRL). The largest contribution came from SP (5400 BRL). Average order value is defined as: Revenue divided by delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 2686.6,
+          "tokens": 524
+        },
+        {
+          "id": "ex10",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 10000 BRL between 2017-05 and 2017-06. The second largest contribution came from BA (4000 BRL). The largest contribution came from MG (6000 BRL).",
+          "latency_ms": 2054.7,
+          "tokens": 508
+        },
+        {
+          "id": "ex11",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 11000 BRL between 2017-10 and 2017-11. The second largest contribution came from RS (4400 BRL). The largest contribution came from PR (6600 BRL). Average order value is defined as: Revenue divided by delivered orders The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1702.2,
+          "tokens": 527
+        },
+        {
+          "id": "ex12",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 12000 BRL between 2018-02 and 2018-03. The second largest contribution came from ES (4800 BRL). The largest contribution came from SC (7200 BRL).",
+          "latency_ms": 3606.2,
+          "tokens": 508
+        },
+        {
+          "id": "ex13",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 13000 ratio between 2016-12 and 2017-01. The second largest contribution came from RJ (5200 ratio). The largest contribution came from SP (7800 ratio).",
+          "latency_ms": 1680.7,
+          "tokens": 508
+        },
+        {
+          "id": "ex14",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 14000 ratio between 2017-05 and 2017-06. The second largest contribution came from BA (5600 ratio). The largest contribution came from MG (8400 ratio).",
+          "latency_ms": 2018.2,
+          "tokens": 508
+        },
+        {
+          "id": "ex15",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 15000 ratio between 2017-10 and 2017-11. The second largest contribution came from RS (6000 ratio). The largest contribution came from PR (9000 ratio). Late-delivery rate is defined as: Share of orders delivered after the estimate The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 2116.4,
+          "tokens": 524
+        },
+        {
+          "id": "ex16",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 16000 ratio between 2018-02 and 2018-03. The second largest contribution came from ES (6400 ratio). The largest contribution came from SC (9600 ratio). Late-delivery rate is defined as: Share of orders delivered after the estimate The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 2086.6,
+          "tokens": 524
+        },
+        {
+          "id": "ex17",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 17000 score between 2016-12 and 2017-01. The second largest contribution came from RJ (6800 score). The largest contribution came from SP (10200 score). Average review score is defined as: Mean review score The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 2548.6,
+          "tokens": 515
+        },
+        {
+          "id": "ex18",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 18000 score between 2017-05 and 2017-06. The second largest contribution came from BA (7200 score). The largest contribution came from MG (10800 score).",
+          "latency_ms": 2875.1,
+          "tokens": 553
+        },
+        {
+          "id": "ex19",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 19000 score between 2017-10 and 2017-11. The second largest contribution came from RS (7600 score). The largest contribution came from PR (11400 score).",
+          "latency_ms": 2178.0,
+          "tokens": 512
+        },
+        {
+          "id": "ex20",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F2",
+            "F4",
+            "F5"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 20000 score between 2018-02 and 2018-03. The second largest contribution came from ES (8000 score). The largest contribution came from SC (12000 score). Average review score is defined as: Mean review score The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+          "latency_ms": 1841.9,
+          "tokens": 525
+        }
+      ]
+    },
+    "llama-8b": {
+      "n": 20,
+      "first_try_pass_rate": 0.95,
+      "pass_after_retry_rate": 0.05,
+      "fallback_rate": 0.0,
+      "latency_ms_p50": 6425.6,
+      "latency_ms_p95": 11797.5,
+      "tokens": 7215,
+      "http_429": 0,
+      "f3_offered": 20,
+      "f3_omitted": 0,
+      "f6_offered": 0,
+      "f6_picked": 0,
+      "f7_offered": 0,
+      "f7_picked": 0,
+      "model": "llama3.1:8b",
+      "provider": "ollama",
+      "rows": [
+        {
+          "id": "ex01",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 1000 BRL between 2016-12 and 2017-01. The largest contribution came from SP (600 BRL). The second largest contribution came from RJ (400 BRL).",
+          "latency_ms": 35841.1,
+          "tokens": 341
+        },
+        {
+          "id": "ex02",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 2000 BRL between 2017-05 and 2017-06. The largest contribution came from MG (1200 BRL). The second largest contribution came from BA (800 BRL).",
+          "latency_ms": 6099.0,
+          "tokens": 341
+        },
+        {
+          "id": "ex03",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 3000 BRL between 2017-10 and 2017-11. The largest contribution came from PR (1800 BRL). The second largest contribution came from RS (1200 BRL).",
+          "latency_ms": 6127.2,
+          "tokens": 341
+        },
+        {
+          "id": "ex04",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 4000 BRL between 2018-02 and 2018-03. The largest contribution came from SC (2400 BRL). The second largest contribution came from ES (1600 BRL).",
+          "latency_ms": 6436.0,
+          "tokens": 341
+        },
+        {
+          "id": "ex05",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 5000 count between 2016-12 and 2017-01. The largest contribution came from SP (3000 count). The second largest contribution came from RJ (2000 count).",
+          "latency_ms": 6065.0,
+          "tokens": 341
+        },
+        {
+          "id": "ex06",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 6000 count between 2017-05 and 2017-06. The largest contribution came from MG (3600 count). The second largest contribution came from BA (2400 count).",
+          "latency_ms": 6059.6,
+          "tokens": 341
+        },
+        {
+          "id": "ex07",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 7000 count between 2017-10 and 2017-11. The largest contribution came from PR (4200 count). The second largest contribution came from RS (2800 count).",
+          "latency_ms": 6425.6,
+          "tokens": 341
+        },
+        {
+          "id": "ex08",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 8000 count between 2018-02 and 2018-03. The largest contribution came from SC (4800 count). The second largest contribution came from ES (3200 count).",
+          "latency_ms": 6119.3,
+          "tokens": 341
+        },
+        {
+          "id": "ex09",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 9000 BRL between 2016-12 and 2017-01. The largest contribution came from SP (5400 BRL). The second largest contribution came from RJ (3600 BRL).",
+          "latency_ms": 7737.0,
+          "tokens": 342
+        },
+        {
+          "id": "ex10",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 10000 BRL between 2017-05 and 2017-06. The largest contribution came from MG (6000 BRL). The second largest contribution came from BA (4000 BRL).",
+          "latency_ms": 7178.8,
+          "tokens": 342
+        },
+        {
+          "id": "ex11",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 11000 BRL between 2017-10 and 2017-11. The largest contribution came from PR (6600 BRL). The second largest contribution came from RS (4400 BRL).",
+          "latency_ms": 5983.4,
+          "tokens": 342
+        },
+        {
+          "id": "ex12",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 12000 BRL between 2018-02 and 2018-03. The largest contribution came from SC (7200 BRL). The second largest contribution came from ES (4800 BRL).",
+          "latency_ms": 6296.1,
+          "tokens": 342
+        },
+        {
+          "id": "ex13",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 13000 ratio between 2016-12 and 2017-01. The largest contribution came from SP (7800 ratio). The second largest contribution came from RJ (5200 ratio).",
+          "latency_ms": 6576.4,
+          "tokens": 342
+        },
+        {
+          "id": "ex14",
+          "source": "llm",
+          "first_try_pass": false,
+          "attempts": 2,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F4"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 14000 ratio between 2017-05 and 2017-06. The second largest contribution came from BA (5600 ratio). Late-delivery rate is defined as: Share of orders delivered after the estimate",
+          "latency_ms": 11797.5,
+          "tokens": 721
+        },
+        {
+          "id": "ex15",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 15000 ratio between 2017-10 and 2017-11. The largest contribution came from PR (9000 ratio). The second largest contribution came from RS (6000 ratio).",
+          "latency_ms": 6559.1,
+          "tokens": 342
+        },
+        {
+          "id": "ex16",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 16000 ratio between 2018-02 and 2018-03. The largest contribution came from SC (9600 ratio). The second largest contribution came from ES (6400 ratio).",
+          "latency_ms": 6438.6,
+          "tokens": 342
+        },
+        {
+          "id": "ex17",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 17000 score between 2016-12 and 2017-01. The largest contribution came from SP (10200 score). The second largest contribution came from RJ (6800 score).",
+          "latency_ms": 6389.9,
+          "tokens": 343
+        },
+        {
+          "id": "ex18",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 18000 score between 2017-05 and 2017-06. The largest contribution came from MG (10800 score). The second largest contribution came from BA (7200 score).",
+          "latency_ms": 6574.0,
+          "tokens": 343
+        },
+        {
+          "id": "ex19",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 19000 score between 2017-10 and 2017-11. The largest contribution came from PR (11400 score). The second largest contribution came from RS (7600 score).",
+          "latency_ms": 6101.6,
+          "tokens": 343
+        },
+        {
+          "id": "ex20",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 20000 score between 2018-02 and 2018-03. The largest contribution came from SC (12000 score). The second largest contribution came from ES (8000 score).",
+          "latency_ms": 5842.5,
+          "tokens": 343
+        }
+      ]
+    },
+    "llama-3b": {
+      "n": 20,
+      "first_try_pass_rate": 0.8,
+      "pass_after_retry_rate": 0.2,
+      "fallback_rate": 0.0,
+      "latency_ms_p50": 4213.4,
+      "latency_ms_p95": 8605.7,
+      "tokens": 8576,
+      "http_429": 0,
+      "f3_offered": 20,
+      "f3_omitted": 0,
+      "f6_offered": 0,
+      "f6_picked": 0,
+      "f7_offered": 0,
+      "f7_picked": 0,
+      "model": "llama3.2:latest",
+      "provider": "ollama",
+      "rows": [
+        {
+          "id": "ex01",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 1000 BRL between 2016-12 and 2017-01. The largest contribution came from SP (600 BRL). The second largest contribution came from RJ (400 BRL).",
+          "latency_ms": 20241.9,
+          "tokens": 351
+        },
+        {
+          "id": "ex02",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 2000 BRL between 2017-05 and 2017-06. The largest contribution came from MG (1200 BRL). The second largest contribution came from BA (800 BRL).",
+          "latency_ms": 4153.6,
+          "tokens": 351
+        },
+        {
+          "id": "ex03",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 3000 BRL between 2017-10 and 2017-11. The largest contribution came from PR (1800 BRL). The second largest contribution came from RS (1200 BRL).",
+          "latency_ms": 4220.8,
+          "tokens": 351
+        },
+        {
+          "id": "ex04",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Revenue went up by 4000 BRL between 2018-02 and 2018-03. The largest contribution came from SC (2400 BRL). The second largest contribution came from ES (1600 BRL).",
+          "latency_ms": 4213.4,
+          "tokens": 351
+        },
+        {
+          "id": "ex05",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 5000 count between 2016-12 and 2017-01. The largest contribution came from SP (3000 count). The second largest contribution came from RJ (2000 count).",
+          "latency_ms": 4391.8,
+          "tokens": 351
+        },
+        {
+          "id": "ex06",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 6000 count between 2017-05 and 2017-06. The largest contribution came from MG (3600 count). The second largest contribution came from BA (2400 count).",
+          "latency_ms": 4262.5,
+          "tokens": 351
+        },
+        {
+          "id": "ex07",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 7000 count between 2017-10 and 2017-11. The largest contribution came from PR (4200 count). The second largest contribution came from RS (2800 count).",
+          "latency_ms": 4233.1,
+          "tokens": 351
+        },
+        {
+          "id": "ex08",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Orders went up by 8000 count between 2018-02 and 2018-03. The largest contribution came from SC (4800 count). The second largest contribution came from ES (3200 count).",
+          "latency_ms": 4134.4,
+          "tokens": 351
+        },
+        {
+          "id": "ex09",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 9000 BRL between 2016-12 and 2017-01. The largest contribution came from SP (5400 BRL). The second largest contribution came from RJ (3600 BRL).",
+          "latency_ms": 4208.8,
+          "tokens": 352
+        },
+        {
+          "id": "ex10",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 10000 BRL between 2017-05 and 2017-06. The largest contribution came from MG (6000 BRL). The second largest contribution came from BA (4000 BRL).",
+          "latency_ms": 4168.3,
+          "tokens": 352
+        },
+        {
+          "id": "ex11",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 11000 BRL between 2017-10 and 2017-11. The largest contribution came from PR (6600 BRL). The second largest contribution came from RS (4400 BRL).",
+          "latency_ms": 3967.5,
+          "tokens": 352
+        },
+        {
+          "id": "ex12",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average order value went up by 12000 BRL between 2018-02 and 2018-03. The largest contribution came from SC (7200 BRL). The second largest contribution came from ES (4800 BRL).",
+          "latency_ms": 3991.5,
+          "tokens": 352
+        },
+        {
+          "id": "ex13",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 13000 ratio between 2016-12 and 2017-01. The largest contribution came from SP (7800 ratio). The second largest contribution came from RJ (5200 ratio).",
+          "latency_ms": 3900.4,
+          "tokens": 352
+        },
+        {
+          "id": "ex14",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 14000 ratio between 2017-05 and 2017-06. The largest contribution came from MG (8400 ratio). The second largest contribution came from BA (5600 ratio).",
+          "latency_ms": 3903.3,
+          "tokens": 352
+        },
+        {
+          "id": "ex15",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 15000 ratio between 2017-10 and 2017-11. The largest contribution came from PR (9000 ratio). The second largest contribution came from RS (6000 ratio).",
+          "latency_ms": 3802.9,
+          "tokens": 352
+        },
+        {
+          "id": "ex16",
+          "source": "llm",
+          "first_try_pass": true,
+          "attempts": 1,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Late-delivery rate went up by 16000 ratio between 2018-02 and 2018-03. The largest contribution came from SC (9600 ratio). The second largest contribution came from ES (6400 ratio).",
+          "latency_ms": 3804.8,
+          "tokens": 352
+        },
+        {
+          "id": "ex17",
+          "source": "llm",
+          "first_try_pass": false,
+          "attempts": 2,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F4"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 17000 score between 2016-12 and 2017-01. The second largest contribution came from RJ (6800 score). Average review score is defined as: Mean review score",
+          "latency_ms": 7576.7,
+          "tokens": 738
+        },
+        {
+          "id": "ex18",
+          "source": "llm",
+          "first_try_pass": false,
+          "attempts": 2,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F4"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 18000 score between 2017-05 and 2017-06. The second largest contribution came from BA (7200 score). Average review score is defined as: Mean review score",
+          "latency_ms": 8203.4,
+          "tokens": 738
+        },
+        {
+          "id": "ex19",
+          "source": "llm",
+          "first_try_pass": false,
+          "attempts": 2,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F4"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 19000 score between 2017-10 and 2017-11. The second largest contribution came from RS (7600 score). Average review score is defined as: Mean review score",
+          "latency_ms": 8605.7,
+          "tokens": 738
+        },
+        {
+          "id": "ex20",
+          "source": "llm",
+          "first_try_pass": false,
+          "attempts": 2,
+          "warning": null,
+          "frames": [
+            "F1",
+            "F3",
+            "F4"
+          ],
+          "offered": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "f3_offered": true,
+          "f3_omitted": false,
+          "picked_f6": false,
+          "picked_f7": false,
+          "f6_offered": false,
+          "f7_offered": false,
+          "answer": "Average review score went up by 20000 score between 2018-02 and 2018-03. The second largest contribution came from ES (8000 score). Average review score is defined as: Mean review score",
+          "latency_ms": 8254.8,
+          "tokens": 738
+        }
+      ]
+    }
+  }
+}

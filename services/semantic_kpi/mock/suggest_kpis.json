@@ -1,0 +1,17 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "draft_kpis",
+      "kind": "json",
+      "path": "runs/{run_id}/04_kpi/draft_kpis.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "suggested": 6
+  },
+  "lineage_events": []
+}

@@ -1,0 +1,49 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "warehouse",
+      "kind": "duckdb",
+      "path": "runs/{run_id}/03_etl/biflow.duckdb",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "dbt_models": 14,
+    "dbt_tests_passed": 24,
+    "dbt_tests_failed": 0,
+    "fact_orders_rows": 99441
+  },
+  "lineage_events": [
+    {
+      "event_id": "mock-etl-dbt_staging",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "etl",
+      "step": "dbt_staging",
+      "inputs": [],
+      "outputs": [],
+      "rule": "dbt run --select staging",
+      "rows_affected": null,
+      "method": "deterministic",
+      "params": {},
+      "llm": null
+    },
+    {
+      "event_id": "mock-etl-dbt_marts",
+      "run_id": "{run_id}",
+      "ts": "2026-01-01T00:00:00Z",
+      "agent": "etl",
+      "step": "dbt_marts",
+      "inputs": [],
+      "outputs": [],
+      "rule": "dbt run --select marts",
+      "rows_affected": null,
+      "method": "deterministic",
+      "params": {},
+      "llm": null
+    }
+  ]
+}

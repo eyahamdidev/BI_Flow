@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "outputs": [],
+  "metrics": {
+    "kpis_indexed": 11,
+    "embedder": "nomic-embed-text",
+    "rebuilt": true
+  },
+  "lineage_events": []
+}

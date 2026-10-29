@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "outputs": [
+    {
+      "name": "explain_answer",
+      "kind": "json",
+      "path": "runs/{run_id}/audit/explain_answer.json",
+      "rows": null,
+      "sha256": null,
+      "label": null
+    }
+  ],
+  "metrics": {
+    "answer": "Revenue rose 8% vs last month, mostly from health_beauty orders in Sao Paulo (mock answer).",
+    "abstained": false
+  },
+  "lineage_events": []
+}

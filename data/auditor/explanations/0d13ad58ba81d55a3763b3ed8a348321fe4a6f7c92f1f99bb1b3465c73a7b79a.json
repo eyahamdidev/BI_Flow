@@ -1,0 +1,40 @@
+{
+  "key": "0d13ad58ba81d55a3763b3ed8a348321fe4a6f7c92f1f99bb1b3465c73a7b79a",
+  "response_sha256": "79d743d0b84dc21fa10cac16f4634fc25c61ad8fe84eeafb17add3c74efba911",
+  "text": "Revenue went up by 10 BRL between 1998-12 and 1999-01. The largest contribution came from SP (10 BRL). The second largest contribution came from RJ (4 BRL).",
+  "prose_source": "fallback",
+  "attempts": 1,
+  "warning": "language model unavailable; frame fallback used ([WinError 10061] No connection could be made because the target machine actively refused it)",
+  "citations": [
+    {
+      "sentence": "Revenue went up by 10 BRL between 1998-12 and 1999-01.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from SP (10 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from RJ (4 BRL).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

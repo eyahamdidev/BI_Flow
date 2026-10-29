@@ -1,0 +1,48 @@
+{
+  "key": "df6e3ccc24648bcb16d7ececd6fe42b3816f5295720a232b58a757d776115888",
+  "response_sha256": "09a2b27b1cfcea646d174475630387d6b8fdd439dcca64da198ca1690bf0e2db",
+  "text": "Orders was unchanged by 0 orders between 2017-04 and 2017-05. The largest contribution came from SP (150 orders). The second largest contribution came from RJ (-150 orders). Orders is defined as: Count of delivered orders",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Orders was unchanged by 0 orders between 2017-04 and 2017-05.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from SP (150 orders).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from RJ (-150 orders).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Orders is defined as: Count of delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

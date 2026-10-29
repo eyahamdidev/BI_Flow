@@ -1,0 +1,184 @@
+{
+  "llm_judge_recall": 0.6667,
+  "union_recall": 0.6667,
+  "judge_model": "openai/gpt-oss-20b",
+  "writer_model": "llama3.2:latest",
+  "note": "Recall is on the 15 labelled unsupported held-out captions. The development items below are not that set.",
+  "items": [
+    {
+      "id": "bad-percent",
+      "prose": "Revenue rose 8% against a logged change of 12.",
+      "fact_sheet": {
+        "total_delta": 12
+      },
+      "unsupported": [
+        "8%"
+      ]
+    },
+    {
+      "id": "bad-count",
+      "prose": "The step dropped 1500 rows and kept 40.",
+      "fact_sheet": {
+        "rows_out": 40
+      },
+      "unsupported": [
+        "1500"
+      ]
+    },
+    {
+      "id": "bad-date",
+      "prose": "The spike happened in 2019 and the delta was 20.",
+      "fact_sheet": {
+        "period": "2018-03",
+        "total_delta": 20
+      },
+      "unsupported": [
+        "2019"
+      ]
+    },
+    {
+      "id": "unbound-percent",
+      "prose": "Revenue rose 8%.",
+      "fact_sheet": {
+        "orders": 8
+      },
+      "unsupported": [
+        "8%",
+        "direction:increased"
+      ]
+    },
+    {
+      "id": "direction-up",
+      "prose": "Revenue increased.",
+      "fact_sheet": {
+        "total_delta": -12
+      },
+      "unsupported": [
+        "direction:increased"
+      ]
+    },
+    {
+      "id": "direction-down",
+      "prose": "Revenue fell.",
+      "fact_sheet": {
+        "total_delta": 12
+      },
+      "unsupported": [
+        "direction:decreased"
+      ]
+    },
+    {
+      "id": "rank-wrong",
+      "prose": "The largest contribution is RJ.",
+      "fact_sheet": {
+        "drivers": {
+          "total_delta": 100,
+          "contributions": [
+            {
+              "dimension_value": "SP",
+              "delta": 80
+            },
+            {
+              "dimension_value": "RJ",
+              "delta": 20
+            }
+          ]
+        }
+      },
+      "unsupported": [
+        "rank:RJ"
+      ]
+    },
+    {
+      "id": "entity-state",
+      "prose": "Orders moved in MG.",
+      "fact_sheet": {
+        "drivers": {
+          "contributions": [
+            {
+              "dimension_value": "SP",
+              "delta": 10
+            }
+          ]
+        }
+      },
+      "unsupported": [
+        "entity:MG"
+      ]
+    },
+    {
+      "id": "entity-category",
+      "prose": "The category health_beauty explains it.",
+      "fact_sheet": {
+        "category": "watches_gifts"
+      },
+      "unsupported": [
+        "entity:health_beauty"
+      ]
+    },
+    {
+      "id": "entity-node",
+      "prose": "The value comes from raw.customers.",
+      "fact_sheet": {
+        "lineage": {
+          "raw_tables": [
+            "raw.orders"
+          ]
+        }
+      },
+      "unsupported": [
+        "entity:raw.customers"
+      ]
+    },
+    {
+      "id": "cause-plain",
+      "prose": "The change was caused by a carrier strike.",
+      "fact_sheet": {
+        "total_delta": 12
+      },
+      "unsupported": [
+        "cause"
+      ]
+    },
+    {
+      "id": "cause-with-number",
+      "prose": "A change of 12 was caused by a holiday.",
+      "fact_sheet": {
+        "total_delta": 12
+      },
+      "unsupported": [
+        "cause"
+      ]
+    },
+    {
+      "id": "unbound-percent-word",
+      "prose": "Late rate was 8 percent.",
+      "fact_sheet": {
+        "orders": 8
+      },
+      "unsupported": [
+        "8%"
+      ]
+    },
+    {
+      "id": "direction-french",
+      "prose": "Le revenu a augment\u00e9.",
+      "fact_sheet": {
+        "total_delta": -4
+      },
+      "unsupported": [
+        "direction:increased"
+      ]
+    },
+    {
+      "id": "rank-missing",
+      "prose": "The top driver is BA.",
+      "fact_sheet": {
+        "total_delta": 5
+      },
+      "unsupported": [
+        "rank:BA"
+      ]
+    }
+  ]
+}
