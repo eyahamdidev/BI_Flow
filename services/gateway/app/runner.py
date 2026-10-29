@@ -88,10 +88,19 @@ def _save(run_dir: Path, manifest: dict[str, Any]) -> None:
     (run_dir / "run_manifest.json").write_text(json.dumps(manifest, indent=2))
 
 
-def _append_events(run_dir: Path, events: list[dict[str, Any]]) -> None:
-    with (run_dir / "lineage" / "events.jsonl").open("a") as f:  # ONLY the gateway writes lineage
-        for e in events:
-            f.write(json.dumps(e) + "\n")
+def _append_events(run_dir: Path, events: list[dict[str, Any]], stage: str) -> None:
+    """Lineage is kept PER STAGE (lineage/stages/<stage>.jsonl, overwritten when the stage runs again), and
+    lineage/events.jsonl is rebuilt from them in pipeline order. A resumed or re-run stage therefore REPLACES its
+    events instead of piling a second, possibly different, copy on top (which confused the Auditor's graph).
+    ONLY the gateway writes lineage."""
+    stages_dir = run_dir / "lineage" / "stages"
+    stages_dir.mkdir(parents=True, exist_ok=True)
+    (stages_dir / f"{stage}.jsonl").write_text("".join(json.dumps(e) + "\n" for e in events), encoding="utf-8")
+    order = ["seed_ingest"] + [s["name"] for s in load_graph()] + [SUMMARY_NODE]
+    files = sorted(stages_dir.glob("*.jsonl"), key=lambda f: order.index(f.stem) if f.stem in order else len(order))
+    with (run_dir / "lineage" / "events.jsonl").open("w", encoding="utf-8") as out:
+        for f in files:
+            out.write(f.read_text(encoding="utf-8"))
 
 
 def _gateway_event(run_id: str, step: str, **kw: Any) -> dict[str, Any]:
@@ -203,7 +212,7 @@ def seed_ingest(manifest: dict[str, Any], run_dir: Path, source_run: str) -> Non
         outputs.append({"name": f.stem, "path": rel, "sha256": _sha256(dst / f.name)})
     manifest["stages"]["ingest"] = {"status": "ok", "seeded_from": source_run, "seconds": 0.0, "mock": False,
                                     "metrics": {"tables": len(files)}}
-    _append_events(run_dir, [_gateway_event(manifest["run_id"], "seed_ingest", rule=f"copy runs/{source_run}/00_ingest",
+    _append_events(run_dir, stage="seed_ingest", events=[_gateway_event(manifest["run_id"], "seed_ingest", rule=f"copy runs/{source_run}/00_ingest",
                                             inputs=[{"name": source_run}], outputs=outputs, rows_affected=None)])
 
 
@@ -276,11 +285,11 @@ def _stage_node(stage: dict[str, Any], ctx: _Ctx):
             for a in resp.get("outputs", []):
                 a["sha256"] = a.get("sha256") or _sha256(data_dir() / a["path"])  # gateway verifies what it can
                 manifest["artifacts"][f"{stage['name']}.{a['name']}"] = a["path"]
-            _append_events(ctx.run_dir, resp.get("lineage_events", []))
+            _append_events(ctx.run_dir, resp.get("lineage_events", []), stage["name"])
         else:
             st["status"] = "failed"
             st["error"] = resp.get("error")
-            _append_events(ctx.run_dir, resp.get("lineage_events", []))  # a failing module may still explain itself
+            _append_events(ctx.run_dir, resp.get("lineage_events", []), stage["name"])  # a failing module may still explain itself
             failed = True
         _save(ctx.run_dir, manifest)
         return {"manifest": manifest, "failed": failed}
@@ -306,7 +315,7 @@ def _summary_node(ctx: _Ctx):
         (ctx.run_dir / "run_summary.md").write_text(s["text"] + "\n", encoding="utf-8")
         m["summary"] = {"text": s["text"], "source": s["source"], "fact_check": s["fact_check"], "llm_calls": s["llm_calls"]}
         m["artifacts"]["summary.run_summary"] = f"runs/{m['run_id']}/run_summary.md"
-        _append_events(ctx.run_dir, [_gateway_event(
+        _append_events(ctx.run_dir, stage=SUMMARY_NODE, events=[_gateway_event(
             m["run_id"], "run_summary", rule="fact sheet -> paragraph; numbers fact-checked",
             method="llm_assisted" if s["source"] == "llm" else "deterministic",
             params={"source": s["source"], "fact_check": s["fact_check"], "facts": s["facts"]},
