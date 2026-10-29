@@ -592,3 +592,9 @@ def test_pyvis_accepts_the_payload():
     for edge in payload["pyvis"]["edges"]:
         net.add_edge(edge["from"], edge["to"], title=edge["title"])
     assert len(net.nodes) == len(payload["nodes"])
+
+
+def test_fact_sheet_with_nan_does_not_crash_the_checker():
+    from app.factcheck import sheet_numbers
+
+    assert sheet_numbers({"p_value": float("nan"), "delta": 12.5, "x": float("inf")}) == {"12.5"}

@@ -9,6 +9,7 @@ contribution, and a state, category, or dataset name has to occur in the sheet.
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 from typing import Any
@@ -46,7 +47,8 @@ def sheet_numbers(obj: Any, bucket: set[str] | None = None) -> set[str]:
     if isinstance(obj, bool) or obj is None:
         return bucket
     if isinstance(obj, (int, float)):
-        bucket.add(canon(float(obj)))
+        if math.isfinite(float(obj)):  # a NaN/inf in a fact sheet is not a citable number (and canon() cannot format it)
+            bucket.add(canon(float(obj)))
         return bucket
     if isinstance(obj, str):
         for number, _percent in extract_numbers(obj):

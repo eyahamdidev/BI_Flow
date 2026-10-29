@@ -59,3 +59,9 @@ def test_eval_targets():
     m = run_eval()
     assert m["anomaly_recall"] >= 0.9
     assert m["driver_sum_to_delta_rate"] == 1.0
+
+
+def test_flat_series_trend_has_no_nan():
+    s = pd.Series([0.0] * 12, index=[f"p{i:02d}" for i in range(12)])
+    tr = A.trend(s)
+    assert tr["direction"] == "flat" and tr["p_value"] == 1.0  # linregress alone would give p = NaN

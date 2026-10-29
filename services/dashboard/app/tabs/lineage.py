@@ -35,7 +35,7 @@ def render(b: Bundle) -> None:
                         hovertext=[str(n.get("metadata", {}).get("rules", ""))[:200] for n in nodes], hoverinfo="text")
         fig.update_layout(height=max(420, 22 * max(per_layer.values() or [1])), xaxis=dict(visible=False),
                           yaxis=dict(visible=False), margin=dict(l=10, r=10, t=10, b=10))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.caption(f"raw → clean → dbt → KPI → insight · {len(g.get('nodes', []))} nodes, {len(edges)} edges · source: {b.source}")
     if b.trace_md:
         with st.expander("Trace report (Auditor)"):

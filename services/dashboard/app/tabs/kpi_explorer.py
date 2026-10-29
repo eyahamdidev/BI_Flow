@@ -30,7 +30,7 @@ def render(b: Bundle) -> None:
     lo, hi = st.select_slider("Period range", options=periods, value=(periods[0], periods[-1]))
     v = v[(v.period >= lo) & (v.period <= hi)]
     anomalies = chart.get("anomaly_periods") or [i["period"] for i in b.insights if i["kpi_id"] == kid and i["type"] == "anomaly"]
-    st.plotly_chart(trend(v, d["name"], unit, anomalies, b.source), use_container_width=True)
+    st.plotly_chart(trend(v, d["name"], unit, anomalies, b.source), width="stretch")
     if chart.get("incomplete_periods"):
         st.caption("Incomplete months (too few orders, excluded from trends and anomalies): " + ", ".join(chart["incomplete_periods"]))
 
@@ -47,6 +47,6 @@ def render(b: Bundle) -> None:
              f"(change {fmt(r['total_delta'], unit)})")
     c = pd.DataFrame(r["contributions"])
     st.plotly_chart(bars(c["dimension_value"].astype(str).tolist()[:10], c["delta"].tolist()[:10],
-                         f"Contribution to the change, by {r['dimension']}", b.source), use_container_width=True)
+                         f"Contribution to the change, by {r['dimension']}", b.source), width="stretch")
     with st.expander("table"):
-        st.dataframe(c, hide_index=True, use_container_width=True)
+        st.dataframe(c, hide_index=True, width="stretch")

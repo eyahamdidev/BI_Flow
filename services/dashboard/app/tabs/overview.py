@@ -32,5 +32,5 @@ def render(b: Bundle) -> None:
         with st.expander("Pipeline stages"):
             st.dataframe(pd.DataFrame([{"stage": k, "status": v["status"], "seconds": v.get("seconds"),
                                         "source": "seeded" if v.get("seeded_from") else ("mock" if v.get("mock") else "real")}
-                                       for k, v in m["stages"].items()]), hide_index=True, use_container_width=True)
+                                       for k, v in m["stages"].items()]), hide_index=True, width="stretch")
     st.caption(f"source: {b.source}" + (f" / run {b.run_id}" if b.run_id else " (demo fixtures)"))

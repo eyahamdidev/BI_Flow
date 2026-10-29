@@ -32,10 +32,15 @@ def trend(series: pd.Series) -> dict[str, Any] | None:
     if len(s) < 6:
         return None
     x = np.arange(len(s))
+    if float(np.ptp(s.values)) == 0.0:  # perfectly flat series: no slope, and linregress would return p = NaN
+        v = round(float(s.iloc[0]), 4)
+        return {"direction": "flat", "slope_per_month": 0.0, "p_value": 1.0, "relative_slope_pct": 0.0,
+                "window_start": s.index[0], "window_end": s.index[-1], "first_value": v, "last_value": v, "months": len(s)}
     fit = stats.linregress(x, s.values)
     mean = float(np.mean(np.abs(s.values))) or 1.0
-    direction = "flat" if fit.pvalue >= P_SIGNIFICANT else ("up" if fit.slope > 0 else "down")
-    return {"direction": direction, "slope_per_month": round(float(fit.slope), 6), "p_value": round(float(fit.pvalue), 4),
+    pvalue = float(fit.pvalue) if np.isfinite(fit.pvalue) else 1.0  # never write NaN (not valid JSON)
+    direction = "flat" if pvalue >= P_SIGNIFICANT else ("up" if fit.slope > 0 else "down")
+    return {"direction": direction, "slope_per_month": round(float(fit.slope), 6), "p_value": round(pvalue, 4),
             "relative_slope_pct": round(100 * float(fit.slope) / mean, 2), "window_start": s.index[0], "window_end": s.index[-1],
             "first_value": round(float(s.iloc[0]), 4), "last_value": round(float(s.iloc[-1]), 4), "months": len(s)}
 
