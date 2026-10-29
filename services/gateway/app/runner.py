@@ -378,6 +378,17 @@ def run_pipeline(dataset: str, run_id: str | None = None, resume: bool = False, 
     return final["manifest"]
 
 
+def _call_or_error(stage: dict[str, Any], req: dict[str, Any], what: str) -> dict[str, Any]:
+    """Interactive calls (dashboard): a slow or unreachable module becomes a readable error answer, never an HTTP 500."""
+    try:
+        with httpx.Client() as client:
+            return call_module(client, stage, req)
+    except httpx.HTTPError as e:
+        return {"status": "error", "module": stage["module"], "metrics": {},
+                "error": {"code": "TIMEOUT", "message": f"{what} took too long or the module was unreachable "
+                                                         f"({type(e).__name__}); please try again in a moment"}}
+
+
 def explain(run_id: str, kpi_id: str, period: str, compare_to: str | None = None) -> dict[str, Any]:
     """Gateway gathers file refs, Auditor writes the answer (spec BO2 step 4)."""
     mf = json.loads((data_dir() / "runs" / run_id / "run_manifest.json").read_text())
@@ -385,8 +396,7 @@ def explain(run_id: str, kpi_id: str, period: str, compare_to: str | None = None
         "request_id": str(uuid.uuid4()), "run_id": run_id, "dataset": mf["dataset"], "mode": "explain",
         "inputs": mf["artifacts"], "options": {"kpi_id": kpi_id, "period": period, "compare_to": compare_to}, "lang": "en",
     }
-    with httpx.Client() as client:
-        return call_module(client, {"module": "auditor", "timeout_s": 45}, req)
+    return _call_or_error({"module": "auditor", "timeout_s": 90}, req, "the explanation")
 
 
 def ask(run_id: str, question: str) -> dict[str, Any]:
@@ -396,8 +406,7 @@ def ask(run_id: str, question: str) -> dict[str, Any]:
         "request_id": str(uuid.uuid4()), "run_id": run_id, "dataset": mf["dataset"], "mode": "map_question",
         "config_ref": mf.get("config_ref"), "inputs": mf["artifacts"], "options": {"question": question}, "lang": "en",
     }
-    with httpx.Client() as client:
-        return call_module(client, {"module": "semantic_kpi", "timeout_s": 30}, req)
+    return _call_or_error({"module": "semantic_kpi", "timeout_s": 30}, req, "the question mapping")
 
 
 def list_datasets() -> list[dict[str, Any]]:

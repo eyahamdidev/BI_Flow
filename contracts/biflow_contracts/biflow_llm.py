@@ -16,6 +16,8 @@ Env: LLM_PROVIDER (ollama|api), LLM_BASE_URL, LLM_API_KEY, BIFLOW_PROFILE (ollam
 """
 from __future__ import annotations
 
+import contextlib
+import contextvars
 import hashlib
 import json
 import os
@@ -137,6 +139,23 @@ def _fixture(prompt_id: str) -> str | None:
 
 
 # ---------------------------------------------------------------- HTTP with retry
+_deadline: contextvars.ContextVar[float | None] = contextvars.ContextVar("llm_deadline", default=None)
+
+
+@contextlib.contextmanager
+def llm_deadline(seconds: float):
+    """Every LLM call inside the block must finish within `seconds` in total. Each call gets only the time left;
+    once it is used up, calls raise LLMUnavailable at once so the caller's no-LLM fallback runs (spec rule 8).
+        with llm_deadline(25):
+            text = chat_text(...)
+    """
+    token = _deadline.set(time.monotonic() + seconds)
+    try:
+        yield
+    finally:
+        _deadline.reset(token)
+
+
 _down_until = 0.0  # circuit breaker: after a connection failure, skip calls for a while instead of waiting each time
 
 
@@ -161,6 +180,12 @@ def _post(path: str, payload: dict[str, Any], timeout: float | None = None, retr
     delay = 1.0
     last: Exception | None = None
     for _ in range(retries):
+        deadline = _deadline.get()
+        if deadline is not None:
+            left = deadline - time.monotonic()
+            if left < 1.0:
+                raise LLMUnavailable("LLM time budget for this step is used up: using the no-LLM fallback")
+            timeout = min(timeout, left)
         try:
             r = httpx.post(url, json=payload, headers=_headers(), timeout=timeout)
             if r.status_code == 429 or r.status_code >= 500:

@@ -90,7 +90,7 @@ def graph(req: RunRequest) -> dict[str, Any]:
     }
 
 
-def audit(req: RunRequest) -> dict[str, Any]:
+def _audit(req: RunRequest) -> dict[str, Any]:
     drain_calls()
     deadline = time.monotonic() + AUDIT_TIMEOUT_S
     events, warnings = load_events(events_path(req.run_id, req.inputs, req.options))
@@ -141,7 +141,7 @@ def audit(req: RunRequest) -> dict[str, Any]:
     }
 
 
-def explain(req: RunRequest) -> dict[str, Any]:
+def _explain(req: RunRequest) -> dict[str, Any]:
     drain_calls()
     kpi_id = req.options.get("kpi_id")
     period = req.options.get("period")
@@ -285,3 +285,19 @@ def explain(req: RunRequest) -> dict[str, Any]:
         ],
         "llm_calls": drain_calls(),
     }
+
+
+# Hard LLM budgets (enforced inside the LLM helper, per call): the prose deadlines above are checked between calls, so a
+# slow provider could still keep one call running past the gateway's budget. Templates take over when time is up.
+def audit(req: RunRequest) -> dict[str, Any]:
+    from biflow_contracts.biflow_llm import llm_deadline
+
+    with llm_deadline(AUDIT_TIMEOUT_S):
+        return _audit(req)
+
+
+def explain(req: RunRequest) -> dict[str, Any]:
+    from biflow_contracts.biflow_llm import llm_deadline
+
+    with llm_deadline(EXPLAIN_TIMEOUT_S):
+        return _explain(req)

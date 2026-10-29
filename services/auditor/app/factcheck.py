@@ -49,6 +49,8 @@ def sheet_numbers(obj: Any, bucket: set[str] | None = None) -> set[str]:
     if isinstance(obj, (int, float)):
         if math.isfinite(float(obj)):  # a NaN/inf in a fact sheet is not a citable number (and canon() cannot format it)
             bucket.add(canon(float(obj)))
+            if float(obj) < 0:  # "went down by 42489.58" states the size of a -42489.58 change; the sign is checked
+                bucket.add(canon(abs(float(obj))))  # separately by the direction rule (a wrong "went up" is still caught)
         return bucket
     if isinstance(obj, str):
         for number, _percent in extract_numbers(obj):

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 # Bump when the code that ranks drivers / fills frames changes: a published answer is only reused if it was produced
 # by the same logic (v2: contributions ranked in the direction of the change, absolute delta after the direction word).
-EXPLAIN_LOGIC_VERSION = 2
+EXPLAIN_LOGIC_VERSION = 3  # v3: the checker accepts the size of a negative change
 
 import hashlib
 import json

@@ -59,3 +59,18 @@ def test_summary_without_llm_uses_template(monkeypatch):
     monkeypatch.setenv("BIFLOW_SUMMARY_LLM", "0")
     s = summary.summarize(_manifest(failed=False))
     assert s["source"] == "template" and "status ok" in s["text"]
+
+
+def test_llm_deadline_stops_calls_immediately(monkeypatch):
+    import time
+
+    import pytest
+    from biflow_contracts.biflow_llm import LLMUnavailable, chat_text, llm_deadline
+
+    monkeypatch.setenv("FAKE_LLM", "0")
+    monkeypatch.setenv("LLM_PROVIDER", "ollama")              # no API-key short-cut: the deadline must do the work
+    monkeypatch.setenv("LLM_BASE_URL", "http://10.255.255.1:9/v1")  # would hang until timeout if called
+    t0 = time.monotonic()
+    with llm_deadline(0.5), pytest.raises(LLMUnavailable, match="budget"):
+        chat_text("test.deadline@v1", system="s", user="u")
+    assert time.monotonic() - t0 < 1.0

@@ -21,7 +21,8 @@ def render(b: Bundle) -> None:
     if st.button("Explain"):
         resp = gateway.explain(b.run_id, kid, period) if b.run_id else None
         if not resp or resp.get("status") not in ("ok", "partial"):
-            st.info("Gateway or run not available (demo fixtures have no run to explain).")
+            msg = ((resp or {}).get("error") or {}).get("message")
+            st.warning(msg or "Gateway or run not available (demo fixtures have no run to explain).")
             return
         m = resp.get("metrics", {})
         st.write(m.get("answer", "(no answer)"))
