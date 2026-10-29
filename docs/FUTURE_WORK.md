@@ -24,21 +24,24 @@ Known improvements, in rough order of value. Each item says what exists today an
    does not make ranking claims there, and measure before/after.
 6. **BO2 audit time:** ~90 s of a ~115 s run is LLM prose (13 calls to the 120B model). Use the fast model for
    section prose, or fewer retries.
-7. **BO2 false alarm:** "row continuity break" is reported for joins that read several tables.
-8. **BO4 quality score sensitivity:** the score moves 99.0 -> 99.1 after cleaning on the sample; tune weights /
+7. **BO2 Explain wording:** rates are written as raw ratios ("went up by 0.048367 ratio" instead of "+4.8 points"),
+   and the closing sentence lists every cleaning step (17 names). Format by unit (percent points for ratios) and
+   summarise the lineage ("8 source tables, 12 cleaning rules: see the Lineage tab").
+8. **BO2 false alarm:** "row continuity break" is reported for joins that read several tables.
+9. **BO4 quality score sensitivity:** the score moves 99.0 -> 99.1 after cleaning on the sample; tune weights /
    dimensions so cleaning gains are visible (the eval shows it does react to heavy corruption: 100 -> 88.5).
-9. **Lineage completeness semantics (contract change):** split `lineage_steps` into always-emitted vs optional in
+10. **Lineage completeness semantics (contract change):** split `lineage_steps` into always-emitted vs optional in
    `MetaResponse`, so optional steps (SQL/API ingest...) no longer count as "untracked".
 
 ## Evidence still to produce
 
-10. **Manual baseline** (BO1): a person times the same prep by hand, protocol in `docs/manual_baseline.md`; then
+11. **Manual baseline** (BO1): a person times the same prep by hand, protocol in `docs/manual_baseline.md`; then
     `biflow bench` prints the manual / automated ratio.
-11. **Full-dataset benchmark** with every module real (the sample benchmark is in `docs/results/`).
+12. **Full-dataset benchmark** with every module real (the sample benchmark is in `docs/results/`).
 
 ## Engineering
 
-12. **CI:** run the smoke test against `docker compose` (the real images) instead of one shared interpreter;
+13. **CI:** run the smoke test against `docker compose` (the real images) instead of one shared interpreter;
     add the dashboard and new BO5/BO6 tests to the matrix.
-13. **BO3:** the timeout wrapper only answers after the work finishes; `/health` calls the LLM provider on every
+14. **BO3:** the timeout wrapper only answers after the work finishes; `/health` calls the LLM provider on every
     request; `_load_tables` picks between same-named inputs by dict order.
