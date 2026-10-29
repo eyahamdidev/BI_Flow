@@ -1,5 +1,5 @@
 duckdb
-dbt-core
+dbt-core>=1.11,<1.12   # 1.12 pulls dbt-core-experimental-parser, which downloads from github.com at install time
 dbt-duckdb
 pandas
 pyarrow

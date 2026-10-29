@@ -27,6 +27,7 @@ charset-normalizer==3.5.2
 click==8.5.0
     # via
     #   dbt-core
+    #   dbt-semantic-interfaces
     #   uvicorn
 colorama==0.4.6
     # via dbt-common
@@ -41,12 +42,10 @@ dbt-common==1.39.0
     #   dbt-adapters
     #   dbt-core
     #   dbt-duckdb
-dbt-core==1.12.6
+dbt-core==1.11.16
     # via
     #   -r services/etl/requirements.in
     #   dbt-duckdb
-dbt-core-experimental-parser==2.0.8
-    # via dbt-core
 dbt-duckdb==1.11.1
     # via -r services/etl/requirements.in
 dbt-extractor==0.6.0
@@ -56,6 +55,8 @@ dbt-protos==1.0.615
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
+dbt-semantic-interfaces==0.9.0
+    # via dbt-core
 deepdiff==8.6.2
     # via dbt-common
 duckdb==2.0.0
@@ -77,8 +78,8 @@ idna==3.20
     #   anyio
     #   httpx
     #   requests
-importlib-metadata==10.1.0
-    # via metricflow
+importlib-metadata==8.9.0
+    # via dbt-semantic-interfaces
 isodate==0.7.2
     # via
     #   agate
@@ -88,38 +89,35 @@ jinja2==3.1.6
     #   -r services/etl/requirements.in
     #   dbt-common
     #   dbt-core
-    #   metricflow
+    #   dbt-semantic-interfaces
 jsonschema==4.26.0
     # via
     #   biflow-contracts (contracts/pyproject.toml)
     #   dbt-common
     #   dbt-core
-    #   metricflow
+    #   dbt-semantic-interfaces
 jsonschema-specifications==2025.9.1
     # via jsonschema
 leather==0.4.1
     # via agate
 markupsafe==3.0.4
     # via jinja2
-mashumaro==3.17
+mashumaro==3.14
     # via
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
-metricflow==0.213.0
-    # via dbt-core
 more-itertools==10.8.0
-    # via metricflow
+    # via dbt-semantic-interfaces
 msgpack==1.2.4
     # via mashumaro
 networkx==3.6.1
     # via dbt-core
 numpy==2.4.6
     # via pandas
-opentelemetry-api==1.45.1
+opentelemetry-api==1.45.2
     # via
     #   dbt-common
-    #   dbt-core
     #   fastapi
 orderly-set==5.5.0
     # via deepdiff
@@ -129,7 +127,7 @@ pandas==3.1.0
     # via -r services/etl/requirements.in
 parsedatetime==2.6
     # via agate
-pathspec==1.0.4
+pathspec==0.12.1
     # via
     #   dbt-common
     #   dbt-core
@@ -141,21 +139,19 @@ protobuf==6.33.6
     #   dbt-protos
 pyarrow==26.0.0
     # via -r services/etl/requirements.in
-pydantic==2.14.1
+pydantic==2.14.2
     # via
     #   biflow-contracts (contracts/pyproject.toml)
     #   dbt-core
+    #   dbt-semantic-interfaces
     #   fastapi
-    #   metricflow
-pydantic-core==2.50.1
+pydantic-core==2.50.2
     # via pydantic
 python-dateutil==2.9.0.post0
     # via
     #   dbt-common
-    #   metricflow
+    #   dbt-semantic-interfaces
     #   pandas
-python-dotenv==1.2.4
-    # via dbt-core
 python-slugify==9.1.3
     # via agate
 pytimeparse==1.1.10
@@ -168,14 +164,11 @@ pyyaml==6.0.3
     # via
     #   biflow-contracts (contracts/pyproject.toml)
     #   dbt-core
-    #   metricflow
-rapidfuzz==3.14.6
-    # via metricflow
+    #   dbt-semantic-interfaces
 referencing==0.37.0
     # via
     #   jsonschema
     #   jsonschema-specifications
-    #   metricflow
 requests==2.34.2
     # via
     #   dbt-common
@@ -189,14 +182,10 @@ six==1.17.0
     # via python-dateutil
 snowplow-tracker==1.1.0
     # via dbt-core
-sqlglot==30.25.0
-    # via metricflow
 sqlparse==0.6.0
     # via dbt-core
 starlette==1.10.0
     # via fastapi
-tabulate==0.10.0
-    # via metricflow
 text-unidecode==1.3
     # via python-slugify
 typing-extensions==4.16.0
@@ -205,9 +194,9 @@ typing-extensions==4.16.0
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
+    #   dbt-semantic-interfaces
     #   fastapi
     #   mashumaro
-    #   metricflow
     #   opentelemetry-api
     #   pydantic
     #   pydantic-core
