@@ -346,7 +346,9 @@ def unsupported_claims(prose: str, fact_sheet: Any) -> list[str]:
         *_ranking_issues(prose, fact_sheet),
         *_entity_issues(prose, fact_sheet),
         *_cause_issues(prose, fact_sheet),
-        *(f"evaluative:{word}" for word in evaluative_hits(prose)),
+        # a listed word that is part of the logged facts (e.g. the cleaning strategy "constant") is quoted, not commentary
+        *(f"evaluative:{word}" for word in evaluative_hits(prose)
+          if not re.search(rf"{re.escape(word)}", _sheet_text(fact_sheet), re.I)),
     ):
         _remember(issues, seen, extra)
     return issues

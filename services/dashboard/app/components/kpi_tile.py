@@ -4,7 +4,9 @@ import pandas as pd
 import streamlit as st
 
 
-def fmt(v: float, unit: str) -> str:
+def fmt(v: float | None, unit: str) -> str:
+    if v is None:
+        return "n/a"
     if unit == "ratio":
         return f"{v * 100:.1f}%"
     if unit in ("BRL",):

@@ -137,7 +137,10 @@ def _fixture(prompt_id: str) -> str | None:
 
 
 # ---------------------------------------------------------------- HTTP with retry
-def _post(path: str, payload: dict[str, Any], timeout: float = 60.0, retries: int = 4) -> dict[str, Any]:
+def _post(path: str, payload: dict[str, Any], timeout: float | None = None, retries: int | None = None) -> dict[str, Any]:
+    # Bounded so one slow provider cannot eat a stage's whole budget (was 60 s x 4 attempts = 4 min per call).
+    timeout = timeout or float(os.getenv("LLM_TIMEOUT_S", "30"))
+    retries = retries or int(os.getenv("LLM_RETRIES", "3"))
     url = f"{_base_url()}{path}"
     delay = 1.0
     last: Exception | None = None
@@ -146,7 +149,7 @@ def _post(path: str, payload: dict[str, Any], timeout: float = 60.0, retries: in
             r = httpx.post(url, json=payload, headers=_headers(), timeout=timeout)
             if r.status_code == 429 or r.status_code >= 500:
                 wait = float(r.headers.get("Retry-After", delay))
-                time.sleep(min(wait, 30))
+                time.sleep(min(wait, 10))
                 delay *= 2
                 last = RuntimeError(f"HTTP {r.status_code}")
                 continue

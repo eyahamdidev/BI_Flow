@@ -19,6 +19,11 @@ class RunBody(BaseModel):
     ingest_from: str | None = None  # DEV: reuse data/runs/<id>/00_ingest instead of the ingest module
 
 
+class AskBody(BaseModel):
+    run_id: str
+    question: str
+
+
 class ExplainBody(BaseModel):
     run_id: str
     kpi_id: str
@@ -73,3 +78,9 @@ def get_run(run_id: str) -> dict[str, Any]:
 @app.post("/api/explain")
 def api_explain(body: ExplainBody) -> dict[str, Any]:
     return runner.explain(body.run_id, body.kpi_id, body.period, body.compare_to)
+
+
+@app.post("/api/ask")
+def api_ask(body: AskBody) -> dict[str, Any]:
+    """Question in plain words -> KPI id (BO5), so the dashboard can explain "sales last month"."""
+    return runner.ask(body.run_id, body.question)

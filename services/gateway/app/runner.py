@@ -361,4 +361,15 @@ def explain(run_id: str, kpi_id: str, period: str, compare_to: str | None = None
         "inputs": mf["artifacts"], "options": {"kpi_id": kpi_id, "period": period, "compare_to": compare_to}, "lang": "en",
     }
     with httpx.Client() as client:
-        return call_module(client, {"module": "auditor", "timeout_s": 30}, req)
+        return call_module(client, {"module": "auditor", "timeout_s": 45}, req)
+
+
+def ask(run_id: str, question: str) -> dict[str, Any]:
+    """Plain-language question -> KPI id (BO5 map_question: retrieval + optional LLM pick). Used by the dashboard."""
+    mf = json.loads((data_dir() / "runs" / run_id / "run_manifest.json").read_text())
+    req = {
+        "request_id": str(uuid.uuid4()), "run_id": run_id, "dataset": mf["dataset"], "mode": "map_question",
+        "config_ref": mf.get("config_ref"), "inputs": mf["artifacts"], "options": {"question": question}, "lang": "en",
+    }
+    with httpx.Client() as client:
+        return call_module(client, {"module": "semantic_kpi", "timeout_s": 30}, req)

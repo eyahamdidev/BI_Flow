@@ -1,28 +1,27 @@
-"""Semantic & KPI (catalog, RAG) handlers (BO5). Replace each NotImplementedError with the real implementation.
+"""Semantic & KPI handlers (BO5). Implementations live in compute.py, retrieval.py, onboarding.py."""
+from biflow_contracts import RunRequest
 
-Rules (docs/RULES.md): read inputs by reference (req.inputs paths are relative to DATA_DIR), write outputs under
-data/runs/<run_id>/<stage>/, return lineage_events for every transformation, never import another service.
-LLM steps use biflow_contracts.biflow_llm (chat_text / chat_json) and must have a no-LLM fallback.
-"""
-from biflow_contracts import RunRequest, RunResponse  # noqa: F401
-
-# from biflow_contracts.biflow_llm import chat_text, chat_json, drain_calls
-
-def compute(req: RunRequest) -> RunResponse | dict:
-    """Execute each KPI `sql` from configs/kpis/<domain>.yaml on biflow.duckdb. Writes kpi_values.parquet + kpi_definitions.json. Every query is a lineage event."""
-    raise NotImplementedError
+from .compute import compute as _compute
+from .onboarding import suggest_kpis as _suggest
+from .retrieval import index as _index
+from .retrieval import map_question_mode as _map
 
 
-def index(req: RunRequest) -> RunResponse | dict:
-    """Embed KPI definitions into Chroma collection kpi__<domain>; store embedder_name in metadata; rebuild on mismatch."""
-    raise NotImplementedError
+def compute(req: RunRequest) -> dict:
+    """Execute each KPI `sql` (total + dimension cuts) on the warehouse -> kpi_values.parquet + kpi_definitions.json."""
+    return _compute(req)
 
 
-def map_question(req: RunRequest) -> RunResponse | dict:
-    """options.question -> KPI id via retrieval top-k (+ optional LLM pick from shortlist). Fallback: top-1."""
-    raise NotImplementedError
+def index(req: RunRequest) -> dict:
+    """Embed KPI definitions into Chroma collection kpi__<domain>; embedder_name in metadata; rebuild on mismatch."""
+    return _index(req)
 
 
-def suggest_kpis(req: RunRequest) -> RunResponse | dict:
-    """New-dataset onboarding: schema -> retrieve similar KPIs -> LLM binds columns from the shortlist -> draft YAML for human review. Never auto-executed."""
-    raise NotImplementedError
+def map_question(req: RunRequest) -> dict:
+    """options.question -> KPI id: hybrid retrieval top-3, optional LLM pick from the shortlist, fallback top-1."""
+    return _map(req)
+
+
+def suggest_kpis(req: RunRequest) -> dict:
+    """New dataset -> draft KPI YAML (column roles + templates + closest existing KPI). Never auto-executed."""
+    return _suggest(req)

@@ -18,6 +18,10 @@ x-svc: &svc
     LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:11434/v1}
     BIFLOW_CONFIG_DIR: /srv/config
     BIFLOW_CACHE: /srv/data/.cache/llm.sqlite   # on the mounted volume: survives rebuilds
+    # Outbound proxy, only if your Docker Desktop requires one (set in .env; empty = direct). Module names bypass it.
+    HTTPS_PROXY: ${HTTPS_PROXY:-}
+    HTTP_PROXY: ${HTTP_PROXY:-}
+    NO_PROXY: localhost,127.0.0.1,gateway,etl,auditor,profile_clean,ingest_quality,semantic_kpi,analyst,dashboard,host.docker.internal
   extra_hosts: ["host.docker.internal:host-gateway"]
   volumes: ["./data:/srv/data", "./configs:/srv/configs:ro", "./config:/srv/config:ro", "./prompts:/srv/prompts:ro"]
   profiles: ["core"]

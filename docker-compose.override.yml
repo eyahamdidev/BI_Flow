@@ -1,0 +1,69 @@
+# DEV override, merged automatically by `docker compose` (delete or rename it to run the images as built).
+# Mounts each service's code and the shared contracts package into its container, so a code change only needs
+#   docker compose restart <service>
+# instead of an image rebuild (rebuilds need the network; only needed when requirements.lock changes).
+services:
+  gateway:
+    volumes:
+      - "./data:/srv/data"
+      - "./configs:/srv/configs:ro"
+      - "./config:/srv/config:ro"
+      - "./prompts:/srv/prompts:ro"
+      - "./.git:/srv/repo/.git:ro"
+      - "./services/gateway:/srv/service"
+      - "./contracts/biflow_contracts:/usr/local/lib/python3.11/site-packages/biflow_contracts:ro"
+  etl:
+    volumes:
+      - "./data:/srv/data"
+      - "./configs:/srv/configs:ro"
+      - "./config:/srv/config:ro"
+      - "./prompts:/srv/prompts:ro"
+      - "./tests/fixtures:/srv/tests/fixtures:ro"
+      - "./services/etl:/srv/service"
+      - "./contracts/biflow_contracts:/usr/local/lib/python3.11/site-packages/biflow_contracts:ro"
+  auditor:
+    volumes:
+      - "./data:/srv/data"
+      - "./configs:/srv/configs:ro"
+      - "./config:/srv/config:ro"
+      - "./prompts:/srv/prompts:ro"
+      - "./services/auditor:/srv/service"
+      - "./contracts/biflow_contracts:/usr/local/lib/python3.11/site-packages/biflow_contracts:ro"
+  profile_clean:
+    volumes:
+      - "./data:/srv/data"
+      - "./configs:/srv/configs:ro"
+      - "./config:/srv/config:ro"
+      - "./prompts:/srv/prompts:ro"
+      - "./services/profile_clean:/srv/service"
+      - "./contracts/biflow_contracts:/usr/local/lib/python3.11/site-packages/biflow_contracts:ro"
+  ingest_quality:
+    volumes:
+      - "./data:/srv/data"
+      - "./configs:/srv/configs:ro"
+      - "./config:/srv/config:ro"
+      - "./prompts:/srv/prompts:ro"
+      - "./tests/fixtures:/srv/tests/fixtures:ro"
+      - "./services/ingest_quality:/srv/service"
+      - "./contracts/biflow_contracts:/usr/local/lib/python3.11/site-packages/biflow_contracts:ro"
+  semantic_kpi:
+    volumes:
+      - "./data:/srv/data"
+      - "./configs:/srv/configs:ro"
+      - "./config:/srv/config:ro"
+      - "./prompts:/srv/prompts:ro"
+      - "./tests/fixtures:/srv/tests/fixtures:ro"
+      - "./services/semantic_kpi:/srv/service"
+      - "./contracts/biflow_contracts:/usr/local/lib/python3.11/site-packages/biflow_contracts:ro"
+  analyst:
+    volumes:
+      - "./data:/srv/data"
+      - "./configs:/srv/configs:ro"
+      - "./config:/srv/config:ro"
+      - "./prompts:/srv/prompts:ro"
+      - "./services/analyst:/srv/service"
+      - "./contracts/biflow_contracts:/usr/local/lib/python3.11/site-packages/biflow_contracts:ro"
+  dashboard:
+    volumes:
+      - "./data:/srv/data:ro"
+      - "./services/dashboard:/srv/service"

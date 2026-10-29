@@ -8,12 +8,13 @@ from pathlib import Path
 from biflow_contracts.service_kit import create_app
 
 from . import handlers as h
+from .evaluation import run_eval
 
 app = create_app(
     module="analyst",
     handlers={"analyse": h.analyse, "dashboard_config": h.dashboard_config},
     mock_dir=Path(__file__).parent.parent / "mock",
-    lineage_steps=["detect_anomalies"],
-    prompt_versions={},  # e.g. {"analyst.example": "v1"}
-    eval_fn=None,  # set to a function returning a metrics dict once eval/ exists
+    lineage_steps=["detect_trends", "detect_anomalies", "decompose_drivers", "match_recommendations", "write_narratives", "dashboard_config"],
+    prompt_versions={"analyst.narrative": "v1"},
+    eval_fn=run_eval,  # planted-anomaly recall/precision + driver sums-to-delta
 )

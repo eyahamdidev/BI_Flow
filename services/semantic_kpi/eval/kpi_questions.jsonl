@@ -1,0 +1,32 @@
+{"q": "how much did we sell last quarter", "kpi": "revenue"}
+{"q": "total sales in March", "kpi": "revenue"}
+{"q": "turnover trend", "kpi": "revenue"}
+{"q": "revnue by state", "kpi": "revenue"}
+{"q": "chiffre d'affaires", "kpi": "revenue"}
+{"q": "how many orders were delivered", "kpi": "orders"}
+{"q": "order volume per month", "kpi": "orders"}
+{"q": "number of ordres", "kpi": "orders"}
+{"q": "average basket size", "kpi": "aov"}
+{"q": "average order value in SP", "kpi": "aov"}
+{"q": "ticket medio", "kpi": "aov"}
+{"q": "how long does delivery take", "kpi": "avg_delivery_days"}
+{"q": "shipping time in days", "kpi": "avg_delivery_days"}
+{"q": "average delivery time", "kpi": "avg_delivery_days"}
+{"q": "are we late compared to the estimate", "kpi": "delivery_delay"}
+{"q": "days of delay versus promised date", "kpi": "delivery_delay"}
+{"q": "lateness", "kpi": "delivery_delay"}
+{"q": "share of late deliveries", "kpi": "late_rate"}
+{"q": "on-time rate", "kpi": "late_rate"}
+{"q": "late delivery percentage", "kpi": "late_rate"}
+{"q": "how many customers pay by credit card", "kpi": "credit_card_share"}
+{"q": "payment mix", "kpi": "credit_card_share"}
+{"q": "card usage", "kpi": "credit_card_share"}
+{"q": "how many installments do customers use", "kpi": "avg_installments"}
+{"q": "parcelas", "kpi": "avg_installments"}
+{"q": "customer satisfaction", "kpi": "avg_review_score"}
+{"q": "average rating", "kpi": "avg_review_score"}
+{"q": "csat", "kpi": "avg_review_score"}
+{"q": "unhappy customers", "kpi": "low_review_rate"}
+{"q": "share of bad reviews", "kpi": "low_review_rate"}
+{"q": "do customers come back", "kpi": "repeat_purchase_rate"}
+{"q": "churn", "kpi": "repeat_purchase_rate"}
