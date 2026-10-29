@@ -5,3 +5,5 @@
 *.pdf binary
 *.parquet binary
 *.duckdb binary
+# Data fixtures are stored byte-for-byte: CRLF inside quoted CSV fields is part of the data.
+tests/fixtures/**/*.csv -text
