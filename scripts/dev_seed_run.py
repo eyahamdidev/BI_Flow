@@ -24,17 +24,11 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--dataset", default="olist")
-    ap.add_argument("--source", help="folder with the CSVs (default: source.path from the dataset YAML)")
-    ap.add_argument("--run-id", default="dev-sample")
-    a = ap.parse_args()
-
-    cfg = yaml.safe_load((ROOT / "configs" / "datasets" / f"{a.dataset}.yaml").read_text(encoding="utf-8"))
-    src = ROOT / (a.source or cfg["source"]["path"])
-    data_dir = Path(os.getenv("DATA_DIR", ROOT / "data"))
-    out = data_dir / "runs" / a.run_id / "00_ingest"
+def seed(dataset: str, source: str | None, run_id: str, data_dir: Path) -> dict[str, str]:
+    """Write <data_dir>/runs/<run_id>/00_ingest/<table>.parquet. Returns the inputs map for the next stage."""
+    cfg = yaml.safe_load((ROOT / "configs" / "datasets" / f"{dataset}.yaml").read_text(encoding="utf-8"))
+    src = ROOT / (source or cfg["source"]["path"])
+    out = data_dir / "runs" / run_id / "00_ingest"
     out.mkdir(parents=True, exist_ok=True)
 
     inputs = {}
@@ -51,10 +45,20 @@ def main() -> None:
             except (ValueError, TypeError):
                 pass  # not numeric: stays text
         df.to_parquet(out / f"{table}.parquet", index=False)
-        inputs[f"ingest.{table}"] = f"runs/{a.run_id}/00_ingest/{table}.parquet"
+        inputs[f"ingest.{table}"] = f"runs/{run_id}/00_ingest/{table}.parquet"
         print(f"  {table:<22} {len(df):>8} rows -> {out / (table + '.parquet')}")
     (out / "inputs.json").write_text(json.dumps(inputs, indent=2))
     print(f"inputs map written to {out / 'inputs.json'}")
+    return inputs
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="olist")
+    ap.add_argument("--source", help="folder with the CSVs (default: source.path from the dataset YAML)")
+    ap.add_argument("--run-id", default="dev-sample")
+    a = ap.parse_args()
+    seed(a.dataset, a.source, a.run_id, Path(os.getenv("DATA_DIR", ROOT / "data")))
 
 
 if __name__ == "__main__":

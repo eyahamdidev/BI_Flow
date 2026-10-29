@@ -3,4 +3,5 @@ biflow:
   outputs:
     dev:
       type: duckdb
-      path: "{{ env_var('DUCKDB_PATH', '../../../data/biflow.duckdb') }}"
+      path: "{{ env_var('DUCKDB_PATH') }}"   # set by the ETL to data/runs/<run_id>/03_etl/biflow.duckdb
+      threads: 4

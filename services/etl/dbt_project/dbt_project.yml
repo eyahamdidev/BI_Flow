@@ -1,3 +1,7 @@
+# Template. The ETL copies this folder into data/runs/<run_id>/03_etl/dbt/ and adds:
+#   models/staging/   generated from the dataset YAML (services/etl/app/staging.py)
+#   models/marts/     copied from the dataset's etl.marts_dir (e.g. configs/marts/ecommerce/models)
+#   tests/            copied from <marts_dir>/tests (singular tests)
 name: biflow
 version: '0.1.0'
 config-version: 2
@@ -7,6 +11,8 @@ test-paths: ['tests']
 models:
   biflow:
     staging:
-      +materialized: view
+      +materialized: view      # thin typed layer over raw.*: no copy of the data
     marts:
-      +materialized: table
+      +materialized: table     # what BO5/BO6 query: materialised for speed
+      intermediate:
+        +materialized: view

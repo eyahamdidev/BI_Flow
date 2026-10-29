@@ -13,7 +13,7 @@ app = create_app(
     module="etl",
     handlers={"run": h.run},
     mock_dir=Path(__file__).parent.parent / "mock",
-    lineage_steps=["dbt_staging", "dbt_marts"],
+    lineage_steps=["load_raw", "dbt_staging", "dbt_intermediate", "dbt_marts", "dbt_tests", "reconcile"],
     prompt_versions={},  # e.g. {"etl.example": "v1"}
     eval_fn=None,  # set to a function returning a metrics dict once eval/ exists
 )
