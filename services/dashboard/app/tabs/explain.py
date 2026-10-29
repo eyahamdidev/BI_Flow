@@ -20,3 +20,22 @@ def render(b: Bundle) -> None:
         else:
             st.info("Gateway or run not available: offline demo answer.")
             st.write(f"{names[kid]} for {period}: demo text. With a real run this is written by the Auditor from the lineage path and the driver decomposition.")
+            return
+        citations = (resp.get("metrics") or {}).get("citations") or []
+        if not citations:
+            return
+        st.caption("Each sentence opens to the logged fact id, value, lineage event, SQL, and source tables.")
+        for item in citations:
+            title = item.get("sentence") or item.get("frame") or "Logged fact"
+            with st.expander(title):
+                facts = item.get("facts") or []
+                if not facts:
+                    st.caption("No fact id was declared for this sentence.")
+                    continue
+                for fact in facts:
+                    value = fact.get("value")
+                    st.markdown(f"`{fact.get('fact_id')}` = {value if value is not None else 'not logged'}")
+                    st.write(f"Lineage event: {fact.get('lineage_event') or 'not logged'}")
+                    st.write(f"SQL: {fact.get('sql') or 'not logged'}")
+                    tables = fact.get("source_tables") or []
+                    st.write("Source tables: " + (", ".join(str(table) for table in tables) if tables else "not logged"))

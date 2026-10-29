@@ -1,0 +1,17 @@
+# prompts/auditor/section_prose/v1.yaml
+id: auditor.section_prose
+version: 1
+owner: BO2
+role_in_system: Turn one audit-report section into plain language.
+technique: role prompting
+model_role: llm_main
+text: |
+  Explain the section "{section}" in {language} for a non-technical reader.
+  Facts:
+  {facts}
+output_schema: null
+failure_cases_observed: []
+fix_applied: null
+metric_before: null
+metric_after: null
+date: 2026-10-25

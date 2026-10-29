@@ -1,0 +1,215 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "prompt_id": "auditor.explain_kpi@v6",
+  "temperature": 0,
+  "seed": 7,
+  "reasoning_effort": "low",
+  "cache": "two cold sqlite files, not the demo cache",
+  "n": 20,
+  "identical": 6,
+  "identical_rate": 0.3,
+  "both_first_try_pass": 20,
+  "note": "Groq does not guarantee determinism. Identical counts answers that match between these two runs.",
+  "rows": [
+    {
+      "id": "ex01",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Revenue covers 2017-01 compared with 2016-12. The logged change is went up by 1000 BRL. The largest contribution came from SP with 600 BRL.",
+      "answer_b": "The indicator Revenue covers 2017-01 compared with 2016-12. The logged change is went up by 1000 BRL. The largest contribution came from SP at 600 BRL."
+    },
+    {
+      "id": "ex02",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Revenue covers 2017-06 compared with 2017-05. The logged change went up by 2000 BRL. The largest contribution came from MG at 1200 BRL. The next contribution came from BA with 800 BRL.",
+      "answer_b": "The indicator Revenue covers 2017-06 compared with 2017-05. The logged change is went up by 2000 BRL. The largest contribution came from MG at 1200 BRL. The next contribution came from BA at 800 BRL."
+    },
+    {
+      "id": "ex03",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Revenue covers 2017-11 compared with 2017-10. The logged change is went up by 3000 BRL. The largest contribution came from PR at 1800 BRL and the next from RS at 1200 BRL.",
+      "answer_b": "The indicator Revenue covers 2017-11 compared with 2017-10. The logged change went up by 3000 BRL. The largest contribution came from PR at 1800 BRL."
+    },
+    {
+      "id": "ex04",
+      "identical": true,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Revenue covers 2018-03 compared with 2018-02. The logged change is went up by 4000 BRL. The largest contribution came from SC at 2400 BRL.",
+      "answer_b": "The indicator Revenue covers 2018-03 compared with 2018-02. The logged change is went up by 4000 BRL. The largest contribution came from SC at 2400 BRL."
+    },
+    {
+      "id": "ex05",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Orders covers 2017-01 compared with 2016-12. The logged change is went up by 5000 count. The largest contribution came from SP with 3000 count and the next from RJ with 2000 count.",
+      "answer_b": "The indicator Orders covers 2017-01 compared with 2016-12. The logged change is went up by 5000 count. The largest contribution came from SP at 3000 count and the next from RJ at 2000 count."
+    },
+    {
+      "id": "ex06",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Orders covers 2017-06 compared with 2017-05. The logged change is went up by 6000 count. The largest contribution came from MG at 3600 count. The next contribution is from BA with 2400 count.",
+      "answer_b": "The indicator Orders covers 2017-06 compared with 2017-05. The logged change is went up by 6000 count. The largest contribution came from MG at 3600 count."
+    },
+    {
+      "id": "ex07",
+      "identical": true,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Orders covers 2017-11 compared with 2017-10. The logged change is went up by 7000 count. The largest contribution came from PR with 4200 count and the next from RS with 2800 count.",
+      "answer_b": "The indicator Orders covers 2017-11 compared with 2017-10. The logged change is went up by 7000 count. The largest contribution came from PR with 4200 count and the next from RS with 2800 count."
+    },
+    {
+      "id": "ex08",
+      "identical": true,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Orders covers 2018-03 compared with 2018-02. The logged change went up by 8000 count. The largest contribution came from SC at 4800 count.",
+      "answer_b": "The indicator Orders covers 2018-03 compared with 2018-02. The logged change went up by 8000 count. The largest contribution came from SC at 4800 count."
+    },
+    {
+      "id": "ex09",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Average order value covers 2017-01 compared with 2016-12. The logged change went up by 9000 BRL. The largest contribution came from SP at 5400 BRL.",
+      "answer_b": "The indicator Average order value covers 2017-01 compared with 2016-12. The logged change is went up by 9000 BRL. The largest contribution came from SP at 5400 BRL. The next contribution is from RJ with 3600 BRL."
+    },
+    {
+      "id": "ex10",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Average order value covers 2017-06 compared with 2017-05. The logged change is went up by 10000 BRL. The largest contribution came from MG at 6000 BRL. The next contribution is from BA with 4000 BRL.",
+      "answer_b": "The indicator Average order value covers 2017-06 compared with 2017-05. The logged change is went up by 10000 BRL. The largest contribution came from MG at 6000 BRL and the next from BA at 4000 BRL."
+    },
+    {
+      "id": "ex11",
+      "identical": true,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Average order value covers 2017-11 compared with 2017-10. The logged change went up by 11000 BRL. The largest contribution came from PR at 6600 BRL.",
+      "answer_b": "The indicator Average order value covers 2017-11 compared with 2017-10. The logged change went up by 11000 BRL. The largest contribution came from PR at 6600 BRL."
+    },
+    {
+      "id": "ex12",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Average order value covers 2018-03 compared with 2018-02. The logged change is went up by 12000 BRL. The largest contribution came from SC at 7200 BRL and the next contribution came from ES at 4800 BRL.",
+      "answer_b": "The indicator Average order value covers 2018-03 compared with 2018-02. The logged change went up by 12000 BRL. The largest contribution came from SC at 7200 BRL."
+    },
+    {
+      "id": "ex13",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Late-delivery rate covers 2017-01 compared with 2016-12. The logged change went up by 13000 ratio. The largest contribution came from SP at 7800 ratio and the next from RJ at 5200 ratio.",
+      "answer_b": "The indicator Late-delivery rate covers 2017-01 compared with 2016-12. The logged change went up by 13000 ratio. The largest contribution came from SP at 7800 ratio."
+    },
+    {
+      "id": "ex14",
+      "identical": true,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Late-delivery rate covers 2017-06 compared with 2017-05. The logged change went up by 14000 ratio. The largest contribution came from MG at 8400 ratio.",
+      "answer_b": "The indicator Late-delivery rate covers 2017-06 compared with 2017-05. The logged change went up by 14000 ratio. The largest contribution came from MG at 8400 ratio."
+    },
+    {
+      "id": "ex15",
+      "identical": true,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Late-delivery rate covers 2017-11 compared with 2017-10. The logged change went up by 15000 ratio. The largest contribution came from PR at 9000 ratio and the next contribution came from RS at 6000 ratio.",
+      "answer_b": "The indicator Late-delivery rate covers 2017-11 compared with 2017-10. The logged change went up by 15000 ratio. The largest contribution came from PR at 9000 ratio and the next contribution came from RS at 6000 ratio."
+    },
+    {
+      "id": "ex16",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Late-delivery rate covers 2018-03 compared with 2018-02. The logged change is went up by 16000 ratio. The largest contribution came from SC at 9600 ratio. The next contribution came from ES at 6400 ratio.",
+      "answer_b": "The indicator Late-delivery rate covers 2018-03 compared with 2018-02. The logged change is went up by 16000 ratio. The largest contribution came from SC at 9600 ratio and the next contribution came from ES at 6400 ratio."
+    },
+    {
+      "id": "ex17",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Average review score covers 2017-01 compared with 2016-12. The logged change is went up by 17000 score. The largest contribution came from SP with 10200 score. The next contribution came from RJ with 6800 score.",
+      "answer_b": "The indicator Average review score covers 2017-01 compared with 2016-12. The logged change is went up by 17000 score. The largest contribution came from SP at 10200 score. The next contribution came from RJ at 6800 score."
+    },
+    {
+      "id": "ex18",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Average review score covers 2017-06 compared with 2017-05. The logged change went up by 18000 score. The largest contribution came from MG at 10800 score and the next from BA at 7200 score.",
+      "answer_b": "The indicator Average review score covers 2017-06 compared with 2017-05. The logged change went up by 18000 score. The largest contribution came from MG at 10800 score."
+    },
+    {
+      "id": "ex19",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Average review score covers 2017-11 compared with 2017-10. The logged change went up by 19000 score. The largest contribution came from PR at 11400 score. The next contribution came from RS at 7600 score.",
+      "answer_b": "The indicator Average review score covers 2017-11 compared with 2017-10. The logged change is went up by 19000 score. The largest contribution came from PR at 11400 score and the next contribution came from RS at 7600 score."
+    },
+    {
+      "id": "ex20",
+      "identical": false,
+      "first_try_a": true,
+      "first_try_b": true,
+      "source_a": "llm",
+      "source_b": "llm",
+      "answer_a": "The indicator Average review score covers 2018-03 compared with 2018-02. The logged change went up by 20000 score. The largest contribution came from SC at 12000 score. The next contribution came from ES at 8000 score.",
+      "answer_b": "The indicator Average review score covers 2018-03 compared with 2018-02. The logged change went up by 20000 score. The largest contribution came from SC at 12000 score. The next contribution came from ES with 8000 score."
+    }
+  ]
+}

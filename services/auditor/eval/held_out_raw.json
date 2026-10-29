@@ -1,0 +1,58 @@
+{
+  "model": "llama3.2:latest",
+  "prompt_id": "auditor.adversarial_prose@v1",
+  "fact_sheet": {
+    "kpi_id": "revenue",
+    "period": "2017-01",
+    "compare_to": "2016-12",
+    "definition": {
+      "kpi_id": "revenue",
+      "name": "Revenue",
+      "description": "Total payments received for delivered orders",
+      "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+      "unit": "BRL",
+      "grain": "month"
+    },
+    "lineage": {
+      "found": true,
+      "raw_tables": [
+        "raw.orders",
+        "raw.order_payments"
+      ],
+      "cleaning_rules": [
+        "parse_dates",
+        "drop_exact_duplicates"
+      ],
+      "dbt_models": [
+        "dbt.fact_orders"
+      ],
+      "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+      "path_nodes": [
+        "raw.orders",
+        "clean.orders",
+        "dbt.fact_orders",
+        "kpi.revenue"
+      ]
+    },
+    "drivers": {
+      "kpi_id": "revenue",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "dimension": "customer_state",
+      "total_delta": 1000,
+      "contribution_count": 2,
+      "contributions": [
+        {
+          "dimension_value": "SP",
+          "delta": 600
+        },
+        {
+          "dimension_value": "RJ",
+          "delta": 400
+        }
+      ]
+    },
+    "insight_count": 0
+  },
+  "raw": "[\n  {\n    \"id\": 1,\n    \"prose\": \"Revenue in January 2017 was 10% higher than in December 2016\"\n  },\n  {\n    \"id\": 2,\n    \"prose\": \"Total payments received for delivered orders increased by 1000 units in January 2017 compared to December 2016\"\n  },\n  {\n    \"id\": 3,\n    \"prose\": \"Our revenue in January 2017 exceeded expectations, driven by strong sales in the state of SP\"\n  },\n  {\n    \"id\": 4,\n    \"prose\": \"The revenue in January 2017 was impacted by slower sales in the state of RJ compared to the year-ago period\"\n  },\n  {\n    \"id\": 5,\n    \"prose\": \"We're seeing a steady increase in revenue, with a total delta of 1000 units in January 2017 compared to December 2016\"\n  },\n  {\n    \"id\": 6,\n    \"prose\": \"Our revenue in January 2017 was influenced by customer state, with SP contributing 600 units and RJ contributing 400 units\"\n  },\n  {\n    \"id\": 7,\n    \"prose\": \"There are currently no insights available to explain the revenue growth in January 2017\"\n  },\n  {\n    \"id\": 8,\n    \"prose\": \"Revenue is an important KPI for our business, providing insight into our ability to deliver orders and collect payments\"\n  },\n  {\n    \"id\": 9,\n    \"prose\": \"We're on track to meet our revenue targets for the year, with January 2017 being a strong start to the year\"\n  },\n  {\n    \"id\": 10,\n    \"prose\": \"The revenue growth in January 2017 was driven by strong sales in the state of SP, with a delta of 600 units\"\n  },\n  {\n    \"id\": 11,\n    \"prose\": \"We'll be keeping a close eye on revenue in the coming months to ensure we're on track to meet our targets\"\n  },\n  {\n    \"id\": 12,\n    \"prose\": \"Revenue is a key driver of our business, and we're committed to continuing to improve our sales and collections processes\"\n  },\n  {\n    \"id\": 13,\n    \"prose\": \"The revenue growth in January 2017 was influenced by a number of factors, including customer state and sales performance\"\n  },\n  {\n    \"id\": 14,\n    \"prose\": \"We're excited about the potential for revenue growth in the coming months, driven by our strong sales and collections processes\"\n  },\n  {\n    \"id\": 15,\n    \"prose\": \"Revenue is a critical metric for our business, providing insight into our ability to deliver orders and collect payments\"\n  },\n  {\n    \"id\": 16,\n    \"prose\": \"Our revenue in January 2017 was a strong start to the year, with 10% growth compared to the same period last year\""
+}

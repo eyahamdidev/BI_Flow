@@ -1,0 +1,387 @@
+{
+  "note": "Live calls only. qwen2.5:7b-instruct is not installed. llama3.2:latest is the local 3B.",
+  "prompt_id": "auditor.explain_kpi@v4",
+  "template": {
+    "n": 20,
+    "errors": 0,
+    "first_try_pass_rate": 1.0,
+    "fallback_rate": 0.0,
+    "latency_ms_p50": 0.4,
+    "latency_ms_p95": 0.5,
+    "rows": [
+      {
+        "id": "ex01",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 1.5,
+        "error": null
+      },
+      {
+        "id": "ex02",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.5,
+        "error": null
+      },
+      {
+        "id": "ex03",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.5,
+        "error": null
+      },
+      {
+        "id": "ex04",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.5,
+        "error": null
+      },
+      {
+        "id": "ex05",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex06",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex07",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex08",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex09",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.5,
+        "error": null
+      },
+      {
+        "id": "ex10",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex11",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.5,
+        "error": null
+      },
+      {
+        "id": "ex12",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.5,
+        "error": null
+      },
+      {
+        "id": "ex13",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.5,
+        "error": null
+      },
+      {
+        "id": "ex14",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex15",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex16",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.5,
+        "error": null
+      },
+      {
+        "id": "ex17",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex18",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex19",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      },
+      {
+        "id": "ex20",
+        "source": "code",
+        "first_try_pass": true,
+        "attempts": 1,
+        "latency_ms": 0.4,
+        "error": null
+      }
+    ]
+  },
+  "llama3.2:latest": {
+    "n": 20,
+    "errors": 0,
+    "first_try_pass_rate": 0.45,
+    "fallback_rate": 0.25,
+    "latency_ms_p50": 14557.3,
+    "latency_ms_p95": 32470.8,
+    "rows": [
+      {
+        "id": "ex01",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "Here's an explanation of the given data:\n\nRevenue for January 2017 is the total amount of payments received for delivered orders during that month. The change in revenue from the previous month is 1000 units. The largest contribution to this change came from the state of SP, with an increase of 600 units, and from the state of RJ, with an increase of 400 units. The data is derived from the fact_orders table, which is used to calculate the revenue, and is split by customer state.",
+        "latency_ms": 40724.2,
+        "error": null
+      },
+      {
+        "id": "ex02",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "Here's an explanation of the revenue for 2017-06:\n\nThe revenue for 2017-06 is the total payments received for delivered orders. It's calculated by summing up the payment values from the fact_orders table, which is derived from the raw.orders and raw.order_payments tables. The change in revenue is 2000, which is the result of adding 1200 from MG and 800 from BA. The largest contribution came from MG.",
+        "latency_ms": 14557.3,
+        "error": null
+      },
+      {
+        "id": "ex03",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "Here's an explanation of the revenue for 2017-11:\n\nThe revenue for 2017-11 is the total payments received for delivered orders. It's calculated by summing up the payment values from the fact_orders table, which is updated monthly. The change in revenue is 3000, which is the result of adding 1800 from the PR state and 1200 from the RS state. The largest contribution came from the PR state.",
+        "latency_ms": 17908.8,
+        "error": null
+      },
+      {
+        "id": "ex04",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "answer": "The revenue for 2018-03 is the total payments received for delivered orders. The change in revenue is split into two contributions: the largest contribution came from SC. The lineage path shows that the data comes from raw.orders and raw.order_payments, and is processed through dbt.fact_orders.",
+        "latency_ms": 32470.8,
+        "error": null
+      },
+      {
+        "id": "ex05",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: rank:customer",
+        "answer": "Orders for 2017-01 is logged as Delivered orders. The logged path starts at raw.orders, raw.order_payments, applies parse_dates, drop_exact_duplicates, and passes through dbt.fact_orders. Compared with 2016-12, the logged change is 5000 count. The logged contributions are SP at 3000, RJ at 2000. No insight facts were logged for this KPI and period.",
+        "latency_ms": 14869.2,
+        "error": null
+      },
+      {
+        "id": "ex06",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "answer": "This fact sheet shows the orders for the period 2017-06. The change in orders is attributed to two main factors: MG and BA. The largest contribution came from MG. The change is tracked over the period 2017-06 and is compared to the previous period 2017-05.",
+        "latency_ms": 16177.7,
+        "error": null
+      },
+      {
+        "id": "ex07",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: rank:customer",
+        "answer": "Orders for 2017-11 is logged as Delivered orders. The logged path starts at raw.orders, raw.order_payments, applies parse_dates, drop_exact_duplicates, and passes through dbt.fact_orders. Compared with 2017-10, the logged change is 7000 count. The logged contributions are PR at 4200, RS at 2800. No insight facts were logged for this KPI and period.",
+        "latency_ms": 17974.6,
+        "error": null
+      },
+      {
+        "id": "ex08",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "answer": "This fact sheet shows the orders for the period 2018-03. The change in orders came from SC with a change of 4800 count. The largest contribution came from SC with a change of 4800 count. The data is based on the Orders metric, which is defined as the sum of payment values from the dbt.fact_orders model.",
+        "latency_ms": 13443.9,
+        "error": null
+      },
+      {
+        "id": "ex09",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: cause",
+        "answer": "Average order value for 2017-01 is logged as Revenue divided by delivered orders. The logged path starts at raw.orders, raw.order_payments, applies parse_dates, drop_exact_duplicates, and passes through dbt.fact_orders. Compared with 2016-12, the logged change is 9000 BRL. The logged contributions are SP at 5400, RJ at 3600. No insight facts were logged for this KPI and period.",
+        "latency_ms": 20230.3,
+        "error": null
+      },
+      {
+        "id": "ex10",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "answer": "The AOV for MG in 2017-06 is 10000 BRL. The lineage path is from dbt.fact_orders to raw.orders to clean.orders to dbt.fact_orders to kpi.aov. The driver split is by customer_state. The largest contribution came from MG.",
+        "latency_ms": 13746.7,
+        "error": null
+      },
+      {
+        "id": "ex11",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "The AOV for 2017-11 is the average order value for that period. It is calculated by dividing the total revenue by the number of delivered orders. The largest contribution to this change came from the customer state of PR, with a change of 6600. The change was made by the driver for the fact_orders table, which is part of the dbt model for the AOV KPI.",
+        "latency_ms": 7620.0,
+        "error": null
+      },
+      {
+        "id": "ex12",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "answer": "This analysis looks at the change in Average Order Value (AOV) from SC in 2018-03 compared to 2018-02. The change is split into contributions, with the largest contribution coming from SC. The lineage path is raw.orders, clean.orders, dbt.fact_orders, and kpi.aov. The drivers split the change into 12000 BRL and 2 parts.",
+        "latency_ms": 14265.4,
+        "error": null
+      },
+      {
+        "id": "ex13",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "The late_rate for January 2017 shows the share of orders that were delivered after the estimated delivery date. The change in this rate came from the largest contribution, which was the state \"SP\", with a positive change of 7800. The change in the rate was split into two parts, with the state \"RJ\" contributing a negative change of 5200.",
+        "latency_ms": 6730.2,
+        "error": null
+      },
+      {
+        "id": "ex14",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "The late_rate for June 2017 shows the share of orders that were delivered after the estimated delivery date. The change in this rate came from the largest contribution, which was the customer state of MG, with a positive delta of 8400. The change in the rate also came from the customer state of BA, with a positive delta of 5600.",
+        "latency_ms": 6631.7,
+        "error": null
+      },
+      {
+        "id": "ex15",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: rank:customer_state",
+        "answer": "Late-delivery rate for 2017-11 is logged as Share of orders delivered after the estimate. The logged path starts at raw.orders, raw.order_payments, applies parse_dates, drop_exact_duplicates, and passes through dbt.fact_orders. Compared with 2017-10, the logged change is 15000 ratio. The logged contributions are PR at 9000, RS at 6000. No insight facts were logged for this KPI and period.",
+        "latency_ms": 19010.4,
+        "error": null
+      },
+      {
+        "id": "ex16",
+        "source": "llm",
+        "first_try_pass": false,
+        "attempts": 2,
+        "warning": null,
+        "answer": "The late_rate for 2018-03 shows the share of orders delivered after the estimate. The change in this rate came from the customer state SC and ES. The lineage path is from the raw orders table to the clean orders table, then to the dbt fact orders model, and finally to the kpi late_rate model.",
+        "latency_ms": 14929.5,
+        "error": null
+      },
+      {
+        "id": "ex17",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "The average review score for January 2017 is the mean review score for that month. It is calculated from the orders fact table, which includes the total payment value for each order. The calculation is based on the date of the order, with the month truncated to the nearest month. The largest contribution to this calculation came from the customer state of SP, with a change of 10,200.",
+        "latency_ms": 8837.9,
+        "error": null
+      },
+      {
+        "id": "ex18",
+        "source": "template",
+        "first_try_pass": false,
+        "attempts": 3,
+        "warning": "fact-check failed after 2 retries; template text used. Unsupported claims: rank:customer",
+        "answer": "Average review score for 2017-06 is logged as Mean review score. The logged path starts at raw.orders, raw.order_payments, applies parse_dates, drop_exact_duplicates, and passes through dbt.fact_orders. Compared with 2017-05, the logged change is 18000 score. The logged contributions are MG at 10800, BA at 7200. No insight facts were logged for this KPI and period.",
+        "latency_ms": 13036.2,
+        "error": null
+      },
+      {
+        "id": "ex19",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "The average review score for November 2017 is calculated by summing up the payment values from fact_orders and then dividing by the number of orders. The calculation is based on the fact_orders table, which is used to determine the payment values. The average review score is compared to the average review score from the previous month. The largest contribution to the change in average review score came from the customer state of PR.",
+        "latency_ms": 7059.3,
+        "error": null
+      },
+      {
+        "id": "ex20",
+        "source": "llm",
+        "first_try_pass": true,
+        "attempts": 1,
+        "warning": null,
+        "answer": "The average review score for March 2018 is the mean review score for that month. It is calculated from the orders fact table, which includes the total payment value for each order. The calculation is split between two customer states: SC and ES, with the largest contribution coming from SC. The total change in the average review score for March 2018 is 20,000.",
+        "latency_ms": 6840.2,
+        "error": null
+      }
+    ]
+  },
+  "judge": {
+    "recall": null
+  }
+}

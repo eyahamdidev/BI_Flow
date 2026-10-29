@@ -1,0 +1,151 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "prompt_id": "auditor.adversarial_prose@v2",
+  "source_case": "ex10",
+  "note": "Written by gpt-oss-120b from the ex10 fact sheet only. The prompt asked for a claim the notes do not contain and did not mention the checker. Every caption was labelled unsupported by reading that sheet. This set has no supported control, so it does not measure false-reject.",
+  "fact_sheet": {
+    "kpi_id": "aov",
+    "period": "2017-06",
+    "compare_to": "2017-05",
+    "definition": {
+      "kpi_id": "aov",
+      "name": "Average order value",
+      "description": "Revenue divided by delivered orders",
+      "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+      "unit": "BRL",
+      "grain": "month"
+    },
+    "lineage": {
+      "found": true,
+      "raw_tables": [
+        "raw.orders",
+        "raw.order_payments"
+      ],
+      "cleaning_rules": [
+        "parse_dates",
+        "drop_exact_duplicates"
+      ],
+      "dbt_models": [
+        "dbt.fact_orders"
+      ],
+      "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+      "path_nodes": [
+        "raw.orders",
+        "clean.orders",
+        "dbt.fact_orders",
+        "kpi.aov"
+      ]
+    },
+    "drivers": {
+      "kpi_id": "aov",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "dimension": "customer_state",
+      "total_delta": 10000,
+      "contribution_count": 2,
+      "contributions": [
+        {
+          "dimension_value": "MG",
+          "delta": 6000
+        },
+        {
+          "dimension_value": "BA",
+          "delta": 4000
+        }
+      ]
+    },
+    "insight_count": 0
+  },
+  "items": [
+    {
+      "id": "f01",
+      "prose": "June's average order value surged, confirming that our recent pricing adjustments are delivering immediate upside.",
+      "supported": false,
+      "label_reason": "June and an increase are logged. Pricing adjustments are not."
+    },
+    {
+      "id": "f02",
+      "prose": "The AOV increase outpaces the prior month, a clear sign that our targeted promotions are resonating with customers.",
+      "supported": false,
+      "label_reason": "An increase versus the prior month is logged. Targeted promotions are not."
+    },
+    {
+      "id": "f03",
+      "prose": "Our focus on high‑value regions is paying off, as the jump in AOV puts us ahead of the seasonal baseline.",
+      "supported": false,
+      "label_reason": "A jump in AOV is the logged direction. High-value regions and a seasonal baseline are not."
+    },
+    {
+      "id": "f04",
+      "prose": "The upward AOV trend aligns with the rollout of the new loyalty tier, indicating stronger basket sizes.",
+      "supported": false,
+      "label_reason": "An upward change is logged. A loyalty tier is not."
+    },
+    {
+      "id": "f05",
+      "prose": "June's AOV growth exceeds our internal forecast, reinforcing confidence in the upcoming product bundle strategy.",
+      "supported": false,
+      "label_reason": "June and growth are logged. An internal forecast and a product bundle are not."
+    },
+    {
+      "id": "f06",
+      "prose": "The month‑over‑month AOV lift demonstrates that our cross‑sell initiatives are already boosting revenue per order.",
+      "supported": false,
+      "label_reason": "A month-over-month lift is logged. Cross-sell initiatives are not."
+    },
+    {
+      "id": "f07",
+      "prose": "With AOV climbing, we are on track to surpass the quarterly revenue target by a comfortable margin.",
+      "supported": false,
+      "label_reason": "AOV climbing is the logged direction. A quarterly revenue target is not."
+    },
+    {
+      "id": "f08",
+      "prose": "The positive AOV delta validates the effectiveness of the recent UI redesign that streamlines checkout.",
+      "supported": false,
+      "label_reason": "A positive delta is logged. A UI redesign is not."
+    },
+    {
+      "id": "f09",
+      "prose": "Our investment in regional advertising is evident as AOV spikes in key states, driving overall performance.",
+      "supported": false,
+      "label_reason": "A rise is the logged direction. Regional advertising, key states, and performance are not."
+    },
+    {
+      "id": "f10",
+      "prose": "The AOV improvement positions us favorably against competitors who are still seeing flat growth.",
+      "supported": false,
+      "label_reason": "An improvement is the logged direction. Competitors and flat growth are not."
+    },
+    {
+      "id": "f11",
+      "prose": "This AOV gain signals that the new payment options are encouraging larger purchases.",
+      "supported": false,
+      "label_reason": "A gain is the logged direction. New payment options are not."
+    },
+    {
+      "id": "f12",
+      "prose": "June's AOV increase is a leading indicator that our upcoming summer campaign will generate record sales.",
+      "supported": false,
+      "label_reason": "June and an increase are logged. A summer campaign and record sales are not."
+    },
+    {
+      "id": "f13",
+      "prose": "The rise in AOV reflects higher customer confidence, a direct outcome of our enhanced trust‑badge program.",
+      "supported": false,
+      "label_reason": "A rise is the logged direction. Customer confidence and a trust-badge program are not."
+    },
+    {
+      "id": "f14",
+      "prose": "Our data shows that the AOV uplift is sustainable, supporting the decision to expand inventory in high‑margin categories.",
+      "supported": false,
+      "label_reason": "An uplift is the logged direction. Sustainability and an inventory decision are not."
+    },
+    {
+      "id": "f15",
+      "prose": "The month‑over‑month AOV jump confirms that the strategic partnership with logistics partners is reducing friction and increasing spend.",
+      "supported": false,
+      "label_reason": "A month-over-month jump is logged. A logistics partnership is not."
+    }
+  ]
+}

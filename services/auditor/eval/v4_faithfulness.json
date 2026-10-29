@@ -1,0 +1,27 @@
+{
+  "note": "Hand labels of the published v4 answers from llama3.2:latest. Supported means every claim matches the fact sheet. A checker pass is not a label. Template fallbacks are included because that is the text a reader sees.",
+  "model": "llama3.2:latest",
+  "prompt_id": "auditor.explain_kpi@v4",
+  "items": [
+    {"id": "ex01", "source": "llm", "supported": false, "reason": "The delta and the states are right, but the unit is written as units. The sheet says BRL."},
+    {"id": "ex02", "source": "llm", "supported": true, "reason": "Description, delta 2000, MG 1200, BA 800, and MG as the largest contribution all match the sheet."},
+    {"id": "ex03", "source": "llm", "supported": true, "reason": "Delta 3000, PR 1800, RS 1200, and PR as the largest contribution match the sheet."},
+    {"id": "ex04", "source": "llm", "supported": true, "reason": "Names SC as the largest contribution and the logged source tables. It does not invent a figure."},
+    {"id": "ex05", "source": "template", "supported": true, "reason": "Template copied from the sheet, including unit count."},
+    {"id": "ex06", "source": "llm", "supported": false, "reason": "Calls MG and BA factors the change is attributed to. The sheet only logs them as contributions."},
+    {"id": "ex07", "source": "template", "supported": true, "reason": "Template copied from the sheet."},
+    {"id": "ex08", "source": "llm", "supported": true, "reason": "SC at 4800 count is the logged top contribution. The payment-value sentence follows the SQL stored on the sheet."},
+    {"id": "ex09", "source": "template", "supported": true, "reason": "Template copied from the sheet, including unit BRL."},
+    {"id": "ex10", "source": "llm", "supported": false, "reason": "Says the AOV is 10000 BRL. That number is the logged change, not a level, and the path is told backwards."},
+    {"id": "ex11", "source": "llm", "supported": false, "reason": "PR at 6600 is right. The sentence then says the change was made by the driver for the fact_orders table, which is not logged."},
+    {"id": "ex12", "source": "llm", "supported": false, "reason": "Says the drivers split the change into 12000 BRL and 2 parts. 12000 is the total, and the parts are 7200 and 4800."},
+    {"id": "ex13", "source": "llm", "supported": false, "reason": "SP at 7800 is right. RJ is logged at 5200, not a negative change."},
+    {"id": "ex14", "source": "llm", "supported": true, "reason": "MG 8400 and BA 5600 match the logged contributions, and MG is the larger one."},
+    {"id": "ex15", "source": "template", "supported": true, "reason": "Template copied from the sheet, including unit ratio."},
+    {"id": "ex16", "source": "llm", "supported": true, "reason": "Names SC and ES and the logged path. It does not invent a figure or a cause."},
+    {"id": "ex17", "source": "llm", "supported": true, "reason": "SP at 10200 is the logged top contribution. The payment-value sentence follows the SQL stored on the sheet."},
+    {"id": "ex18", "source": "template", "supported": true, "reason": "Template copied from the sheet."},
+    {"id": "ex19", "source": "llm", "supported": false, "reason": "Says the score is payment value divided by the number of orders. The logged description is the mean review score, and the SQL does not divide."},
+    {"id": "ex20", "source": "llm", "supported": true, "reason": "The change of 20000 and SC as the largest of SC and ES match the sheet."}
+  ]
+}

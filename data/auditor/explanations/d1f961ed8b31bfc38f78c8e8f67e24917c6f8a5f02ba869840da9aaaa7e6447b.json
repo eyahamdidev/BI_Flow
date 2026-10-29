@@ -1,0 +1,56 @@
+{
+  "key": "d1f961ed8b31bfc38f78c8e8f67e24917c6f8a5f02ba869840da9aaaa7e6447b",
+  "response_sha256": "6e43e12ecd2b7ad104837f851dcdad478680b94a80dd994a8339c1f52ed84d1a",
+  "text": "Revenue went down by -800 BRL between 2017-03 and 2017-04. The largest contribution came from SP (-300 BRL). The second largest contribution came from RJ (-500 BRL). Revenue is defined as: Total payments received for delivered orders The figure comes from raw.orders; the logged cleaning steps are parse_dates.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Revenue went down by -800 BRL between 2017-03 and 2017-04.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from SP (-300 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from RJ (-500 BRL).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Revenue is defined as: Total payments received for delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "The figure comes from raw.orders; the logged cleaning steps are parse_dates.",
+      "fact_ids": [
+        "lineage.raw_tables",
+        "lineage.cleaning_rules"
+      ],
+      "frame": "F5"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

@@ -1,5 +1,7 @@
-networkx
+# 3.7 requires Python 3.12; this service image is 3.11.
+networkx>=3.3,<3.7
 jinja2
 pyyaml
+pyvis
 # contracts are installed separately: pip install ../../contracts
 uvicorn

@@ -1,0 +1,56 @@
+{
+  "key": "e5ae4f0ae8ceca0dff91645a5527f5235baf82c6f5841703954baa76a32893aa",
+  "response_sha256": "1cd5404715082e192bd455e6bbbecd74be905c687f2293bb018439f88cc8da83",
+  "text": "Late-delivery rate went up by 13000 ratio between 2016-12 and 2017-01. The largest contribution came from SP (7800 ratio). The second largest contribution came from RJ (5200 ratio). Late-delivery rate is defined as: Share of orders delivered after the estimate The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Late-delivery rate went up by 13000 ratio between 2016-12 and 2017-01.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "The largest contribution came from SP (7800 ratio).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "The second largest contribution came from RJ (5200 ratio).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Late-delivery rate is defined as: Share of orders delivered after the estimate",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "The figure comes from raw.orders, raw.order_payments; the logged cleaning steps are parse_dates, drop_exact_duplicates.",
+      "fact_ids": [
+        "lineage.raw_tables",
+        "lineage.cleaning_rules"
+      ],
+      "frame": "F5"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

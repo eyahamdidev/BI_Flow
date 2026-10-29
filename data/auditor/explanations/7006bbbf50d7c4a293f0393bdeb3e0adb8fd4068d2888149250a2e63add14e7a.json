@@ -1,0 +1,56 @@
+{
+  "key": "7006bbbf50d7c4a293f0393bdeb3e0adb8fd4068d2888149250a2e63add14e7a",
+  "response_sha256": "9c3438c92dc7ec4effe1fee85a49d0846ba6ad16daa9d6c4f780fc871aa0b9e8",
+  "text": "Orders a inchangé de 0 orders entre 2017-04 et 2017-05. La plus grande contribution vient de SP (150 orders). La deuxième plus grande contribution vient de RJ (-150 orders). Orders est défini comme : Count of delivered orders Le chiffre provient de raw.orders ; les étapes de nettoyage enregistrées sont parse_dates.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Orders a inchangé de 0 orders entre 2017-04 et 2017-05.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "La plus grande contribution vient de SP (150 orders).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "La deuxième plus grande contribution vient de RJ (-150 orders).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Orders est défini comme : Count of delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "Le chiffre provient de raw.orders ; les étapes de nettoyage enregistrées sont parse_dates.",
+      "fact_ids": [
+        "lineage.raw_tables",
+        "lineage.cleaning_rules"
+      ],
+      "frame": "F5"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

@@ -8,12 +8,14 @@ from pathlib import Path
 from biflow_contracts.service_kit import create_app
 
 from . import handlers as h
+from .eval_runner import eval_metrics
+from .prose import explain_kpi_default
 
 app = create_app(
     module="auditor",
     handlers={"graph": h.graph, "audit": h.audit, "explain": h.explain},
     mock_dir=Path(__file__).parent.parent / "mock",
-    lineage_steps=[],
-    prompt_versions={},  # e.g. {"auditor.example": "v1"}
-    eval_fn=None,  # set to a function returning a metrics dict once eval/ exists
+    lineage_steps=["build_lineage_graph", "write_trace_report", "explain_kpi"],
+    prompt_versions={"auditor.section_prose": "v3", "auditor.explain_kpi": explain_kpi_default(), "auditor.fact_judge": "v1"},
+    eval_fn=eval_metrics,
 )

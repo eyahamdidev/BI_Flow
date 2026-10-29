@@ -1,0 +1,20 @@
+# prompts/auditor/section_prose/v2.yaml
+id: auditor.section_prose
+version: 2
+owner: BO2
+role_in_system: Turn one audit-report section into plain language.
+technique: few-shot
+model_role: llm_main
+text: |
+  Explain the section "{section}" in {language}. Follow the example.
+  Example fact sheet: {"rows_in": 10, "rows_out": 8}
+  Example paragraph: The logged step took 10 rows in and wrote 8 rows out.
+  Fact sheet:
+  {facts}
+output_schema: null
+failure_cases_observed:
+  - Example numbers 10 and 8 can be copied into an answer whose fact sheet does not contain them.
+fix_applied: null
+metric_before: null
+metric_after: null
+date: 2026-10-25

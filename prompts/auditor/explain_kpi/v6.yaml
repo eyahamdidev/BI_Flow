@@ -1,0 +1,43 @@
+# prompts/auditor/explain_kpi/v6.yaml
+id: auditor.explain_kpi
+version: 6
+owner: BO2
+role_in_system: Explain one KPI. The model writes fact ids only. Code fills values, units, and the direction word.
+technique: fact-ids-json
+model_role: llm_main
+engine: jinja2
+text: |
+  Explain "{{ section }}" in {{ language }}.
+  Reply with one JSON object and no other text.
+  Valid ids for this request:
+  {{ fields }}
+  Rules:
+  - Use only those ids. Do not use outside knowledge.
+  - Write 3 to 5 sentences.
+  - Every sentence contains at least one id, written in square brackets and copied from the list.
+  - The "ids" array of a sentence is exactly the ids in that sentence, in the same order.
+  - Do not write a digit, a date, a currency, a percent sign, a state code, or a category name outside brackets.
+  - Do not write a direction word. When you need the direction, write [drivers.direction]. Code supplies the word in {{ language }}.
+  - Do not write because, due to, caused by, driven by, thanks to, as a result, hence, parce que, à cause de, en raison de, grâce à, or donc.
+  - Do not give advice.
+  - drivers.top1 is the largest logged contribution. drivers.top2 is the next. drivers.top3 is the next. Use an id only if it appears in the list above.
+  - If you name the largest contribution, write: The largest contribution came from [drivers.top1.label].
+  - Contributions are a split of the logged change, not a cause.
+  - The explanation must include [kpi.name], [drivers.direction], [drivers.total_delta], and [drivers.top1.label].
+  - Do not write important, critical, key, steady, strong, weak, healthy, concerning, ability, performance, or a French equivalent such as critique, clé, stable, fort, faible, sain, capacité, or performance.
+  - If the list above is empty, reply with {"abstain": true}.
+  Output shape:
+  {"sentences":[{"text":"...","ids":["kpi.name"]}]}
+  Example in English, including a label id:
+  {"sentences":[{"text":"The indicator [kpi.name] covers [period.current] compared with [period.compare].","ids":["kpi.name","period.current","period.compare"]},{"text":"The logged change [drivers.direction] by [drivers.total_delta].","ids":["drivers.direction","drivers.total_delta"]},{"text":"The largest contribution came from [drivers.top1.label] at [drivers.top1.delta].","ids":["drivers.top1.label","drivers.top1.delta"]}]}
+  Example in French:
+  {"sentences":[{"text":"L'indicateur [kpi.name] porte sur [period.current] par rapport à [period.compare].","ids":["kpi.name","period.current","period.compare"]},{"text":"Le changement journalisé est [drivers.direction] de [drivers.total_delta].","ids":["drivers.direction","drivers.total_delta"]},{"text":"La plus grande contribution vient de [drivers.top1.label] avec [drivers.top1.delta].","ids":["drivers.top1.label","drivers.top1.delta"]}]}
+  Example when nothing was logged:
+  {"abstain": true}
+output_schema: null
+failure_cases_observed:
+  - A model wrote a state code and a unit instead of a field id.
+fix_applied: The model returns JSON sentences of field ids. Code fills the value, the unit, and the direction word, then retries with the exact error.
+metric_before: null
+metric_after: null
+date: 2026-10-25

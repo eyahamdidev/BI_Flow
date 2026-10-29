@@ -1,0 +1,353 @@
+{
+  "note": "Hand-written fixtures. They cover shapes. They are not a sample for a rate.",
+  "sheets": [
+    {
+      "id": "syn01_decrease",
+      "lang": "en",
+      "shape": "decrease",
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-04",
+        "compare_to": "2017-03",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "unit": "BRL"
+        },
+        "drivers": {
+          "total_delta": -800,
+          "contributions": [
+            {"dimension_value": "SP", "delta": -300},
+            {"dimension_value": "RJ", "delta": -500}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders"], "cleaning_rules": ["parse_dates"]}
+      }
+    },
+    {
+      "id": "syn02_flat",
+      "lang": "en",
+      "shape": "flat",
+      "fact_sheet": {
+        "kpi_id": "orders",
+        "period": "2017-05",
+        "compare_to": "2017-04",
+        "definition": {
+          "kpi_id": "orders",
+          "name": "Orders",
+          "description": "Count of delivered orders",
+          "unit": "orders"
+        },
+        "drivers": {
+          "total_delta": 0,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 150},
+            {"dimension_value": "RJ", "delta": -150}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders"], "cleaning_rules": ["parse_dates"]}
+      }
+    },
+    {
+      "id": "syn03_one_driver",
+      "lang": "en",
+      "shape": "one_driver",
+      "fact_sheet": {
+        "kpi_id": "aov",
+        "period": "2017-06",
+        "compare_to": "2017-05",
+        "definition": {
+          "kpi_id": "aov",
+          "name": "AOV",
+          "description": "Average payment value of delivered orders",
+          "unit": "BRL"
+        },
+        "drivers": {
+          "total_delta": 250,
+          "contributions": [{"dimension_value": "MG", "delta": 250}]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.order_payments"], "cleaning_rules": ["drop_exact_duplicates"]}
+      }
+    },
+    {
+      "id": "syn04_three_drivers",
+      "lang": "en",
+      "shape": "three_drivers",
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-07",
+        "compare_to": "2017-06",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "unit": "BRL"
+        },
+        "drivers": {
+          "total_delta": 900,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 500},
+            {"dimension_value": "RJ", "delta": 300},
+            {"dimension_value": "BA", "delta": 100}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders", "raw.order_payments"], "cleaning_rules": ["parse_dates"]}
+      }
+    },
+    {
+      "id": "syn05_rule",
+      "lang": "en",
+      "shape": "rule_id",
+      "fact_sheet": {
+        "kpi_id": "late_rate",
+        "period": "2017-08",
+        "compare_to": "2017-07",
+        "definition": {
+          "kpi_id": "late_rate",
+          "name": "Late rate",
+          "description": "Share of orders delivered after the estimated date",
+          "unit": "pp"
+        },
+        "drivers": {
+          "total_delta": 4,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 3},
+            {"dimension_value": "RJ", "delta": 1}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders"], "cleaning_rules": ["parse_dates"]},
+        "rule_id": "late_delivery"
+      }
+    },
+    {
+      "id": "syn06_caveat",
+      "lang": "en",
+      "shape": "caveat",
+      "fact_sheet": {
+        "kpi_id": "avg_review_score",
+        "period": "2017-09",
+        "compare_to": "2017-08",
+        "definition": {
+          "kpi_id": "avg_review_score",
+          "name": "Review score",
+          "description": "Mean review score of delivered orders",
+          "unit": "points",
+          "caveats": "Delivered orders only"
+        },
+        "drivers": {
+          "total_delta": 2,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 2},
+            {"dimension_value": "MG", "delta": 0}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.order_reviews"], "cleaning_rules": ["drop_exact_duplicates"]}
+      }
+    },
+    {
+      "id": "syn07_both",
+      "lang": "en",
+      "shape": "rule_and_caveat",
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-10",
+        "compare_to": "2017-09",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "unit": "BRL",
+          "caveats": "Delivered orders only"
+        },
+        "drivers": {
+          "total_delta": 700,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 400},
+            {"dimension_value": "RJ", "delta": 300}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders"], "cleaning_rules": ["parse_dates"]},
+        "rule_id": "late_delivery"
+      }
+    },
+    {
+      "id": "syn08_no_lineage",
+      "lang": "en",
+      "shape": "no_lineage",
+      "fact_sheet": {
+        "kpi_id": "orders",
+        "period": "2017-11",
+        "compare_to": "2017-10",
+        "definition": {
+          "kpi_id": "orders",
+          "name": "Orders",
+          "description": "Count of delivered orders",
+          "unit": "orders"
+        },
+        "drivers": {
+          "total_delta": 40,
+          "contributions": [
+            {"dimension_value": "BA", "delta": 25},
+            {"dimension_value": "MG", "delta": 15}
+          ]
+        }
+      }
+    },
+    {
+      "id": "syn09_empty",
+      "lang": "en",
+      "shape": "empty",
+      "fact_sheet": {}
+    },
+    {
+      "id": "syn10_decrease_fr",
+      "lang": "fr",
+      "shape": "decrease",
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-04",
+        "compare_to": "2017-03",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "unit": "BRL"
+        },
+        "drivers": {
+          "total_delta": -800,
+          "contributions": [
+            {"dimension_value": "SP", "delta": -300},
+            {"dimension_value": "RJ", "delta": -500}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders"], "cleaning_rules": ["parse_dates"]}
+      }
+    },
+    {
+      "id": "syn11_flat_fr",
+      "lang": "fr",
+      "shape": "flat",
+      "fact_sheet": {
+        "kpi_id": "orders",
+        "period": "2017-05",
+        "compare_to": "2017-04",
+        "definition": {
+          "kpi_id": "orders",
+          "name": "Orders",
+          "description": "Count of delivered orders",
+          "unit": "orders"
+        },
+        "drivers": {
+          "total_delta": 0,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 150},
+            {"dimension_value": "RJ", "delta": -150}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders"], "cleaning_rules": ["parse_dates"]}
+      }
+    },
+    {
+      "id": "syn12_rule_fr",
+      "lang": "fr",
+      "shape": "rule_id",
+      "fact_sheet": {
+        "kpi_id": "late_rate",
+        "period": "2017-08",
+        "compare_to": "2017-07",
+        "definition": {
+          "kpi_id": "late_rate",
+          "name": "Late rate",
+          "description": "Share of orders delivered after the estimated date",
+          "unit": "pp"
+        },
+        "drivers": {
+          "total_delta": 4,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 3},
+            {"dimension_value": "RJ", "delta": 1}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders"], "cleaning_rules": ["parse_dates"]},
+        "rule_id": "late_delivery"
+      }
+    },
+    {
+      "id": "syn13_caveat_fr",
+      "lang": "fr",
+      "shape": "caveat",
+      "fact_sheet": {
+        "kpi_id": "avg_review_score",
+        "period": "2017-09",
+        "compare_to": "2017-08",
+        "definition": {
+          "kpi_id": "avg_review_score",
+          "name": "Review score",
+          "description": "Mean review score of delivered orders",
+          "unit": "points",
+          "caveats": "Delivered orders only"
+        },
+        "drivers": {
+          "total_delta": 2,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 2},
+            {"dimension_value": "MG", "delta": 0}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.order_reviews"], "cleaning_rules": ["drop_exact_duplicates"]}
+      }
+    },
+    {
+      "id": "syn14_three_fr",
+      "lang": "fr",
+      "shape": "three_drivers",
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-07",
+        "compare_to": "2017-06",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "unit": "BRL"
+        },
+        "drivers": {
+          "total_delta": 900,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 500},
+            {"dimension_value": "RJ", "delta": 300},
+            {"dimension_value": "BA", "delta": 100}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders", "raw.order_payments"], "cleaning_rules": ["parse_dates"]}
+      }
+    },
+    {
+      "id": "syn15_both_fr",
+      "lang": "fr",
+      "shape": "rule_and_caveat",
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-10",
+        "compare_to": "2017-09",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "unit": "BRL",
+          "caveats": "Delivered orders only"
+        },
+        "drivers": {
+          "total_delta": 700,
+          "contributions": [
+            {"dimension_value": "SP", "delta": 400},
+            {"dimension_value": "RJ", "delta": 300}
+          ]
+        },
+        "lineage": {"found": true, "raw_tables": ["raw.orders"], "cleaning_rules": ["parse_dates"]},
+        "rule_id": "late_delivery"
+      }
+    }
+  ]
+}

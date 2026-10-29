@@ -22,21 +22,21 @@
 # from repo root
 make venv SERVICE=auditor                 # creates services/auditor/.venv and installs deps
 make run SERVICE=auditor                  # uvicorn on :8102 (BIFLOW_MOCK=1 by default)
-BIFLOW_MOCK=0 make run SERVICE=auditor    # real handlers (raise NotImplementedError until you write them)
+BIFLOW_MOCK=0 make run SERVICE=auditor    # real handlers
 make test SERVICE=auditor                 # contract test
 ```
 
 ## Definition of done for this module
 
-See the spec sections for BO2 in `docs/BIFlow_Technical_Spec.md` (acceptance criteria and metrics are the definition of done).
+See the spec sections for BO2 in `docs/BIFlow_Technical_Spec.md` (acceptance criteria and metrics are the definition of done). The write-up of the design and the harness results is `REPORT.md`.
 
 ## TODO checklist
 
-- [ ] Lineage graph builder + upstream(kpi_id)
-- [ ] Structured trace report (per stage / KPI / insight)
-- [ ] Prose layer + number fact-check (regex+code)
-- [ ] Explain this KPI (fact sheet -> 3-5 sentences, abstain when empty)
-- [ ] Completeness test vs each module's /v1/meta lineage_steps
+- [x] Lineage graph builder + upstream(kpi_id)
+- [x] Structured trace report (per stage / KPI / insight)
+- [x] Prose layer + number fact-check (regex+code)
+- [x] Explain this KPI (fact sheet -> 3-5 sentences, abstain when empty)
+- [x] Completeness test vs each module's /v1/meta lineage_steps
 
 ## Folder map
 

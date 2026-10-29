@@ -1,0 +1,59 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "prompt_id": "auditor.adversarial_prose@v2",
+  "source_case": "ex10",
+  "fact_sheet": {
+    "kpi_id": "aov",
+    "period": "2017-06",
+    "compare_to": "2017-05",
+    "definition": {
+      "kpi_id": "aov",
+      "name": "Average order value",
+      "description": "Revenue divided by delivered orders",
+      "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+      "unit": "BRL",
+      "grain": "month"
+    },
+    "lineage": {
+      "found": true,
+      "raw_tables": [
+        "raw.orders",
+        "raw.order_payments"
+      ],
+      "cleaning_rules": [
+        "parse_dates",
+        "drop_exact_duplicates"
+      ],
+      "dbt_models": [
+        "dbt.fact_orders"
+      ],
+      "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+      "path_nodes": [
+        "raw.orders",
+        "clean.orders",
+        "dbt.fact_orders",
+        "kpi.aov"
+      ]
+    },
+    "drivers": {
+      "kpi_id": "aov",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "dimension": "customer_state",
+      "total_delta": 10000,
+      "contribution_count": 2,
+      "contributions": [
+        {
+          "dimension_value": "MG",
+          "delta": 6000
+        },
+        {
+          "dimension_value": "BA",
+          "delta": 4000
+        }
+      ]
+    },
+    "insight_count": 0
+  },
+  "raw": "[\n  {\"id\": 1, \"prose\": \"June's average order value surged, confirming that our recent pricing adjustments are delivering immediate upside.\"},\n  {\"id\": 2, \"prose\": \"The AOV increase outpaces the prior month, a clear sign that our targeted promotions are resonating with customers.\"},\n  {\"id\": 3, \"prose\": \"Our focus on high‑value regions is paying off, as the jump in AOV puts us ahead of the seasonal baseline.\"},\n  {\"id\": 4, \"prose\": \"The upward AOV trend aligns with the rollout of the new loyalty tier, indicating stronger basket sizes.\"},\n  {\"id\": 5, \"prose\": \"June's AOV growth exceeds our internal forecast, reinforcing confidence in the upcoming product bundle strategy.\"},\n  {\"id\": 6, \"prose\": \"The month‑over‑month AOV lift demonstrates that our cross‑sell initiatives are already boosting revenue per order.\"},\n  {\"id\": 7, \"prose\": \"With AOV climbing, we are on track to surpass the quarterly revenue target by a comfortable margin.\"},\n  {\"id\": 8, \"prose\": \"The positive AOV delta validates the effectiveness of the recent UI redesign that streamlines checkout.\"},\n  {\"id\": 9, \"prose\": \"Our investment in regional advertising is evident as AOV spikes in key states, driving overall performance.\"},\n  {\"id\": 10, \"prose\": \"The AOV improvement positions us favorably against competitors who are still seeing flat growth.\"},\n  {\"id\": 11, \"prose\": \"This AOV gain signals that the new payment options are encouraging larger purchases.\"},\n  {\"id\": 12, \"prose\": \"June's AOV increase is a leading indicator that our upcoming summer campaign will generate record sales.\"},\n  {\"id\": 13, \"prose\": \"The rise in AOV reflects higher customer confidence, a direct outcome of our enhanced trust‑badge program.\"},\n  {\"id\": 14, \"prose\": \"Our data shows that the AOV uplift is sustainable, supporting the decision to expand inventory in high‑margin categories.\"},\n  {\"id\": 15, \"prose\": \"The month‑over‑month AOV jump confirms that the strategic partnership with logistics partners is reducing friction and increasing spend.\"}\n]"
+}

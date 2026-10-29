@@ -1,0 +1,55 @@
+{
+  "key": "bf52730f9bf1eae723505d0d79d68b86569c293c8f883288f09f5dcb13bdb39f",
+  "response_sha256": "1415f51665427faf413fba976023b2e1d5654687290f3966092c00b0b8a8d7d3",
+  "text": "Revenue a en hausse de 700 BRL entre 2017-09 et 2017-10. La plus grande contribution vient de SP (400 BRL). La deuxième plus grande contribution vient de RJ (300 BRL). Revenue est défini comme : Total payments received for delivered orders La règle enregistrée pour ce changement est late_delivery.",
+  "prose_source": "llm",
+  "attempts": 1,
+  "warning": null,
+  "citations": [
+    {
+      "sentence": "Revenue a en hausse de 700 BRL entre 2017-09 et 2017-10.",
+      "fact_ids": [
+        "kpi.name",
+        "drivers.direction",
+        "drivers.total_delta",
+        "period.compare",
+        "period.current"
+      ],
+      "frame": "F1"
+    },
+    {
+      "sentence": "La plus grande contribution vient de SP (400 BRL).",
+      "fact_ids": [
+        "drivers.top1.label",
+        "drivers.top1.delta"
+      ],
+      "frame": "F2"
+    },
+    {
+      "sentence": "La deuxième plus grande contribution vient de RJ (300 BRL).",
+      "fact_ids": [
+        "drivers.top2.label",
+        "drivers.top2.delta"
+      ],
+      "frame": "F3"
+    },
+    {
+      "sentence": "Revenue est défini comme : Total payments received for delivered orders",
+      "fact_ids": [
+        "kpi.name",
+        "definition.description"
+      ],
+      "frame": "F4"
+    },
+    {
+      "sentence": "La règle enregistrée pour ce changement est late_delivery.",
+      "fact_ids": [
+        "rule_id"
+      ],
+      "frame": "F6"
+    }
+  ],
+  "citation_method": "declared_field_id",
+  "prompt_version": "auditor.explain_kpi@v7",
+  "model": "openai/gpt-oss-120b"
+}

@@ -1,0 +1,1544 @@
+{
+  "cases": [
+    {
+      "id": "ex01",
+      "kpi_id": "revenue",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "expected_drivers": [
+        "SP",
+        "RJ"
+      ],
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-01",
+        "compare_to": "2016-12",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "BRL",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.revenue"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "revenue",
+          "period": "2017-01",
+          "compare_to": "2016-12",
+          "dimension": "customer_state",
+          "total_delta": 1000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SP",
+              "delta": 600
+            },
+            {
+              "dimension_value": "RJ",
+              "delta": 400
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 1000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SP at 600.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900000 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex02",
+      "kpi_id": "revenue",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "expected_drivers": [
+        "MG",
+        "BA"
+      ],
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-06",
+        "compare_to": "2017-05",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "BRL",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.revenue"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "revenue",
+          "period": "2017-06",
+          "compare_to": "2017-05",
+          "dimension": "customer_state",
+          "total_delta": 2000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "MG",
+              "delta": 1200
+            },
+            {
+              "dimension_value": "BA",
+              "delta": 800
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 2000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is MG at 1200.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900001 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex03",
+      "kpi_id": "revenue",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "expected_drivers": [
+        "PR",
+        "RS"
+      ],
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2017-11",
+        "compare_to": "2017-10",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "BRL",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.revenue"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "revenue",
+          "period": "2017-11",
+          "compare_to": "2017-10",
+          "dimension": "customer_state",
+          "total_delta": 3000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "PR",
+              "delta": 1800
+            },
+            {
+              "dimension_value": "RS",
+              "delta": 1200
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 3000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is PR at 1800.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900002 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex04",
+      "kpi_id": "revenue",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "expected_drivers": [
+        "SC",
+        "ES"
+      ],
+      "fact_sheet": {
+        "kpi_id": "revenue",
+        "period": "2018-03",
+        "compare_to": "2018-02",
+        "definition": {
+          "kpi_id": "revenue",
+          "name": "Revenue",
+          "description": "Total payments received for delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "BRL",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.revenue"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "revenue",
+          "period": "2018-03",
+          "compare_to": "2018-02",
+          "dimension": "customer_state",
+          "total_delta": 4000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SC",
+              "delta": 2400
+            },
+            {
+              "dimension_value": "ES",
+              "delta": 1600
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 4000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SC at 2400.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900003 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex05",
+      "kpi_id": "orders",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "expected_drivers": [
+        "SP",
+        "RJ"
+      ],
+      "fact_sheet": {
+        "kpi_id": "orders",
+        "period": "2017-01",
+        "compare_to": "2016-12",
+        "definition": {
+          "kpi_id": "orders",
+          "name": "Orders",
+          "description": "Delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "count",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.orders"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "orders",
+          "period": "2017-01",
+          "compare_to": "2016-12",
+          "dimension": "customer_state",
+          "total_delta": 5000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SP",
+              "delta": 3000
+            },
+            {
+              "dimension_value": "RJ",
+              "delta": 2000
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 5000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SP at 3000.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900004 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex06",
+      "kpi_id": "orders",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "expected_drivers": [
+        "MG",
+        "BA"
+      ],
+      "fact_sheet": {
+        "kpi_id": "orders",
+        "period": "2017-06",
+        "compare_to": "2017-05",
+        "definition": {
+          "kpi_id": "orders",
+          "name": "Orders",
+          "description": "Delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "count",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.orders"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "orders",
+          "period": "2017-06",
+          "compare_to": "2017-05",
+          "dimension": "customer_state",
+          "total_delta": 6000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "MG",
+              "delta": 3600
+            },
+            {
+              "dimension_value": "BA",
+              "delta": 2400
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 6000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is MG at 3600.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900005 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex07",
+      "kpi_id": "orders",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "expected_drivers": [
+        "PR",
+        "RS"
+      ],
+      "fact_sheet": {
+        "kpi_id": "orders",
+        "period": "2017-11",
+        "compare_to": "2017-10",
+        "definition": {
+          "kpi_id": "orders",
+          "name": "Orders",
+          "description": "Delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "count",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.orders"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "orders",
+          "period": "2017-11",
+          "compare_to": "2017-10",
+          "dimension": "customer_state",
+          "total_delta": 7000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "PR",
+              "delta": 4200
+            },
+            {
+              "dimension_value": "RS",
+              "delta": 2800
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 7000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is PR at 4200.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900006 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex08",
+      "kpi_id": "orders",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "expected_drivers": [
+        "SC",
+        "ES"
+      ],
+      "fact_sheet": {
+        "kpi_id": "orders",
+        "period": "2018-03",
+        "compare_to": "2018-02",
+        "definition": {
+          "kpi_id": "orders",
+          "name": "Orders",
+          "description": "Delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "count",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.orders"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "orders",
+          "period": "2018-03",
+          "compare_to": "2018-02",
+          "dimension": "customer_state",
+          "total_delta": 8000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SC",
+              "delta": 4800
+            },
+            {
+              "dimension_value": "ES",
+              "delta": 3200
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 8000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SC at 4800.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900007 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex09",
+      "kpi_id": "aov",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "expected_drivers": [
+        "SP",
+        "RJ"
+      ],
+      "fact_sheet": {
+        "kpi_id": "aov",
+        "period": "2017-01",
+        "compare_to": "2016-12",
+        "definition": {
+          "kpi_id": "aov",
+          "name": "Average order value",
+          "description": "Revenue divided by delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "BRL",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.aov"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "aov",
+          "period": "2017-01",
+          "compare_to": "2016-12",
+          "dimension": "customer_state",
+          "total_delta": 9000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SP",
+              "delta": 5400
+            },
+            {
+              "dimension_value": "RJ",
+              "delta": 3600
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 9000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SP at 5400.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900008 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex10",
+      "kpi_id": "aov",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "expected_drivers": [
+        "MG",
+        "BA"
+      ],
+      "fact_sheet": {
+        "kpi_id": "aov",
+        "period": "2017-06",
+        "compare_to": "2017-05",
+        "definition": {
+          "kpi_id": "aov",
+          "name": "Average order value",
+          "description": "Revenue divided by delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "BRL",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.aov"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "aov",
+          "period": "2017-06",
+          "compare_to": "2017-05",
+          "dimension": "customer_state",
+          "total_delta": 10000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "MG",
+              "delta": 6000
+            },
+            {
+              "dimension_value": "BA",
+              "delta": 4000
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 10000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is MG at 6000.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900009 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex11",
+      "kpi_id": "aov",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "expected_drivers": [
+        "PR",
+        "RS"
+      ],
+      "fact_sheet": {
+        "kpi_id": "aov",
+        "period": "2017-11",
+        "compare_to": "2017-10",
+        "definition": {
+          "kpi_id": "aov",
+          "name": "Average order value",
+          "description": "Revenue divided by delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "BRL",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.aov"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "aov",
+          "period": "2017-11",
+          "compare_to": "2017-10",
+          "dimension": "customer_state",
+          "total_delta": 11000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "PR",
+              "delta": 6600
+            },
+            {
+              "dimension_value": "RS",
+              "delta": 4400
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 11000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is PR at 6600.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900010 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex12",
+      "kpi_id": "aov",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "expected_drivers": [
+        "SC",
+        "ES"
+      ],
+      "fact_sheet": {
+        "kpi_id": "aov",
+        "period": "2018-03",
+        "compare_to": "2018-02",
+        "definition": {
+          "kpi_id": "aov",
+          "name": "Average order value",
+          "description": "Revenue divided by delivered orders",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "BRL",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.aov"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "aov",
+          "period": "2018-03",
+          "compare_to": "2018-02",
+          "dimension": "customer_state",
+          "total_delta": 12000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SC",
+              "delta": 7200
+            },
+            {
+              "dimension_value": "ES",
+              "delta": 4800
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 12000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SC at 7200.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900011 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex13",
+      "kpi_id": "late_rate",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "expected_drivers": [
+        "SP",
+        "RJ"
+      ],
+      "fact_sheet": {
+        "kpi_id": "late_rate",
+        "period": "2017-01",
+        "compare_to": "2016-12",
+        "definition": {
+          "kpi_id": "late_rate",
+          "name": "Late-delivery rate",
+          "description": "Share of orders delivered after the estimate",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "ratio",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.late_rate"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "late_rate",
+          "period": "2017-01",
+          "compare_to": "2016-12",
+          "dimension": "customer_state",
+          "total_delta": 13000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SP",
+              "delta": 7800
+            },
+            {
+              "dimension_value": "RJ",
+              "delta": 5200
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 13000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SP at 7800.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900012 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex14",
+      "kpi_id": "late_rate",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "expected_drivers": [
+        "MG",
+        "BA"
+      ],
+      "fact_sheet": {
+        "kpi_id": "late_rate",
+        "period": "2017-06",
+        "compare_to": "2017-05",
+        "definition": {
+          "kpi_id": "late_rate",
+          "name": "Late-delivery rate",
+          "description": "Share of orders delivered after the estimate",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "ratio",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.late_rate"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "late_rate",
+          "period": "2017-06",
+          "compare_to": "2017-05",
+          "dimension": "customer_state",
+          "total_delta": 14000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "MG",
+              "delta": 8400
+            },
+            {
+              "dimension_value": "BA",
+              "delta": 5600
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 14000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is MG at 8400.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900013 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex15",
+      "kpi_id": "late_rate",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "expected_drivers": [
+        "PR",
+        "RS"
+      ],
+      "fact_sheet": {
+        "kpi_id": "late_rate",
+        "period": "2017-11",
+        "compare_to": "2017-10",
+        "definition": {
+          "kpi_id": "late_rate",
+          "name": "Late-delivery rate",
+          "description": "Share of orders delivered after the estimate",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "ratio",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.late_rate"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "late_rate",
+          "period": "2017-11",
+          "compare_to": "2017-10",
+          "dimension": "customer_state",
+          "total_delta": 15000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "PR",
+              "delta": 9000
+            },
+            {
+              "dimension_value": "RS",
+              "delta": 6000
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 15000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is PR at 9000.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900014 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex16",
+      "kpi_id": "late_rate",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "expected_drivers": [
+        "SC",
+        "ES"
+      ],
+      "fact_sheet": {
+        "kpi_id": "late_rate",
+        "period": "2018-03",
+        "compare_to": "2018-02",
+        "definition": {
+          "kpi_id": "late_rate",
+          "name": "Late-delivery rate",
+          "description": "Share of orders delivered after the estimate",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "ratio",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.late_rate"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "late_rate",
+          "period": "2018-03",
+          "compare_to": "2018-02",
+          "dimension": "customer_state",
+          "total_delta": 16000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SC",
+              "delta": 9600
+            },
+            {
+              "dimension_value": "ES",
+              "delta": 6400
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 16000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SC at 9600.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900015 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex17",
+      "kpi_id": "avg_review_score",
+      "period": "2017-01",
+      "compare_to": "2016-12",
+      "expected_drivers": [
+        "SP",
+        "RJ"
+      ],
+      "fact_sheet": {
+        "kpi_id": "avg_review_score",
+        "period": "2017-01",
+        "compare_to": "2016-12",
+        "definition": {
+          "kpi_id": "avg_review_score",
+          "name": "Average review score",
+          "description": "Mean review score",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "score",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.avg_review_score"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "avg_review_score",
+          "period": "2017-01",
+          "compare_to": "2016-12",
+          "dimension": "customer_state",
+          "total_delta": 17000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SP",
+              "delta": 10200
+            },
+            {
+              "dimension_value": "RJ",
+              "delta": 6800
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 17000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SP at 10200.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900016 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex18",
+      "kpi_id": "avg_review_score",
+      "period": "2017-06",
+      "compare_to": "2017-05",
+      "expected_drivers": [
+        "MG",
+        "BA"
+      ],
+      "fact_sheet": {
+        "kpi_id": "avg_review_score",
+        "period": "2017-06",
+        "compare_to": "2017-05",
+        "definition": {
+          "kpi_id": "avg_review_score",
+          "name": "Average review score",
+          "description": "Mean review score",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "score",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.avg_review_score"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "avg_review_score",
+          "period": "2017-06",
+          "compare_to": "2017-05",
+          "dimension": "customer_state",
+          "total_delta": 18000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "MG",
+              "delta": 10800
+            },
+            {
+              "dimension_value": "BA",
+              "delta": 7200
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 18000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is MG at 10800.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900017 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex19",
+      "kpi_id": "avg_review_score",
+      "period": "2017-11",
+      "compare_to": "2017-10",
+      "expected_drivers": [
+        "PR",
+        "RS"
+      ],
+      "fact_sheet": {
+        "kpi_id": "avg_review_score",
+        "period": "2017-11",
+        "compare_to": "2017-10",
+        "definition": {
+          "kpi_id": "avg_review_score",
+          "name": "Average review score",
+          "description": "Mean review score",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "score",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.avg_review_score"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "avg_review_score",
+          "period": "2017-11",
+          "compare_to": "2017-10",
+          "dimension": "customer_state",
+          "total_delta": 19000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "PR",
+              "delta": 11400
+            },
+            {
+              "dimension_value": "RS",
+              "delta": 7600
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 19000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is PR at 11400.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900018 was applied.",
+          "supported": false
+        }
+      ]
+    },
+    {
+      "id": "ex20",
+      "kpi_id": "avg_review_score",
+      "period": "2018-03",
+      "compare_to": "2018-02",
+      "expected_drivers": [
+        "SC",
+        "ES"
+      ],
+      "fact_sheet": {
+        "kpi_id": "avg_review_score",
+        "period": "2018-03",
+        "compare_to": "2018-02",
+        "definition": {
+          "kpi_id": "avg_review_score",
+          "name": "Average review score",
+          "description": "Mean review score",
+          "sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "unit": "score",
+          "grain": "month"
+        },
+        "lineage": {
+          "found": true,
+          "raw_tables": [
+            "raw.orders",
+            "raw.order_payments"
+          ],
+          "cleaning_rules": [
+            "parse_dates",
+            "drop_exact_duplicates"
+          ],
+          "dbt_models": [
+            "dbt.fact_orders"
+          ],
+          "kpi_sql": "SELECT date_trunc('month', order_purchase_timestamp) AS period, SUM(payment_value) AS value FROM fact_orders",
+          "path_nodes": [
+            "raw.orders",
+            "clean.orders",
+            "dbt.fact_orders",
+            "kpi.avg_review_score"
+          ]
+        },
+        "drivers": {
+          "kpi_id": "avg_review_score",
+          "period": "2018-03",
+          "compare_to": "2018-02",
+          "dimension": "customer_state",
+          "total_delta": 20000,
+          "contribution_count": 2,
+          "contributions": [
+            {
+              "dimension_value": "SC",
+              "delta": 12000
+            },
+            {
+              "dimension_value": "ES",
+              "delta": 8000
+            }
+          ]
+        },
+        "insight_count": 0
+      },
+      "claims": [
+        {
+          "text": "The logged change is 20000.",
+          "supported": true
+        },
+        {
+          "text": "The largest logged contribution is SC at 12000.",
+          "supported": true
+        },
+        {
+          "text": "An unlogged adjustment of 900019 was applied.",
+          "supported": false
+        }
+      ]
+    }
+  ]
+}

@@ -11,11 +11,12 @@ RUN UV_HTTP_TIMEOUT=300 uv pip install --system --no-cache -r /srv/requirements.
 COPY contracts /srv/contracts
 RUN uv pip install --system --no-cache --no-deps /srv/contracts
 
-# 3) Service code and configs last: editing code only rebuilds from here.
+# 3) Service code, prompts and configs last: editing code only rebuilds from here.
 COPY config /srv/config
 COPY configs /srv/configs
+COPY prompts/auditor /srv/prompts/auditor
 COPY services/auditor /srv/service
 WORKDIR /srv/service
-ENV BIFLOW_MOCK=1 DATA_DIR=/srv/data BIFLOW_CONFIG_DIR=/srv/config PYTHONUNBUFFERED=1
+ENV BIFLOW_MOCK=1 DATA_DIR=/srv/data BIFLOW_CONFIG_DIR=/srv/config PYTHONUNBUFFERED=1     BIFLOW_PROMPTS_DIR=/srv/prompts/auditor
 EXPOSE 8102
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8102"]

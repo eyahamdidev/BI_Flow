@@ -1,0 +1,110 @@
+{
+  "judge_model": "openai/gpt-oss-20b",
+  "writer_model": "openai/gpt-oss-120b",
+  "prompt_id": "auditor.explain_kpi@v6",
+  "n": 20,
+  "flag_rate": 0.25,
+  "note": "Flag rate is not recall. These 120B v6 answers are not hand-labelled.",
+  "items": [
+    {
+      "id": "ex01",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex02",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex03",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex04",
+      "checker": false,
+      "judge_fail": true
+    },
+    {
+      "id": "ex05",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex06",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex07",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex08",
+      "checker": false,
+      "judge_fail": true
+    },
+    {
+      "id": "ex09",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex10",
+      "checker": false,
+      "judge_fail": true
+    },
+    {
+      "id": "ex11",
+      "checker": false,
+      "judge_fail": true
+    },
+    {
+      "id": "ex12",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex13",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex14",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex15",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex16",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex17",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex18",
+      "checker": false,
+      "judge_fail": false
+    },
+    {
+      "id": "ex19",
+      "checker": false,
+      "judge_fail": true
+    },
+    {
+      "id": "ex20",
+      "checker": false,
+      "judge_fail": false
+    }
+  ]
+}
